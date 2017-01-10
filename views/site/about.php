@@ -15,4 +15,27 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <code><?= __FILE__ ?></code>
+    <p>
+        <?php
+echo hash('sha256', 'The quick brown fox jumped over the lazy dog.');
+
+    if (password_verify(hash('sha256', 'The quick brown fox jumped over the lazy dog.'), hash('sha256', 'The quick brown fox jumped over the lazy dog.'))) {
+        echo 'o';
+    } else {
+        echo 'a';
+    }
+
+    
+    
+    
+?>
+    </p>
+    <p><?php
+        $salt ="sometext";
+        $escapedPW="userpass";
+        $saltedPW =  $escapedPW . $salt;
+        $hashedPW = hash('sha256', $saltedPW);
+        echo "<center>".$hashedPW."</center>";
+    ?>
+    </p>
 </div>

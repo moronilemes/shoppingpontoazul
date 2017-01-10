@@ -38,14 +38,14 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
+        
+        // this is the pretty URL functionality. It only works when the Yii Serve is active
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
-        ],
-        */
+        ],        
     ],
     'params' => $params,
 ];
