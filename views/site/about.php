@@ -17,15 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <code><?= __FILE__ ?></code>
     <p>
         <?php
-echo hash('sha256', 'The quick brown fox jumped over the lazy dog.');
 
-    if (password_verify(hash('sha256', 'The quick brown fox jumped over the lazy dog.'), hash('sha256', 'The quick brown fox jumped over the lazy dog.'))) {
-        echo 'o';
-    } else {
-        echo 'a';
-    }
-
-    
+    echo yii\base\Theme::className();
     
     
 ?>
