@@ -25,7 +25,9 @@ class AppAsset extends AssetBundle
         'gentella-vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css',   
         'gentella-vendors/bootstrap-daterangepicker/daterangepicker.css',
         'gentella-vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',   
+        'gentella-vendors/google-code-prettify/bin/prettify.min.css',
         'css/custom.min.css',
+        'css/zizap.css',
     ];
     public $js = [
         'gentella-vendors/bootstrap/dist/js/bootstrap.min.js',
@@ -35,8 +37,14 @@ class AppAsset extends AssetBundle
         'gentella-vendors/nprogress/nprogress.js',   
         'gentella-vendors/moment/min/moment.min.js',
         'gentella-vendors/bootstrap-daterangepicker/daterangepicker.js',
-        'gentella-vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',            
+        'gentella-vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',  
+        // Bootstrap WYSIWYG
+        'gentella-vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js',
+        'gentella-vendors/jquery.hotkeys/jquery.hotkeys.js',
+        'gentella-vendors/google-code-prettify/src/prettify.js',
+        // Comes with the template
         'js/custom.min.js',
+        // Project stuff
         'js/zizap.js',
     ];
     public $depends = [
