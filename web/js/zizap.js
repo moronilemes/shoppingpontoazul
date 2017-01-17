@@ -248,11 +248,7 @@ $(document).ready(function(){
         $('.product-list').empty();
         updateProductList(previousProductsURL);
     });
-    
-    $('.btn-product-detail').on('click', function(){        
-        console.log('yo');
-    });
-    
+  
     $( ".product-list " ).on( "click", "tr td a.btn-product-detail", function() {
         openProductDetail( $( this).data('id') );
     });
@@ -280,21 +276,14 @@ $(document).ready(function(){
                     previousProductsURL = productsURL;
                 }
                
-                $.each(data['content'], function(index) {
-//                    console.log(this.images[0]['lowResolutionUrl']);
-//                    console.log(this.title);
-//                    console.log(this.skus[0]['partnerId']);
-//                    console.log(this.skus[0]['price']);
-//                    console.log('ativo');
-//                    console.log(this.skus[0]['amount']);
-//                    console.log('---------------------------------------------');                  
+                $.each(data['content'], function() {           
                     
                     try {
                         $('.order-list').append(
                             "<tr class='odd pointer'>" +
                                 "<td class='a-center'><input type='checkbox' class='flat' name='table_records'></td>" +
                                 "<td class=''>" + this.marketPlace + "</td>" +
-                                "<td class=''>" + this.id + "</td>" +
+                                "<td class=''><a href='#' class='btn-order-detail' data-id='" + this.id + "'>" + this.id + "</a></td>" +
                                 "<td class=''>" + this.items[0]['product']['title'] + "</td>" +
                                 "<td class=''>" + this.buyer['name'] + "</td>" +
                                 "<td class=''>" + this.gross + "</td>" + 
@@ -302,7 +291,7 @@ $(document).ready(function(){
                                 "<td class=''>" + this.createdAt + "</td>" +
                                 "<td class=''>" + this.status + "</td>" +
                                 "<td class='a-right a-right'><button class='btn btn-default' type='submit'>NF</button></td>" +
-                                "<td class='last'><button class='btn btn-default' type='submit'><span class='glyphicon glyphicon-print' aria-hidden='true'></span></button></td>" +
+                                "<td class='last'><button class='btn btn-default btn-order-detail' data-id='" + this.id + "' type='submit'><span class='glyphicon glyphicon-search' aria-hidden='true'></span></button></td>" +
                             "</tr>" 
                         );
                     }
@@ -317,6 +306,60 @@ $(document).ready(function(){
        });        
     };
     
+    function openOrderDetail(orderID){
+        
+        orderURL = 'http://sandbox-api.anymarket.com.br/v2/orders/' + orderID + '?gumgaToken=LG1484315269910R-224861608';
+        
+        $.ajax({
+            url: orderURL,
+            dataType: 'json',        
+            success: function (data) {
+                console.log(data);                
+                $('.order-detail-info').empty();
+                
+                $('.orderID').append(data['id']);
+                $('.order-channel').append(data['marketPlace']);
+                $('.order-date').append(data['createdAt']);
+                $('.order-payment-date').append(data['paymentDate']);
+                $('.order-payment-status').append(data['payments'][0]['status']);
+                $('.order-payment-value').append('xxxxxxx');
+                $('.order-stalments-number').append('xxxxxxx');
+                $('.order-marketplace-status').append(data['marketPlaceStatus']);                
+                $('.order-shipment-type').append(data['deliverStatus']);
+                $('.order-customer-name').append(data['buyer']['name']);
+                $('.order-customer-document').append(data['buyer']['document']);
+                $('.order-customer-email').append(data['buyer']['email']);                
+                $('.order-customer-phone').append(data['buyer']['phone']);
+                $('.order-customer-address').append(data['shipping']['address']);
+                $('.order-customer-city').append(data['shipping']['city']);                
+                $('.order-customer-postal-code').append(data['shipping']['zipCode']);
+                
+                $('.order-payment-method').append("<img src='/images/" + data['payments'][0]['method'] + ".png' alt='" + data['payments'][0]['method'] + "'>");
+                console.log("<img src='/images/" + data['payments'][0]['method'] + ".png' alt='" + data['payments'][0]['method'] + "'>");
+                
+                $('.modal').modal('show');
+                
+                $.each(data['items'], function(index) {                    
+                    try {
+                        $('.order-detail-item-list').append(
+                            "<tr>" + 
+                                "<td>" + this.amount + "</td>" + 
+                                "<td>" + this.product['title'] + "</td>" + 
+                                "<td>" + this.sku['partnerId'] + "</td>" + 
+                                "<td>" + this.total + "</td>" +
+                            "</tr>"
+                        );
+                    }
+                    catch(err){
+                        console.log('Error in product')
+                    }
+                });
+                
+            }
+        }); 
+        
+    };
+    
     updateOrderList(orderURL);
     
     $('.btn-order-list-next').click(function(){
@@ -329,6 +372,10 @@ $(document).ready(function(){
         updateOrderList(previousOrderURL);
     });
     
+    $( ".order-list " ).on( "click", "tr td .btn-order-detail", function() {
+        openOrderDetail($(this).text());
+        //openProductDetail( $( this).data('id') );
+    });
     
     // Text Area WYSIWYG
     

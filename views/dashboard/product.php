@@ -78,7 +78,8 @@
           </thead>
 
           <tbody class='product-list'>
-<!--            <tr class="even pointer">
+            <!--            
+            <tr class="even pointer">
               <td class="a-center ">
                 <input type="checkbox" class="flat" name="table_records">
               </td>
@@ -100,7 +101,7 @@
               <td class=" ">John Blank L</td>
               <td class=" ">Paid</td>
               <td class=" ">Paid</td>
-            </tr>                          -->
+            </tr>  -->
           </tbody>
         </table>
       </div>

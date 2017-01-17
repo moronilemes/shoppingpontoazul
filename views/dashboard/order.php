@@ -71,8 +71,8 @@
               <th class="column-title">Valor Recebimento </th>
               <th class="column-title">Data </th>
               <th class="column-title">Status </th>
-              <th class="column-title">NF </th>
-              <th class="column-title no-link last"><span class="nobr">Etiqueta</span>
+              <th class="column-title">Ação </th>
+              <th class="column-title no-link last"><span class="nobr">Visualizar</span>
               </th>
               <th class="bulk-actions" colspan="7">
                 <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
@@ -320,4 +320,142 @@
                   </div>
                 </div>
      </div>
+</div>
+
+
+<div class="modal fade product-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+              </button>   
+                <h3 class="modal-title" id="myModalLabel">Vendas</h3>
+            </div>
+            <div class="modal-body">
+                <section class="content invoice">    
+                    
+                        <!-- /.col -->
+                      <!-- info row -->
+                    <div class="row invoice-info">
+                        <div class="col-sm-4 invoice-col">
+                            <h4>Pedido: <span class="order-detail-info orderID">XXXXXXX</span></h4>  
+                            <b>Canal: </b><span class="order-detail-info order-channel">Ecommerce</span><br>  
+                            <b>Data do Pedido:</b><span class="order-detail-info order-date">2/22/2014</span> <br>
+                            <b>Data do Pagamento:</b> <span class="order-detail-info order-payment-date">2/22/2014</span> <br>
+                            <b>Status no MarketPlace:</b> <span class="order-detail-info order-marketplace-status">968-34567</span><br>
+                            <b>Forma de Envio:</b> <span class="order-detail-info order-shipment-type">968-34567</span>
+                        </div>
+                        <div class="col-sm-4 invoice-col">
+                            <h4>Cliente:</h4>
+                            <address>
+                                <strong><span class="order-detail-info order-customer-name">Cliente Teste </span></strong>
+                                <br>CPF: <span class="order-detail-info order-customer-document">318.825.531-44</span>
+                                <br><span class="order-detail-info order-customer-email">emailDeTestes@teste.com.br</span>
+                                <br>Telefone: <span class="order-detail-info order-customer-phone">(44) 9876-5432</span>
+                            </address>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 invoice-col">
+                            <h4>Endereço:</h4>
+                            <address>
+                                <span class="order-detail-info order-customer-address">Avenida Horacio Raccanello Filho 5410 - Centro </span><br>
+                                <span class="order-detail-info order-customer-city">Maringa - PARANA - BRASIL</span><br>
+                                <span class="order-detail-info order-customer-postal-code">87020035</span>
+                            </address>
+                        </div>
+                        <!-- /.col -->
+                        
+                    </div>
+                    <!-- /.row -->
+                    <div class="clearfix"></div>
+                        <!-- Table row -->
+                        <div class="row">
+                            <div class="col-xs-12 table">
+                                <table class="table table-striped">
+                                    <thead>
+                                      <tr>
+                                        <th>Qtd.</th>
+                                        <th>Produto</th>
+                                        <th>SKU</th>                                
+                                        <th>Subtotal</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody class="order-detail-info order-detail-item-list">
+        <!--                              <tr>
+                                        <td>1</td>
+                                        <td>Call of Duty</td>
+                                        <td>455-981-221</td>
+                                        <td>El snort testosterone trophy driving gloves handsome gerry Richardson helvetica tousled street art master testosterone trophy driving gloves handsome gerry Richardson
+                                        </td>
+                                        <td>$64.50</td>
+                                      </tr>-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        <!-- /.col -->
+                        </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <!-- accepted payments column -->
+                        <div class="col-xs-6">
+                            <p class="lead">Método de Pagamento:</p>
+                            <span class="order-detail-info order-payment-method">
+                                <img src="/images/visa.png" alt="Visa">
+                                <img src="/images/mastercard.png" alt="Mastercard">
+                                <img src="/images/american-express.png" alt="American Express">
+                                <img src="/images/paypal.png" alt="Paypal"> 
+                            </span>
+                            
+                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                Situação de Pagamento: <span class="order-detail-info order-payment-status">ok</sp<an><br />
+                                Valor: <span class="order-detail-info order-payment-value">ok</span><br />
+                                Qtd. de Parcelas: <span class="order-detail-info order-stalments-number">ok</span><br />                                  
+                            </p>
+                        </div>
+                        <!-- /.col -->
+                            <div class="col-xs-6">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                      <tbody>
+                                        <tr>
+                                          <th style="width:50%">Produtos:</th>
+                                          <td>$250.30</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Juros:</th>
+                                          <td>$10.34</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Frete:</th>
+                                          <td>$5.80</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Desconto:</th>
+                                          <td>$265.24</td>
+                                        </tr>
+                                        <tr>
+                                          <th>Total do Pedido:</th>
+                                          <td>$265.24</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        <!-- /.col -->
+                        </div>
+                      <!-- /.row -->
+
+                      <!-- this row will not appear when printing -->
+                        <div class="row no-print">
+                            <div class="col-xs-12">
+                                <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
+                                <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
+                                <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+                            </div>
+                        </div>
+                    </section>   
+            </div>
+        </div>
+    </div>
 </div>
