@@ -26,6 +26,7 @@ class AppAsset extends AssetBundle
         'gentella-vendors/bootstrap-daterangepicker/daterangepicker.css',
         'gentella-vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',   
         'gentella-vendors/google-code-prettify/bin/prettify.min.css',
+        'gentella-vendors/dropzone/dist/min/dropzone.min.css',
         'css/custom.min.css',
         'css/zizap.css',
     ];
@@ -42,10 +43,14 @@ class AppAsset extends AssetBundle
         'gentella-vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js',
         'gentella-vendors/jquery.hotkeys/jquery.hotkeys.js',
         'gentella-vendors/google-code-prettify/src/prettify.js',
+        //
+        'gentella-vendors/dropzone/dist/min/dropzone.min.js',
         // Comes with the template
         'js/custom.min.js',
         // Project stuff
         'js/zizap.js',
+        'js/order.js',
+        'js/product.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

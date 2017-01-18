@@ -332,6 +332,51 @@
                 <h3 class="modal-title" id="myModalLabel">Vendas</h3>
             </div>
             <div class="modal-body">
+                <div id="wizard" class="form_wizard wizard_horizontal">
+                      <ul class="wizard_steps anchor">
+                        <li>
+                          <a href="#step-1" class="disabled" isdone="1" rel="1">
+                            <span class="step_no">1</span>
+                            <span class="step_descr">&nbsp&nbspPendente&nbsp&nbsp</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#step-2" class="disabled" isdone="0" rel="2">
+                            <span class="step_no">2</span>
+                            <span class="step_descr">&nbsp&nbsp&nbsp&nbspPago&nbsp&nbsp&nbsp&nbsp</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#step-3" class="disabled" isdone="0" rel="3">
+                            <span class="step_no">3</span>
+                            <span class="step_descr">&nbsp&nbspFaturado&nbsp&nbsp</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#step-4" class="disabled" isdone="0" rel="4">
+                            <span class="step_no">4</span>
+                            <span class="step_descr">&nbspEm trânsito</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#step-5" class="disabled" isdone="0" rel="5">
+                            <span class="step_no">5</span>
+                            <span class="step_descr">&nbsp&nbspEntregue&nbsp&nbsp</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="#step-6" class="disabled" isdone="0" rel="6">
+                            <span class="step_no">6</span>
+                            <span class="step_descr">&nbspFinalizado&nbsp</span>
+                          </a>
+                        </li>
+                      </ul>
+                      
+
+                    <div class="actionBar"><div class="msgBox"><div class="content"></div><a href="#" class="close">X</a></div><div class="loader">Loading</div></div></div>
+                      
+                      
+                      
                 <section class="content invoice">    
                     
                         <!-- /.col -->
@@ -450,6 +495,14 @@
                         <div class="row no-print">
                             <div class="col-xs-12">
                                 <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
+                                
+                                <button class="btn btn-default btn-order-update-paid"> Pago</button>
+                                <button class="btn btn-default btn-order-update-invoiced"> Faturado</button>
+                                <button class="btn btn-default btn-order-update-transit"> Em Trânsito</button>
+                                <button class="btn btn-default btn-order-update-delivered"> Entregue</button>
+                                <button class="btn btn-default btn-order-update-finished"> Concluído</button>
+                                <button class="btn btn-default btn-order-update-canceled"> Cancelado</button>
+                                
                                 <button class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment</button>
                                 <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
                             </div>
