@@ -43,13 +43,13 @@
     </div>
     <div class="col-md-6">
         <div id="" class="pull-right">            
-            <div class="btn-group">
-                <button type="button" class="btn btn-default btn-product-list-next">Anterior</button>            
+            <div class="btn-group pagination-list">
+ <!--               <button type="button" class="btn btn-default btn-product-list-next">Anterior</button>                
                 <button class="btn btn-default" type="button">1</button>
                 <button class="btn btn-default active" type="button">2</button>
                 <button class="btn btn-default" type="button">3</button>
                 <button class="btn btn-default" type="button">4</button>
-                <button type="button" class="btn btn-default btn-product-list-previous">Próximo</button>
+                <button type="button" class="btn btn-default btn-product-list-previous">Próximo</button>-->
             </div>
             <div class="btn-group">
                 <button type="button" class="btn btn-primary btn-product-new" data-toggle="modal" data-target=".product-modal-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  Novo</button>
@@ -127,7 +127,7 @@
                     <div class="alert alert-success alert-dismissible fade in" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                         </button>
-                        <strong>Tudo certo!</strong> Seu novo produto foi cadastrado.
+                        <strong>Tudo certo!</strong> <span class="alert-success-message"> </span>
                     </div>
                 </div>
                 
@@ -141,26 +141,44 @@
                               <input type="text" name="name" id="name" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                         </div>
                         </div>
-                        <div class="form-group col-md-12">
-                            <label class="" for="bar-code">Codigo de Barra <span class="required">*</span>                            </label>
-                            <div class="">
-                                <input type="text" name="bar-code" id="bar-code" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
-                            </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label class="" for="sku">SKU Interno <span class="required">*</span></label>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="sku">SKU Interno <span class="required"> </span></label>
                             <div class="">
                                 <input type="text" name="sku" id="sku" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                             </div>
                         </div>
-                          <div class="form-group col-md-6">
-                          <label class="" for="warranty-time">Tempo de Garantia <span class="required">*</span>
+                        <div class="form-group col-md-4">
+                          <label for="stock" class="control-label">Estoque <span class="required">*</span></label>
+                          <div class="">
+                            <input id="stock" class="form-control col-md-7 col-xs-12" type="text" name="stock" data-parsley-id="9">
+                          </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                           <label for="operation-period" class="control-label">Prazo da Operação</label>
+                           <div class="">
+                             <input id="operation-period" class="form-control col-md-7 col-xs-12" type="number" name="operation-period" data-parsley-id="9">
+                           </div>
+                        </div>
+<!--                        <div class="form-group col-md-9">
+                            <label class="" for="bar-code">Codigo de Barra</label>
+                            <div class="">
+                                <input type="text" name="bar-code" id="bar-code" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
+                            </div>
+                        </div>-->
+                        <div class="form-group col-md-3">
+                          <label class="" for="warranty-time">Tempo de Garantia
                           </label>
                           <div class="">
                               <input type="text" name="warranty-time" id="warranty-time" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                           </div>
                         </div>
-                        
+                        <div class="form-group col-md-9">
+                          <label class="" for="warranty-text">Texto de Garantia
+                          </label>
+                          <div class="">
+                              <input type="text" name="warranty-text" id="warranty-text" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
+                          </div>
+                        </div>
                         
                         
                                 
@@ -178,7 +196,7 @@
                       <ul class="dropdown-menu">
                         <li>
                           <a data-edit="fontSize 5">
-                            <p style="font-size:17px">Huge</p>
+                            <p style="font-size:17px">Grande</p>
                           </a>
                         </li>
                         <li>
@@ -188,7 +206,7 @@
                         </li>
                         <li>
                           <a data-edit="fontSize 1">
-                            <p style="font-size:11px">Small</p>
+                            <p style="font-size:11px">Pequeno</p>
                           </a>
                         </li>
                       </ul>
@@ -219,7 +237,7 @@
                       <a class="btn dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><i class="fa fa-link"></i></a>
                       <div class="dropdown-menu input-append">
                         <input class="span2" placeholder="URL" type="text" data-edit="createLink">
-                        <button class="btn" type="button">Add</button>
+                        <button class="btn" type="button">Adicionar</button>
                       </div>
                       <a class="btn" data-edit="unlink" title="" data-original-title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
                     </div>
@@ -272,64 +290,59 @@
                                 <input placeholder="Peso" type="number" name="product-weight" id="product-weight" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                             </div>
                         </div>          -->
-                        <div class="form-group col-md-12">
-                          <label class="col-md-12" for="pack-measure">Medidas da Embalagem<span class="required">*</span>
+                        <div class="form-group col-md-3">
+                          <label class="col-md-12" for="pack-measure">Largura
                           </label>
-                            <div class="col-md-3">
+                            <div class="">
                                 <input placeholder="Largura" type="number" name="pack-width" id="pack-width" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                             </div>
-                            <div class="col-md-3">
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-md-12" for="pack-measure">Altura
+                          </label>
+                            <div class="">
                                 <input placeholder="Altura" type="number" name="pack-height" id="pack-height" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                             </div>
-                            <div class="col-md-3">
+                        </div>
+                        <div class="form-group col-md-3">
+                          <label class="col-md-12" for="pack-measure">Comprimento
+                          </label>
+                            <div class="">
                                 <input placeholder="Comprimento" type="number" name="pack-length" id="pack-length" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                             </div>
-                            <div class="col-md-3">
-                                <input placeholder="Peso" type="number" name="pack-weigth" id="pack-weigth" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
-                            </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label class="" for="origin">Origem <span class="required">*</span>
-                            </label>
+                        <div class="form-group col-md-3">
+                          <label class="col-md-12" for="pack-measure">Peso
+                          </label>
                             <div class="">
-                                <input type="text" id="origin" name="origin" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
+                                <input placeholder="Peso" type="number" name="pack-weigth" id="pack-weight" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                             </div>
                         </div>
-                        <div class="form-group col-md-6">
-                          <label class="" for="cost">Custo <span class="required">*</span>
+                        
+                        <div class="form-group col-md-4">
+                          <label class="" for="cost">Custo<span class="required">*</span>
                           </label>
                           <div class="">
                               <input type="number" id="cost" name="cost" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                           </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label class="" for="price-from">Preço DE <span class="required">*</span>
-                          </label>
-                          <div class="">
-                              <input type="number" id="price-from" class="form-control col-md-7 col-xs-12" name="price-from" data-parsley-id="5">
-                          </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label class="" for="price-final">Preço POR <span class="required">*</span>
+                        </div>                        
+                        <div class="form-group col-md-4">
+                          <label class="" for="price-final">Preço<span class="required">*</span>
                           </label>
                           <div class="">
                             <input type="number" id="price-final" name="price-final" class="form-control col-md-7 col-xs-12" data-parsley-id="7">
                           </div>
                         </div>
-                        <div class="form-group col-md-6">
-                          <label for="stock" class="control-label">Estoque</label>
-                          <div class="">
-                            <input id="stock" class="form-control col-md-7 col-xs-12" type="text" name="stock" data-parsley-id="9">
-                          </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                           <label for="operation-period" class="control-label">Prazo da Operação</label>
-                           <div class="">
-                             <input id="operation-period" class="form-control col-md-7 col-xs-12" type="text" name="operation-period" data-parsley-id="9">
-                           </div>
+                        <div class="form-group col-md-4">
+                            <label class="" for="origin">Origem
+                            </label>
+                            <div class="">
+                                <input type="text" id="origin" name="origin" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
+                            </div>
                         </div>
                         
-                        <div class="row col-md-6"> <label class="" for="origin">Fotos: </label> </div>
+                        
+                        <div class="row col-md-12"> <label class="" for="origin">Fotos: </label> </div>
                         <div class="row img-thumbnail-list-product">                      
 <!--                      <div class="col-md-55">
                             <div class="thumbnail">

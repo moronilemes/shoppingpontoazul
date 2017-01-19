@@ -2,49 +2,83 @@ $(document).ready(function(){
     
     // PRODUCTS LIST PAGE
     
-    var productionToken = 'L118564309EG1480611916093R1250720512';
+    
+    var sandboxURL = 'http://sandbox-api.anymarket.com.br/v2/products/';
     var sandboxToken = 'LG1484315269910R-224861608';
-    var productsURL = 'http://api.anymarket.com.br/v2/products?gumgaToken=L118564309EG1480611916093R1250720512&limit=20';
+    var sandboxCategoryURL = 'http://sandbox-api.anymarket.com.br/v2/categories';
+    var productionURL = 'http://api.anymarket.com.br/v2/products/';
+    var productionToken = 'L118564309EG1480611916093R1250720512';
+    var productionCategoryURL = 'http://api.anymarket.com.br/v2/categories';
+     
+    var baseURL = sandboxURL;
+    var tokenChosen = sandboxToken;
+    var categoryURL = sandboxCategoryURL;
+    
+    var productListLimit = 20;
+    var productListOffset = 20;
+    var productListTotalElements;
     var nextProductsURL;
     var previousProductsURL;
     var thisProductID;
+    var productDetailMode;
     
     function showAlertError(message){
+        $('.alert').hide();
         $('.alert-error-message').empty();
         $('.alert-error-message').text(message);
-        $('.alert').fadeIn();
+        $('.alert-danger').fadeIn();
     }  
     
-    function showSuccessMessage(message){
+    function showSuccessMessage(message){        
         $('.alert').hide();
+        $('.alert-success-message').empty();
+        $('.alert-success-message').text(message);
         $('.alert-success').fadeIn();
     } 
-    
-    function updateProductList(url){
+        
+    function updateProductList(){
+        console.log('productListLimit ' + productListLimit);
+        console.log('productListOffset ' + productListOffset);
+        
+        
+        $('.product-list').empty();
+        
         $.ajax({
-            url: url,
-            dataType: 'json',        
+            url: baseURL + '?limit=' + productListLimit + '?offset=' + productListOffset,
+            dataType: 'json',   
+            "headers": {
+                "gumgatoken": tokenChosen,
+                "content-type": "application/json" },
             success: function (data) {
                 console.log(data);
-                $('.product-list').hide();
-                //console.log(data['links'][0]['href']);                
-                try{ 
-                    nextProductsURL = data['links'][0]['href'];
-                    previousProductsURL = data['links'][1]['href'];
+                productListTotalElements = data['page']['totalElements'];
+                console.log(productListTotalElements);
+                
+                $('.pagination-list').empty();
+                $('.pagination-list').append("<button type='button' class='btn btn-default btn-product-list-next'>Anterior</button>");
+                for (i = 1; i<= Math.ceil(productListTotalElements/productListOffset); i++){
+                    $('.pagination-list').append(
+                        "<button class='btn btn-default' type='button'>" + i + "</button>"
+                    );
                 }
-                catch(err) { 
-                    nextProductsURL = data['links'][0]['href'];
-                    previousProductsURL = productsURL;
-                }
+                $('.pagination-list').append("<button type='button' class='btn btn-default btn-product-list-previous'>Próximo</button>");
+                
+                console.log(Math.ceil(productListTotalElements/productListOffset));
+                
+                
+                $('.product-list').hide();             
+                //try{ 
+                    //console.log(0);
+                    //nextProductsURL = data['links'][0]['href'];
+                    //previousProductsURL = data['links'][1]['href'];
+                //}
+                //catch(err) { 
+                    //console.log(1);
+                    //nextProductsURL = data['links'][0]['href'];
+                    //previousProductsURL = productsURL;
+                //}
                
                 $.each(data['content'], function(index) {
-//                    console.log(this.images[0]['lowResolutionUrl']);
-//                    console.log(this.title);
-//                    console.log(this.skus[0]['partnerId']);
-//                    console.log(this.skus[0]['price']);
-//                    console.log('ativo');
-//                    console.log(this.skus[0]['amount']);
-//                    console.log('---------------------------------------------');                  
                     
                     try {
                         $('.product-list').append(
@@ -60,7 +94,7 @@ $(document).ready(function(){
                         );
                     }
                     catch(err){
-                        console.log('Error in product')
+                        console.log('Error in product');
                     }
                });
                $('.product-list').fadeIn();
@@ -68,41 +102,39 @@ $(document).ready(function(){
        });        
     };
     
-    function openProductDetail(productID){
-        
-        productURL = 'http://api.anymarket.com.br/v2/products/' + productID + '?gumgaToken=L118564309EG1480611916093R1250720512';
+    function openProductDetail(){
+        //
+        $('.dropzone').hide();
         
         $.ajax({
-            url: productURL,
-            dataType: 'json',        
+            url: baseURL + thisProductID,
+            dataType: 'json',  
+            "headers": {
+                "gumgatoken": tokenChosen,
+                "content-type": "application/json" },
             success: function (data) {
                 console.log(data);
                 $('#name').val(data['title']);
-                $('#category').val(data['category']['name']);
+                getProductCategory(data['category']['id']);
                 $('#warranty-time').val(data['warrantyTime']);
+                $('#warranty-text').val(data['warrantyText']);
                 $('#origin').val(data['origin']['description']);
                 $('#sku').val(data['skus'][0]['partnerId']);
-                
                 $('#pack-width').val(data['width']);
                 $('#pack-height').val(data['height']);
                 $('#pack-length').val(data['length']);
                 $('#pack-weight').val(data['weight']);
-                
-                $('#cost').val(data['---']);
+                $('#cost').val(Math.round(data['skus'][0]['price'] / data['priceFactor']));
                 $('#price-from').val(data['---']);
                 $('#price-final').val(data['skus'][0]['price']);
-                
                 $('#stock').val(data['skus'][0]['amount']);
                 $('#operation-period').val(data['skus'][0]['additionalTime']);
-                
                 $('#editor').html(data['description']);
                 $('.modal').modal('show');
-                
                 $('.img-thumbnail-list-product').empty();
                 
                 $.each(data['images'], function(index) {
-                    console.log($(this)[0]['thumbnailUrl']);
-                    
+                    //console.log($(this)[0]['thumbnailUrl']);
                     try {
                         $('.img-thumbnail-list-product').append(
                             "<div class='col-md-55'>" +
@@ -123,36 +155,42 @@ $(document).ready(function(){
                     catch(err){
                         console.log('Error in product')
                     }
-                    
-                    
                 });
                 
+                $('.img-thumbnail-list-product').append(
+                    "<div class='col-md-55'>" +
+                        "<div class=''>" +
+                        "<div class=''>" +
+                            "<img style='width: 100%; display: block;' src='http://www.gratisskole.dk/sdata/minipic/001/00155-300.png' alt='image'>" +
+                            "</div>" +
+                        "</div>" +
+                      "</div>"   
+                );
             }
         }); 
-        
-        console.log(productID);
+        //console.log(thisProductID);
     };
     
-    function getProductCategory(){
+    function getProductCategory(categoryID){
         $.ajax({
                 "async": true,
                 "crossDomain": true,
-                "url": "http://sandbox-api.anymarket.com.br/v2/categories",
+                "url": categoryURL,
                 "method": "GET",
                 "headers": {
-                  "gumgatoken": "LG1484315269910R-224861608",
+                  "gumgatoken": tokenChosen,
                   "content-type": "application/json"
-              },
+                },
             success: function (data) {
                 $('#category').empty();
                 $('#category').append("<option value=''>Categoria</option>");
                 
                 $.each(data['content'], function(index) {                    
                     try {
-                        $('#category').append("<option value='" + this.id + "'>" + this.name + "</option>");
+                        $('#category').append("<option " + ((categoryID ===this.id)? " selected " : "") + " value='" + this.id + "'>" + this.name + "</option>");
                     }
                     catch(err){
-                        console.log('Error in category')
+                        console.log('Error in category');
                     }
                 });
                 console.log(data);
@@ -163,42 +201,26 @@ $(document).ready(function(){
         });
     };
     
-    function createProduct(){
-        console.log('aaa');
+    function saveProduct(){
         
-        if ($('#name').val() === ''){ showAlertError('Nome não preenchido'); return; };
-        if ($('#sku').val() === ''){ showAlertError('SKU não preenchido'); return; };
-        if ($('#category').val() === ''){ showAlertError('Categoria não preenchida'); return; };
-        if ($('#pack-width').val() === ''){ showAlertError('Largura não preenchida'); return; };
-        if ($('#pack-height').val() === ''){ showAlertError('Altura não preenchida'); return; };
-        if ($('#pack-length').val() === ''){ showAlertError('Comprimenro não preenchido'); return; };
-        if ($('#pack-weigth').val() === ''){ showAlertError('Peso não preenchido'); return; };
+        productID = ((thisProductID === null) ? 'null' : thisProductID);
+        console.log('ID: ' + productID);
+        if ($('#name').val() === ''){ showAlertError('Nome não preenchido'); return; };        
+        if ($('#category').val() === ''){ showAlertError('Categoria não preenchida'); return; };        
+        packWidth = (($('#pack-width').val() === '') ? "\"\"" : $('#pack-width').val());
+        packHeight = (($('#pack-height').val() === '') ? "\"\"" : $('#pack-height').val());
+        packLength = (($('#pack-length').val() === '') ? "\"\"" : $('#pack-length').val());
+        packWeigth = (($('#pack-weight').val() === '') ? "\"\"" : $('#pack-weight').val());
+        if ($('#cost').val() === ''){ showAlertError('Custo não preenchido'); return; };
         if ($('#price-final').val() === ''){ showAlertError('Preço não preenchido'); return; };
         if ($('#stock').val() === ''){ showAlertError('Estoque não preenchido'); return; };               
         
-//        console.log($('#name').val()); 
-//        console.log($('#sku').val());
-//        console.log($('#warranty-time').val());
-//        console.log($('#editor').html()); 
-//        console.log($('#category').val());
-//        console.log($('#origin').val());
-//        console.log($('#pack-width').val());
-//        console.log($('#pack-height').val());
-//        console.log($('#pack-length').val());
-//        console.log($('#pack-weigth').val());
-//        console.log($('#cost').val());
-//        console.log($('#price-from').val());
-//        console.log($('#price-final').val()); 
-//        console.log($('#stock').val());
-//        console.log($('#operation-period').val());
-        
-        
-        productPreparation = "{\"id\": null,\"title\": \"" + $('#name').val() + "\","+
-                    "\"description\": \"" + $('#editor').html() + "\",\"nbm\": {  \"id\": \"0\"}," +
+        productPreparation = "{\"id\": " + productID + ",\"title\": \"" + $('#name').val() + "\","+
+                    "\"description\": \"" + $('#editor').html().replace(/"/g,"'") + "\",\"nbm\": {  \"id\": \"0\"}," +
                     "\"origin\": {  \"id\": \"0\"}," +
                     "\"category\": {  \"id\": \"" + $('#category').val() + "\"},\"model\": \"\"," +
-                    "\"warrantyText\": \"\",\"warrantyTime\": \"" + $('#warranty-time').val() + "\"," +
-                    "\"weight\": " + $('#pack-weigth').val() + ",\"height\": " + $('#pack-height').val() + ",\"width\": " + $('#pack-width').val() + ",\"length\": " + $('#pack-length').val() + "," +
+                    "\"warrantyText\": \"" + $('#warranty-text').val() + "\",\"warrantyTime\": \"" + $('#warranty-time').val() + "\"," +
+                    "\"weight\": " + packWeigth + ",\"height\": " + packHeight + ",\"width\": " + packWidth + ",\"length\": " + packLength + "," +
                     "\"images\": [{  \"main\": true,  \"url\": \"http://66.media.tumblr.com/tumblr_lcpn2mv6yU1qf0qtao1_1280.jpg\"}, " +
                     "{  \"main\": true,  \"url\": \"http://imguol.com/c/entretenimento/2014/09/03/2007---pedro-cardoso-em-cena-de-a-grande-familia-1409762964928_956x500.jpg\"}, " +
                     "{  \"main\": true,  \"url\": \"http://imguol.com/blogs/160/files/2016/05/cauby-peixoto.jpg\"}]," +
@@ -211,15 +233,16 @@ $(document).ready(function(){
         $.ajax({
             "async": true,
             "crossDomain": true,
-            "url": "http://sandbox-api.anymarket.com.br/v2/products",
-            "method": "POST",
+            "url": baseURL + productID,
+            "method": productDetailMode,
             "headers": {
-                "gumgatoken": sandboxToken,
+                "gumgatoken": tokenChosen,
                 "content-type": "application/json"
             },
             "processData": false,
             "data": productPreparation,
             success : function (response) {
+                showSuccessMessage('Seu novo produto foi salvo com sucesso.');
                 console.log(response);
             },
             fail : function (response) {
@@ -228,20 +251,20 @@ $(document).ready(function(){
             error: function(response){
                 console.log(response.statusText);
                 console.log(response['responseJSON']['message']);
-                
+                //
                 showAlertError(response.statusText);
                 
             }
         });  
-
     }
     
     if ($('tbody').hasClass('product-list')){
-        updateProductList(productsURL);
+        updateProductList();
     }
     
     $('.alert').hide();
     
+    // Pagination
     $('.btn-product-list-next').click(function(){        
         $('.product-list').empty();
         updateProductList(nextProductsURL);
@@ -252,19 +275,28 @@ $(document).ready(function(){
         updateProductList(previousProductsURL);
     });
   
-    $( ".product-list " ).on( "click", "tr td a.btn-product-detail", function() {
-        openProductDetail( $( this).data('id') );
+    // Open product details
+    $( ".product-list " ).on( "click", "tr td a.btn-product-detail", function() {        
+        thisProductID = $(this).data('id');
+        productDetailMode = 'PUT';
+        openProductDetail();
     });
     
+    // Creates new product
     $( ".btn-product-new").click(function(){        
-        thisProductID = '';
+        thisProductID = null;
+        productDetailMode = 'POST';
         $('.alert').hide();
         $('.form-control').empty();
         getProductCategory();
     });
 
     $(".btn-save-product").click(function(){        
-        createProduct();
+        saveProduct();
+    });
+    
+    $('.product-modal-lg').on('hide.bs.modal', function (e) {
+        updateProductList();
     });
     
 });
