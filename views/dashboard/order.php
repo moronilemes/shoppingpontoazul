@@ -1,11 +1,3 @@
-<?php
-
-//use yii\helpers\Html;
-
-//    CHtml::image();
-
-?>
-
 <!-- top tiles -->
 <div class="row tile_count">
   <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -323,7 +315,7 @@
 </div>
 
 
-<div class="modal fade product-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade order-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -494,8 +486,7 @@
                       <!-- this row will not appear when printing -->
                         <div class="row no-print">
                             <div class="col-xs-12">
-                                <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
-                                
+                                <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>                                
                                 <button class="btn btn-default btn-order-update-paid"> Pago</button>
                                 <button class="btn btn-default btn-order-update-invoiced"> Faturado</button>
                                 <button class="btn btn-default btn-order-update-transit"> Em Trânsito</button>

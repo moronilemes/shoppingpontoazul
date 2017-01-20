@@ -27,6 +27,10 @@ class AppAsset extends AssetBundle
         'gentella-vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',   
         'gentella-vendors/google-code-prettify/bin/prettify.min.css',
         'gentella-vendors/dropzone/dist/min/dropzone.min.css',
+        // PNotify 
+        'gentella-vendors/pnotify/dist/pnotify.css',
+        'gentella-vendors/pnotify/dist/pnotify.buttons.css',
+        'gentella-vendors/pnotify/dist/pnotify.nonblock.css',
         'css/custom.min.css',
         'css/zizap.css',
     ];
@@ -45,6 +49,10 @@ class AppAsset extends AssetBundle
         'gentella-vendors/google-code-prettify/src/prettify.js',
         //
         'gentella-vendors/dropzone/dist/min/dropzone.min.js',
+        // PNotify 
+        'gentella-vendors/pnotify/dist/pnotify.js',
+        'gentella-vendors/pnotify/dist/pnotify.buttons.js',
+        'gentella-vendors/pnotify/dist/pnotify.nonblock.js',
         // Comes with the template
         'js/custom.min.js',
         // Project stuff

@@ -1,8 +1,6 @@
 $(document).ready(function(){    
     
     // PRODUCTS LIST PAGE
-    
-    
     var sandboxURL = 'http://sandbox-api.anymarket.com.br/v2/products/';
     var sandboxToken = 'LG1484315269910R-224861608';
     var sandboxCategoryURL = 'http://sandbox-api.anymarket.com.br/v2/categories';
@@ -15,68 +13,70 @@ $(document).ready(function(){
     var categoryURL = sandboxCategoryURL;
     
     var productListLimit = 20;
-    var productListOffset = 20;
+    var productListOffset = 0;
     var productListTotalElements;
-    var nextProductsURL;
-    var previousProductsURL;
     var thisProductID;
     var productDetailMode;
+    var productPaginationQuantity;
+    var productPaginationPosition;
     
     function showAlertError(message){
-        $('.alert').hide();
-        $('.alert-error-message').empty();
-        $('.alert-error-message').text(message);
-        $('.alert-danger').fadeIn();
+        new PNotify({
+            title: 'Erro no formulário:',
+            text: message,
+            type: 'error',
+            styling: 'bootstrap3'
+        });
     }  
     
     function showSuccessMessage(message){        
-        $('.alert').hide();
-        $('.alert-success-message').empty();
-        $('.alert-success-message').text(message);
-        $('.alert-success').fadeIn();
+        new PNotify({
+            title: 'Tudo certo!',
+            text: message,
+            type: 'success',
+            styling: 'bootstrap3'
+        });
     } 
         
     function updateProductList(){
-        console.log('productListLimit ' + productListLimit);
-        console.log('productListOffset ' + productListOffset);
         
-        
-        $('.product-list').empty();
+        $('.product-list').hide();
         
         $.ajax({
-            url: baseURL + '?limit=' + productListLimit + '?offset=' + productListOffset,
+            url: baseURL + '?limit=' + productListLimit + '&offset=' + productListOffset,
             dataType: 'json',   
             "headers": {
                 "gumgatoken": tokenChosen,
                 "content-type": "application/json" },
             success: function (data) {
+                productPaginationPosition = productListOffset / productListLimit + 1;
+                console.log(productPaginationPosition);
                 console.log(data);
                 productListTotalElements = data['page']['totalElements'];
                 console.log(productListTotalElements);
                 
+                productPaginationQuantity = Math.ceil(productListTotalElements/productListLimit);
+                console.log(productPaginationQuantity);
+                
+                
                 $('.pagination-list').empty();
-                $('.pagination-list').append("<button type='button' class='btn btn-default btn-product-list-next'>Anterior</button>");
-                for (i = 1; i<= Math.ceil(productListTotalElements/productListOffset); i++){
-                    $('.pagination-list').append(
-                        "<button class='btn btn-default' type='button'>" + i + "</button>"
-                    );
+                $('.pagination-list').append("<button type='button' class='btn btn-default btn-product-list-previous btn-pagination-list'>Anterior</button>");
+                for (i = 1; i<= productPaginationQuantity; i++){
+                    if (productPaginationPosition === i){
+                        $('.pagination-list').append(
+                            "<button class='btn btn-default btn-pagination-list active' type='button'>" + i + "</button>"
+                        );
+                    } else {
+                        $('.pagination-list').append(
+                            "<button class='btn btn-default btn-pagination-list' type='button'>" + i + "</button>"
+                        );
+                    }
                 }
-                $('.pagination-list').append("<button type='button' class='btn btn-default btn-product-list-previous'>Próximo</button>");
+                $('.pagination-list').append("<button type='button' class='btn btn-default btn-product-list-next btn-pagination-list'>Próximo</button>");
                 
-                console.log(Math.ceil(productListTotalElements/productListOffset));
+                              
                 
-                
-                $('.product-list').hide();             
-                //try{ 
-                    //console.log(0);
-                    //nextProductsURL = data['links'][0]['href'];
-                    //previousProductsURL = data['links'][1]['href'];
-                //}
-                //catch(err) { 
-                    //console.log(1);
-                    //nextProductsURL = data['links'][0]['href'];
-                    //previousProductsURL = productsURL;
-                //}
+                $('.product-list').hide();   
                
                 $.each(data['content'], function(index) {
                     
@@ -160,8 +160,8 @@ $(document).ready(function(){
                 $('.img-thumbnail-list-product').append(
                     "<div class='col-md-55'>" +
                         "<div class=''>" +
-                        "<div class=''>" +
-                            "<img style='width: 100%; display: block;' src='http://www.gratisskole.dk/sdata/minipic/001/00155-300.png' alt='image'>" +
+                        "<div class='img-upload-plus'>" +
+                            "<img style='width: 100%; display: block; cursor: pointer' src='http://www.gratisskole.dk/sdata/minipic/001/00155-300.png' alt='image'>" +
                             "</div>" +
                         "</div>" +
                       "</div>"   
@@ -203,7 +203,7 @@ $(document).ready(function(){
     
     function saveProduct(){
         
-        productID = ((thisProductID === null) ? 'null' : thisProductID);
+        productID = ((thisProductID === '') ? 'null' : thisProductID);
         console.log('ID: ' + productID);
         if ($('#name').val() === ''){ showAlertError('Nome não preenchido'); return; };        
         if ($('#category').val() === ''){ showAlertError('Categoria não preenchida'); return; };        
@@ -216,24 +216,29 @@ $(document).ready(function(){
         if ($('#stock').val() === ''){ showAlertError('Estoque não preenchido'); return; };               
         
         productPreparation = "{\"id\": " + productID + ",\"title\": \"" + $('#name').val() + "\","+
-                    "\"description\": \"" + $('#editor').html().replace(/"/g,"'") + "\",\"nbm\": {  \"id\": \"0\"}," +
-                    "\"origin\": {  \"id\": \"0\"}," +
-                    "\"category\": {  \"id\": \"" + $('#category').val() + "\"},\"model\": \"\"," +
-                    "\"warrantyText\": \"" + $('#warranty-text').val() + "\",\"warrantyTime\": \"" + $('#warranty-time').val() + "\"," +
-                    "\"weight\": " + packWeigth + ",\"height\": " + packHeight + ",\"width\": " + packWidth + ",\"length\": " + packLength + "," +
-                    "\"images\": [{  \"main\": true,  \"url\": \"http://66.media.tumblr.com/tumblr_lcpn2mv6yU1qf0qtao1_1280.jpg\"}, " +
-                    "{  \"main\": true,  \"url\": \"http://imguol.com/c/entretenimento/2014/09/03/2007---pedro-cardoso-em-cena-de-a-grande-familia-1409762964928_956x500.jpg\"}, " +
-                    "{  \"main\": true,  \"url\": \"http://imguol.com/blogs/160/files/2016/05/cauby-peixoto.jpg\"}]," +
-                    "\"priceFactor\": 1,\"calculatedPrice\": false," +
-                    "\"skus\": [{  \"price\": " + $('#price-final').val() + ",  \"amount\": " + $('#stock').val() + ",  \"ean\": null,  " +
-                    "\"partnerId\": \"" + $('#sku').val() + "\",  \"title\": \"" + $('#name').val() + "\",  \"idProduct\": null,  \"internalIdProduct\": \"2573\"}]\r\n}";
+            "\"description\": \"" + $('#editor').html().replace(/"/g,"'") + "\",\"nbm\": {  \"id\": \"0\"}," +
+            "\"origin\": {  \"id\": \"0\"}," +
+            "\"category\": {  \"id\": \"" + $('#category').val() + "\"},\"model\": \"\"," +
+            "\"warrantyText\": \"" + $('#warranty-text').val() + "\",\"warrantyTime\": \"" + $('#warranty-time').val() + "\"," +
+            "\"weight\": " + packWeigth + ",\"height\": " + packHeight + ",\"width\": " + packWidth + ",\"length\": " + packLength + "," +
+            "\"images\": [{  \"main\": true,  \"url\": \"http://66.media.tumblr.com/tumblr_lcpn2mv6yU1qf0qtao1_1280.jpg\"}, " +
+            "{  \"main\": true,  \"url\": \"http://imguol.com/c/entretenimento/2014/09/03/2007---pedro-cardoso-em-cena-de-a-grande-familia-1409762964928_956x500.jpg\"}, " +
+            "{  \"main\": true,  \"url\": \"http://imguol.com/blogs/160/files/2016/05/cauby-peixoto.jpg\"}]," +
+            "\"priceFactor\": 1,\"calculatedPrice\": false," +
+            "\"skus\": [{  \"price\": " + $('#price-final').val() + ",  \"amount\": " + $('#stock').val() + ",  \"ean\": null,  " +
+            "\"partnerId\": \"" + $('#sku').val() + "\",  \"title\": \"" + $('#name').val() + "\",  \"idProduct\": null,  \"internalIdProduct\": \"2573\"}]\r\n}";
                 
         console.log(productPreparation);
+        console.log(baseURL + productID);
+        console.log(productDetailMode);
+        console.log(tokenChosen);
+        console.log('thisProductID ' + thisProductID);
+        productID = ((thisProductID === null) ? null : thisProductID);
         
         $.ajax({
             "async": true,
             "crossDomain": true,
-            "url": baseURL + productID,
+            "url": baseURL + thisProductID,
             "method": productDetailMode,
             "headers": {
                 "gumgatoken": tokenChosen,
@@ -242,7 +247,7 @@ $(document).ready(function(){
             "processData": false,
             "data": productPreparation,
             success : function (response) {
-                showSuccessMessage('Seu novo produto foi salvo com sucesso.');
+                showSuccessMessage('Seu produto foi salvo com sucesso.');
                 console.log(response);
             },
             fail : function (response) {
@@ -262,17 +267,31 @@ $(document).ready(function(){
         updateProductList();
     }
     
+    $('.product-modal-lg').on('hide.bs.modal', function (e) {
+        if ($('tbody').hasClass('product-list')){
+            updateProductList();
+        };
+    });
+    
     $('.alert').hide();
     
     // Pagination
-    $('.btn-product-list-next').click(function(){        
-        $('.product-list').empty();
-        updateProductList(nextProductsURL);
-    });
-    
-    $('.btn-product-list-previous').click(function(){        
-        $('.product-list').empty();
-        updateProductList(previousProductsURL);
+    $('.pagination-list').on('click', 'button', function(){       
+        //
+        if ($(this).text() === 'Próximo') { 
+            productListOffset = productListOffset + productListLimit; 
+            if (productListOffset > (productListLimit * (productPaginationQuantity - 1))){
+                productListOffset = productListLimit * (productPaginationQuantity - 1);
+            }                  
+        } else if ($(this).text() === 'Anterior') { 
+            productListOffset = productListOffset - productListLimit;
+            productListOffset = ((productListOffset - 0) ? 0 : productListOffset);
+        } else {
+            productListOffset = ($(this).text() - 1) * productListLimit;
+        }
+        //
+        updateProductList();
+        //
     });
   
     // Open product details
@@ -284,10 +303,11 @@ $(document).ready(function(){
     
     // Creates new product
     $( ".btn-product-new").click(function(){        
-        thisProductID = null;
+        thisProductID = '';
         productDetailMode = 'POST';
         $('.alert').hide();
-        $('.form-control').empty();
+        $('.form-control input').empty();
+        $('.form-control').html('');
         getProductCategory();
     });
 
@@ -295,8 +315,31 @@ $(document).ready(function(){
         saveProduct();
     });
     
-    $('.product-modal-lg').on('hide.bs.modal', function (e) {
-        updateProductList();
+    $(".form-control").keypress(function(){
+        var keycode = event.keyCode || event.which;
+        if(keycode === '13') {
+           saveProduct();
+        }
     });
+    
+
+    
+    $('.img-thumbnail-list-product').on('click', '.img-upload-plus', function(){
+        console.log('mais');
+        $('.img-thumbnail-list-product').hide();
+        $('.dropzone').show();
+    });
+    
+    Dropzone.options.myAwesomeDropzone = {
+        paramName: "imageFile", // The name that will be used to transfer the file
+        maxFilesize: 1, // MB
+        acceptedFiles: "image/*",
+        accept: function(file, done) {
+            if (file.name == "justinbieber.jpg") {
+                done("Naha, you don't.");
+            }
+            else { done(); }
+        }
+    };
     
 });

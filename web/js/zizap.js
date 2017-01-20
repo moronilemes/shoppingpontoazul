@@ -1,4 +1,5 @@
-$(document).ready(function(){   
+$(document).ready(function(){  
+    
     try {
         var options = {
           legend: false,
@@ -176,11 +177,18 @@ $(document).ready(function(){
     initToolbarBootstrapBindings();
 
     $('#editor').wysiwyg({
-      fileUploadError: showErrorAlert
+        fileUploadError: showErrorAlert
     });
 
     window.prettyPrint;
-    prettyPrint();
+    prettyPrint();  
     
+    $( document ).ajaxStart(function() {
+        NProgress.start();
+    });
+
+    $( document ).ajaxComplete(function() {
+        NProgress.done();
+    });
     
 });

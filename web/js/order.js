@@ -1,31 +1,36 @@
 $(document).ready(function(){
     
     // ORDERS LIST PAGE
-    
-    var productionToken = 'L118564309EG1480611916093R1250720512';
+    var sandboxURL = 'http://sandbox-api.anymarket.com.br/v2/orders/';
     var sandboxToken = 'LG1484315269910R-224861608';
-    var orderURL = 'http://sandbox-api.anymarket.com.br/v2/orders?gumgaToken=' + sandboxToken + '&limit=20';
-    var nextOrderURL;
-    var previousOrderURL;
+    var productionURL = 'http://api.anymarket.com.br/v2/orders/';
+    var productionToken = 'L118564309EG1480611916093R1250720512';
+     
+    var baseURL = sandboxURL;
+    var tokenChosen = sandboxToken;
+
+    var orderListLimit = 20;
+    var orderListOffset = 0;
+    var orderListTotalElements;
     var thisOrderID;
-    
+    var orderDetailMode;
+    var orderPaginationQuantity;
+    var orderPaginationPosition;
     
     function updateOrderList(url){
+        
+        $('.order-list').hide();
+        
         $.ajax({
-            url: url,
-            dataType: 'json',        
+            url: baseURL  + '?limit=' + orderListLimit + '&offset=' + orderListOffset,
+            dataType: 'json',  
+            "headers": {
+                "gumgatoken": tokenChosen,
+                "content-type": "application/json" },
             success: function (data) {
                 console.log(data);
-                $('.order-list').hide();
-                //console.log(data['links'][0]['href']);                
-                try{ 
-                    nextProductsURL = data['links'][0]['href'];
-                    previousProductsURL = data['links'][1]['href'];
-                }
-                catch(err) { 
-                    nextProductsURL = data['links'][0]['href'];
-                    previousProductsURL = orderURL;
-                }
+                
+                //console.log(data['links'][0]['href']);  
                
                 $.each(data['content'], function() {           
                     
@@ -57,17 +62,16 @@ $(document).ready(function(){
        });        
     };
     
-    function openOrderDetail(orderID){
-        
-        thisOrderID = orderID;
+    function openOrderDetail(){        
         
         $('.modal').modal('hide');
         
-        orderURL = 'http://sandbox-api.anymarket.com.br/v2/orders/' + orderID + '?gumgaToken=' + sandboxToken;
-        
         $.ajax({
-            url: orderURL,
-            dataType: 'json',        
+            url: baseURL + thisOrderID,
+            dataType: 'json',   
+            "headers": {
+                "gumgatoken": tokenChosen,
+                "content-type": "application/json" },
             success: function (data) {
                 console.log(data);                
                 $('.order-detail-info').empty();
@@ -117,11 +121,11 @@ $(document).ready(function(){
         
     };
     
-    function updateStatusSetPaid(orderID){ // ok
+    function updateStatusSetPaid(){
         $.ajax({
             "async": true,
             "crossDomain": true,
-            "url": "http://sandbox-api.anymarket.com.br/v2/orders/" + orderID,
+            "url": baseURL + thisOrderID,
             "method": "PUT",
             "headers": {
                 "gumgatoken": sandboxToken,
@@ -130,8 +134,8 @@ $(document).ready(function(){
             "processData": false,
             "data": "{\r\n  \"order_id\": \"" + orderID + "\",\r\n  \"status\": \"PAID_WAITING_SHIP\"\r\n}",
             success : function (response) {
-                console.log('Order #' + orderID + ' new status: PAID');
-                openOrderDetail(thisOrderID);
+                console.log(response);
+                openOrderDetail();
             },
             fail : function (response) {
                 console.log(response);
@@ -268,39 +272,29 @@ $(document).ready(function(){
     //--------------------------------------------------------//
 
     if ($('tbody').hasClass('order-list')){
-        updateOrderList(orderURL);
+        updateOrderList();
     }
     
-    //updateStatusSetPaid("4827");
-    //updateStatusSetInvoiced(4812, "00000000000000000000000000000000000000000000");
-    //updateStatusSetDelivered(4811);
-    //updateStatusSetCancelled('4814');
-
-    // Pagination
-    $('.btn-order-list-next').click(function(){
-        $('.order-list').empty();
-        updateOrderList(nextOrderURL);
+    $('.order-modal-lg').on('hide.bs.modal', function (e) {
+        if ($('tbody').hasClass('order-list')){
+            updateOrderList();
+        };
     });
-    
-    $('.btn-order-list-previous').click(function(){
-        $('.order-list').empty();
-        updateOrderList(previousOrderURL);
-    });
-    
+      
     // Opens order detail modal
     $( ".order-list " ).on( "click", "tr td .btn-order-detail", function() {
-        openOrderDetail($(this).text());
-    });
-    
+        thisOrderID = $(this).text();
+        openOrderDetail();
+    });    
         
     $('.btn-order-update-paid').click(function(){        
         console.log('PAID_WAITING_SHIP');
-        updateStatusSetPaid(thisOrderID);        
+        updateStatusSetPaid();        
     });
     
     $('.btn-order-update-invoiced').click(function(){        
         console.log('INVOICED');
-        updateStatusSetInvoiced(thisOrderID, "00000000000000000000000000000000000000000000");
+        updateStatusSetInvoiced("00000000000000000000000000000000000000000000");
     });
     
     $('.btn-order-update-transit').click(function(){        
@@ -309,7 +303,7 @@ $(document).ready(function(){
     
     $('.btn-order-update-delivered').click(function(){        
         console.log('PAID_WAITING_DELIVERY 2');
-        updateStatusSetDelivered(thisOrderID);
+        updateStatusSetDelivered();
     });
     
     $('.btn-order-update-finished').click(function(){        
@@ -318,7 +312,7 @@ $(document).ready(function(){
     
     $('.btn-order-update-canceled').click(function(){        
         console.log('CANCELED');
-        updateStatusSetCancelled(thisOrderID);
+        updateStatusSetCancelled();
     });
     
 });
