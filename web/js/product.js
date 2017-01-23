@@ -76,7 +76,7 @@ $(document).ready(function(){
                 
                               
                 
-                $('.product-list').hide();   
+                $('.product-list').empty();   
                
                 $.each(data['content'], function(index) {
                     
@@ -305,9 +305,27 @@ $(document).ready(function(){
     $( ".btn-product-new").click(function(){        
         thisProductID = '';
         productDetailMode = 'POST';
-        $('.alert').hide();
         $('.form-control input').empty();
         $('.form-control').html('');
+        //
+                $('#name').val('');
+                getProductCategory('');
+                $('#warranty-time').val('');
+                $('#warranty-text').val('');
+                $('#origin').val('');
+                $('#sku').val('');
+                $('#pack-width').val('');
+                $('#pack-height').val('');
+                $('#pack-length').val('');
+                $('#pack-weight').val('');
+                $('#cost').val('');
+                $('#price-from').val('');
+                $('#price-final').val('');
+                $('#stock').val('');
+                $('#operation-period').val('');
+                $('#editor').html('');
+                $('.img-thumbnail-list-product').empty();
+        //
         getProductCategory();
     });
 

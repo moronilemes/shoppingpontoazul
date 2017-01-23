@@ -39,7 +39,9 @@
            
 <div class="row x_title">
     <div class="col-md-6">
-        <h3>Produtos <small>Graph title sub-title</small></h3>
+        <h3>Produtos <small>Graph title sub-title</small><br>
+            <?php echo Yii::$app->user->identity->username ?>
+        </h3>
     </div>
     <div class="col-md-6">
         <div id="" class="pull-right">            

@@ -39,7 +39,7 @@ AppAsset::register($this);
             <div class="clearfix"></div>
 
 <!--             menu profile quick info -->
-            <div class="profile clearfix">
+<!--            <div class="profile clearfix">
               <div class="profile_pic">
                 <img src="/images/img.jpg" alt="..." class="img-circle profile_img">
               </div>
@@ -47,7 +47,7 @@ AppAsset::register($this);
                 <span>Welcome,</span>
                 <h2>John Doe</h2>
               </div>
-            </div>
+            </div>-->
 <!--             /menu profile quick info -->
 
             <br />
@@ -55,28 +55,28 @@ AppAsset::register($this);
 <!--             sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>General</h3>
+<!--                <h3>General</h3>-->
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-smile-o"></i> Pages <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-smile-o"></i> Gerenciamento <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="/site/index">Home</a></li>
-                      <li><a href="/site/about">About</a></li>
-                      <li><a href="/site/contact">Contact</a></li>
-					  <li><a href="/site/signup">SignUp</a></li>
-					  <li><a href="/store">Store</a></li>
-					  <li><a href="/user-store-role">Assignment</a></li>
-						<?php if(Yii::$app->user->isGuest){ ?>
-							<li><a href="/site/login">Login</a></li>
-						<?php } else { 
-								echo '<li>'
-								. Html::beginForm(['/site/logout'], 'post')
-								. Html::submitButton(
-									'Logout (' . Yii::$app->user->identity->username . ')',
-									['class' => 'btn btn-link logout']
-								)
-								. Html::endForm()
-								. '</li>';
-						} ?>
+<!--                        <li><a href="/site/index">Home</a></li>
+                        <li><a href="/site/about">About</a></li>
+                        <li><a href="/site/contact">Contact</a></li>-->
+                        <li><a href="/site/signup">New User</a></li>
+                        <li><a href="/store">Store</a></li>
+                        <li><a href="/user-store-role">Assignment</a></li>
+                        <!--      <?php if(Yii::$app->user->isGuest){ ?>
+                                      <li><a href="/site/login">Login</a></li>
+                              <?php } else { 
+                                              echo '<li>'
+                                              . Html::beginForm(['/site/logout'], 'post')
+                                              . Html::submitButton(
+                                                      'Logout (' . Yii::$app->user->identity->username . ')',
+                                                      ['class' => 'btn btn-link logout']
+                                              )
+                                              . Html::endForm()
+                                              . '</li>';
+                        } ?>-->
                     </ul>
                   </li>
                   <li><a><i class="fa fa-home"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
@@ -218,22 +218,58 @@ AppAsset::register($this);
 
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                  <a href="/dashboard/javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="/images/img.jpg" alt="">John Doe
-                    <span class=" fa fa-angle-down"></span>
-                  </a>
+                    <!--<a href="/dashboard/javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                      <img src="/images/img.jpg" alt="">
+                      <?php if(Yii::$app->user->isGuest){ ?>
+                              Login
+                      <?php } else { 
+                              echo Yii::$app->user->identity->username;
+                      } ?>
+                      <span class=" fa fa-angle-down"></span>
+                    </a>-->
+                    
+                    <?php if(Yii::$app->user->isGuest){ ?>
+                            <a href="/site/login/" class="user-profile" aria-expanded="false">
+                                Login
+                            </a>
+                    <?php } else { ?>
+                        <a href="/dashboard/javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <img src="/images/img.jpg" alt="">
+                            <?php 
+                                echo Yii::$app->user->identity->username
+                            ?>
+                            <span class=" fa fa-angle-down"></span>
+                        </a>
+                    <?php } ?>
+                    
+                    
+                    
+                    
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="/dashboard/javascript:;"> Profile</a></li>
-                    <li>
-                      <a href="/dashboard/javascript:;">
-                        <span class="badge bg-red pull-right">50%</span>
-                        <span>Settings</span>
-                      </a>
-                    </li>
-                    <li><a href="/dashboard/javascript:;">Help</a></li>
-                    <li><a href="/dashboard/login"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <!--<li><a href="/site/index">Home</a></li>
+                    <li><a href="/site/about">About</a></li>
+                    <li><a href="/site/contact">Contact</a></li>
+                    <li><a href="/site/signup">New User</a></li>
+                    <li><a href="/store">Store</a></li>
+                    <li><a href="/user-store-role">Assignment</a></li>-->
+                    
+                    <li><a href="/dashboard/profile"> Profile</a></li>
+                    <li><a href="/dashboard/settings"><span>Settings</span></a></li>
+                    <?php if(Yii::$app->user->isGuest){ ?>
+                            <li><a href="/site/login">Login</a></li>
+                    <?php } else { 
+                                    echo '<li>'
+                                    . Html::beginForm(['/site/logout'], 'post')
+                                    . Html::submitButton(
+                                            'Logout',
+                                            ['class' => 'btn btn-link logout']
+                                    )
+                                    . Html::endForm()
+                                    . '</li>';
+                    } ?>
                   </ul>
                 </li>
+                                
 
                 <li role="presentation" class="dropdown">
                   <a href="/dashboard/javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
