@@ -62,7 +62,7 @@ AppAsset::register($this);
 <!--                        <li><a href="/site/index">Home</a></li>
                         <li><a href="/site/about">About</a></li>
                         <li><a href="/site/contact">Contact</a></li>-->
-                        <li><a href="/site/signup">New User</a></li>
+                        <li><a href="/user/">User</a></li>
                         <li><a href="/store">Store</a></li>
                         <li><a href="/user-store-role">Assignment</a></li>
                         <!--      <?php if(Yii::$app->user->isGuest){ ?>

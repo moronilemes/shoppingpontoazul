@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\UserStoreRole */
 
-$this->title = Yii::t('app', 'Create User Store Role');
+$this->title = Yii::t('app', 'Create Assignment');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'User Store Roles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

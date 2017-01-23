@@ -19,18 +19,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'name',
             'phone',
-            'mobile',
-            'observation',
+            //'mobile',
+            //'observation',
             // 'address',
             // 'address2',
             // 'postal_code',
-            // 'city',
-            // 'state',
+            'city',
+            'state',
             // 'country',
             // 'pay_day',
             // 'CPF',
@@ -38,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'IE',
             // 'RG',
             // 'store_type',
-            // 'mercado_libre_user',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

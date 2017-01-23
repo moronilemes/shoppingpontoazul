@@ -45,7 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'IE',
             'RG',
             'store_type',
-            'mercado_libre_user',
         ],
     ]) ?>
 

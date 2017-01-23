@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <!--<?= $form->field($model, 'id')->textInput() ?>-->
-
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
@@ -44,11 +42,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'RG')->textInput(['maxlength' => true]) ?>
 
-    <?php
-    //$form->field($model, 'store_type')->textInput(['maxlength' => true])->dropDownList([ 'F' => 'Física', 'J' => 'Jurídica', ], ['prompt' => '']) ?>
-    <?= $form->field($model, 'store_type')->dropDownList([ 'F' => 'Física', 'J' => 'Jurídica', ], ['prompt' => '']) ?>
-    
-    <?= $form->field($model, 'mercado_libre_user')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'store_type')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

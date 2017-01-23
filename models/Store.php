@@ -24,7 +24,6 @@ use Yii;
  * @property string $IE
  * @property string $RG
  * @property string $store_type
- * @property string $mercado_libre_user
  *
  * @property UserStoreRole[] $userStoreRoles
  */
@@ -44,11 +43,10 @@ class Store extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name', 'address', 'postal_code', 'city', 'state', 'store_type'], 'required'],
-            [['id'], 'integer'],
+            [['name', 'address', 'postal_code', 'city', 'state', 'store_type'], 'required'],
             [['pay_day'], 'string'],
             [['name'], 'string', 'max' => 100],
-            [['phone', 'mobile', 'address', 'address2', 'postal_code', 'city', 'state', 'country', 'mercado_libre_user'], 'string', 'max' => 45],
+            [['phone', 'mobile', 'address', 'address2', 'postal_code', 'city', 'state', 'country'], 'string', 'max' => 45],
             [['observation'], 'string', 'max' => 200],
             [['CPF'], 'string', 'max' => 11],
             [['CNPJ', 'RG'], 'string', 'max' => 15],
@@ -80,7 +78,6 @@ class Store extends \yii\db\ActiveRecord
             'IE' => Yii::t('app', 'IE'),
             'RG' => Yii::t('app', 'RG'),
             'store_type' => Yii::t('app', 'Store Type'),
-            'mercado_libre_user' => Yii::t('app', 'Mercado Libre User'),
         ];
     }
 
