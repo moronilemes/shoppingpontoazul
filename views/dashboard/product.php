@@ -40,7 +40,12 @@
 <div class="row x_title">
     <div class="col-md-6">
         <h3>Produtos <small>Graph title sub-title</small><br>
-            <?php echo Yii::$app->user->identity->username ?>
+            
+            <span class="hidden this-user-id">
+                <?php 
+                    echo Yii::$app->user->identity->id;                        
+                ?>
+            </span>
         </h3>
     </div>
     <div class="col-md-6">
@@ -335,8 +340,8 @@
                         
                         
                         <div class="row col-md-12"> <label class="" for="origin">Fotos: </label> </div>
-                        <div class="row img-thumbnail-list-product">                      
-<!--                      <div class="col-md-55">
+ <!--                      <div class="row img-thumbnail-list-product">                      
+                      <div class="col-md-55">
                             <div class="thumbnail">
                               <div class="image view view-first">
                                 <img style="width: 100%; display: block;" src="images/media.jpg" alt="image">
@@ -349,8 +354,8 @@
                                 </div>
                               </div>
                             </div>
-                          </div>-->
-                        </div>
+                          </div>
+                        </div>-->
                     </form>
                     <div class="clearfix"></div>
                         <div class="row">
