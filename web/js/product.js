@@ -213,14 +213,9 @@ $(document).ready(function(){
 //                        );
                 
                         $('.dropzone-previews').append(
-                            "<div class='dz-preview dz-processing dz-success dz-complete dz-image-preview' val='" + $(this)[0]['standardUrl'] + "'>  " +
-                                "<div class='dz-image'><img data-dz-thumbnail='" + $(this)[0]['thumbnailUrl'] + "' alt='' src='" + $(this)[0]['thumbnailUrl'] + "'></div>  " +
-                                //"<div class='dz-details'><div class='dz-size'><span data-dz-size=''><strong>0.3</strong> MB</span></div>    " +
-                                "<div class='dz-filename'><span data-dz-name=''>" + $(this)[0]['standardUrl'] + "</span></div>  </div>  " +
-                                //"<div class='dz-progress'><span class='dz-upload' data-dz-uploadprogress='' style='width: 100%;'></span></div>  " +
-                                //"<div class='dz-error-message'><span data-dz-errormessage=''></span></div>" +
-                                "<a class='dz-remove' href='javascript:undefined;' data-dz-remove=''>Remover imagem</a>" +
-                            "</div>"
+                            "<div class='dz-preview dz-processing dz-success dz-complete dz-image-preview'>" +
+                            "<div class='dz-image'><img data-dz-thumbnail='" + $(this)[0]['thumbnailUrl'] + "' alt='' src='" + $(this)[0]['thumbnailUrl'] + "'></div>" +
+                            "<a class='dz-remove' href='javascript:undefined;' data-dz-remove=''>Remover imagem</a></div>"
                         );
                                                 
                     }
