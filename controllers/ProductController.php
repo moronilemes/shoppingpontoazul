@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Image;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -168,28 +169,38 @@ class ProductController extends Controller
         } 
     }
     
-    public function actionUpload() {
-        $model = new DynamicModel([
-            'nama', 'file_id'
-            ]);
-
-        // behavior untuk upload file
-        $model->attachBehavior('upload', [
-            'class' => 'mdm\upload\UploadBehavior',
-            'attribute' => 'file',
-            'savedAttribute' => 'file_id' // coresponding with $model->file_id
-        ]);
-
-        // rule untuk model
-        $model->addRule('nama', 'string')
-            ->addRule('file', 'file', ['extensions' => 'jpg']);
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->saveUploadedFile() !== false) {
-                Yii::$app->session->setFlash('success', 'Upload Sukses');
+    public function actionUpload()
+    {
+        $fileName = 'file';
+        $uploadPath = 'uploads';
+        
+//        if(isset($_POST["thisUploadProductID"]) && $_POST["thisUploadProductID"] != ''){
+//                 
+//            $thisProductID = $_POST["thisUploadProductID"];
+//            
+//        }
+        
+        if (isset($_FILES[$fileName])) {
+            $file = \yii\web\UploadedFile::getInstanceByName($fileName);
+            
+            //Print file data
+            //print_r($file);
+            
+            $newFileName = uniqid() . '.' . $file->getExtension();            
+            $myImage = new Image();            
+            //$myImage->url = $file->name;            
+            
+            if ($file->saveAs($uploadPath . '/' . $newFileName)) {
+                //Now save file data to database
+                $myImage->url = $newFileName;
+                $myImage->save();
+                echo \yii\helpers\Json::encode($file);
+                
+                
             }
-        }
-        return $this->render('upload',['model' => $model]);
-        }
+        } 
+
+        return false;
+    }
     
 }

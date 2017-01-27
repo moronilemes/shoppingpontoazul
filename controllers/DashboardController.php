@@ -9,6 +9,12 @@ class DashboardController extends \yii\web\Controller
         return $this->render('order');
     }
     
+    public function actionTest()
+    {
+        return $this->render('test');
+    }
+    
+    
     public function actionSetting()
     {
         return $this->render('setting');

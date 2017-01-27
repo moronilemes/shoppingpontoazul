@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "{{%image}}".
  *
  * @property integer $id
- * @property integer $image
+ * @property string $url
  */
 class Image extends \yii\db\ActiveRecord
 {
@@ -26,8 +26,8 @@ class Image extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['image'], 'required'],
-            [['image'], 'integer'],
+            [['url'], 'required'],
+            [['url'], 'string'],
         ];
     }
 
@@ -38,7 +38,7 @@ class Image extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'image' => Yii::t('app', 'Image'),
+            'url' => Yii::t('app', 'Url'),
         ];
     }
 }
