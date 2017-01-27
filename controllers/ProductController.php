@@ -80,11 +80,12 @@ class ProductController extends Controller
                 return 'Could not save in database!';
             }
 
-            $response = Yii::$app->response;
-            $response->format = \yii\web\Response::FORMAT_JSON;
-            $response->data = ['filename' => $filename];
-            $response->statusCode = 200;
-            return $response;
+//            $response = Yii::$app->response;
+//            $response->format = \yii\web\Response::FORMAT_JSON;
+//            $response->data = ['filename' => $filename];
+//            $response->statusCode = 200;
+//            return $response;
+            
         } else {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id, 'anymarket_id' => $model->anymarket_id]);
@@ -146,4 +147,49 @@ class ProductController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function actionList(){        
+        
+        if(Yii::$app->request->isAjax){
+            
+            $myUserID = Yii::$app->request->get('id');
+            
+            $rows = (new \yii\db\Query())
+                ->select(['anymarket_id'])
+                ->from('product')
+                ->where(['user_id' => $myUserID])
+                //->limit(10)
+                ->all();
+
+
+            
+            return json_encode($rows);
+
+        } 
+    }
+    
+    public function actionUpload() {
+        $model = new DynamicModel([
+            'nama', 'file_id'
+            ]);
+
+        // behavior untuk upload file
+        $model->attachBehavior('upload', [
+            'class' => 'mdm\upload\UploadBehavior',
+            'attribute' => 'file',
+            'savedAttribute' => 'file_id' // coresponding with $model->file_id
+        ]);
+
+        // rule untuk model
+        $model->addRule('nama', 'string')
+            ->addRule('file', 'file', ['extensions' => 'jpg']);
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->saveUploadedFile() !== false) {
+                Yii::$app->session->setFlash('success', 'Upload Sukses');
+            }
+        }
+        return $this->render('upload',['model' => $model]);
+        }
+    
 }

@@ -12,11 +12,12 @@ $(document).ready(function(){
     var tokenChosen = sandboxToken;
     var categoryURL = sandboxCategoryURL;
     
-    var productListLimit = 20;
+    var productListLimit = 70;
     var productListOffset = 0;
     var productListTotalElements;
     var thisProductID;
     var thisUserID;
+    var myProductList = [];
     
     var productDetailMode;
     var productPaginationQuantity;
@@ -44,6 +45,31 @@ $(document).ready(function(){
     function updateProductList(){
         
         $('.product-list').hide();
+        
+        $.ajax({
+            type: 'GET',
+            url: '/product/list',
+            data: { "id": (thisUserID).trim() },
+            //dataType: 'text',
+            success: function(data){
+                
+                
+                $.each(JSON.parse(data), function() {
+                    myProductList.push(Number(this.anymarket_id));
+                    //console.log(this.anymarket_id);
+                });
+                
+                console.log(myProductList.findIndex(function(product){ product = '2'; }));
+                
+            },
+            fail: function(create_response){
+                console.log(create_response);
+            },
+            error: function(create_response){
+                console.log(create_response);
+            }
+        });
+        
         
         $.ajax({
             url: baseURL + '?limit=' + productListLimit + '&offset=' + productListOffset,
@@ -81,26 +107,38 @@ $(document).ready(function(){
                 
                 $('.product-list').empty();   
                
+               
+                //console.log(myProductList);
+               
                 $.each(data['content'], function(index) {
                     
                     try {
-                        if (this.images == undefined){
-                            productThumbnailImage = 'http://www.sensiblespeech.com/wp-content/uploads/2016/07/No_image_available-450x301.png';
-                        } else {
-                            productThumbnailImage = this.images[0]['thumbnailUrl'];
+                        
+                        if ($.inArray( this.id, myProductList) !== -1){
+                            
+                            //console.log(myProductList.findIndex(function(product){ product = this.id; }));
+                            //console.log('esse vai ' + this.id);
+                            
+                            if (this.images === undefined){
+                                productThumbnailImage = 'http://www.sensiblespeech.com/wp-content/uploads/2016/07/No_image_available-450x301.png';
+                            } else {
+                                productThumbnailImage = this.images[0]['thumbnailUrl'];
+                            }
+
+                            $('.product-list').append(
+                                "<tr class='even pointer'>" + 
+                                    "<td class='a-center'><input type='checkbox' class='flat' name='table_records'></td>" +
+                                    "<td class=''><img class='product-image btn-product-detail' src='" + productThumbnailImage + "' /></td>" +
+                                    "<td class=''><a href='#' class='btn-product-detail' data-id='" + this['id'] + "'>" + this.title + "<br /><small>" + this['category']['name'] + "</small></a></td>" +
+                                    "<td class=''>" + this.skus[0]['partnerId'] + "</td>" +
+                                    "<td class=''>" + this.skus[0]['price'] + "</td>" +
+                                    "<td class=''>Ativo</td>" +
+                                    "<td class=''>" + this.skus[0]['amount'] + "</td>" +
+                                "</tr>"    
+                            );
+                    
                         }
                         
-                        $('.product-list').append(
-                            "<tr class='even pointer'>" + 
-                                "<td class='a-center'><input type='checkbox' class='flat' name='table_records'></td>" +
-                                "<td class=''><img class='product-image btn-product-detail' src='" + productThumbnailImage + "' /></td>" +
-                                "<td class=''><a href='#' class='btn-product-detail' data-id='" + this['id'] + "'>" + this.title + "<br /><small>" + this['category']['name'] + "</small></a></td>" +
-                                "<td class=''>" + this.skus[0]['partnerId'] + "</td>" +
-                                "<td class=''>" + this.skus[0]['price'] + "</td>" +
-                                "<td class=''>Ativo</td>" +
-                                "<td class=''>" + this.skus[0]['amount'] + "</td>" +
-                            "</tr>"    
-                        );
                     }
                     catch(err){
                         console.log('Error in product id:' + this.id);
@@ -224,7 +262,7 @@ $(document).ready(function(){
         if ($('#stock').val() === ''){ showAlertError('Estoque não preenchido'); return; }; 
         if ($('#operation-period').val() === ''){ $('#operation-period').val('0') }; 
         
-        thisUserID = $('.this-user-id').html();
+        
         
         
         productPreparation = "{\"id\": " + productID + ",\"title\": \"" + $('#name').val() + "\","+
@@ -298,6 +336,7 @@ $(document).ready(function(){
     }
     
     if ($('tbody').hasClass('product-list')){
+        thisUserID = $('.this-user-id').html();
         updateProductList();
     }
     
@@ -371,6 +410,12 @@ $(document).ready(function(){
         saveProduct();
     });
     
+    $(".btn-delete-product").click(function(){        
+        if (window.confirm('Você vai apagar este item para sempre. Continuar?')){
+            console.log('The guy is sure...');
+        }
+    });
+    
     $(".form-control").keypress(function(){
         var keycode = event.keyCode || event.which;
         if(keycode === '13') {
@@ -404,35 +449,35 @@ $(document).ready(function(){
        maxFiles: 6,
        acceptedFiles: "image/*",
        init:function(){
-         var self = this;
-         // config
-         self.options.addRemoveLinks = true;
-         self.options.dictRemoveFile = "Delete";
-         //New file added
-         self.on("addedfile", function (file) {
-           console.log('new file added ', file);
-         });
-         // Send file starts
-         self.on("sending", function (file) {
-           console.log('upload started', file);
-           $('.meter').show();
-         });
+            var self = this;
+            // config
+            self.options.addRemoveLinks = true;
+            self.options.dictRemoveFile = "Delete";
+            //New file added
+            self.on("addedfile", function (file) {
+              console.log('new file added ', file);
+            });
+            // Send file starts
+            self.on("sending", function (file) {
+              console.log('upload started', file);
+              $('.meter').show();
+            });
 
-         // File upload Progress
-         self.on("totaluploadprogress", function (progress) {
-           console.log("progress ", progress);
-           $('.roller').width(progress + '%');
-         });
+            // File upload Progress
+            self.on("totaluploadprogress", function (progress) {
+              console.log("progress ", progress);
+              $('.roller').width(progress + '%');
+            });
 
-         self.on("queuecomplete", function (progress) {
-           $('.meter').delay(999).slideUp(999);
-         });
+            self.on("queuecomplete", function (progress) {
+              $('.meter').delay(999).slideUp(999);
+            });
 
-         // On removing file
-         self.on("removedfile", function (file) {
-           console.log(file);
-         });
-       }
-     };
-   
+            // On removing file
+            self.on("removedfile", function (file) {
+              console.log(file);
+            });
+        }
+    };
+    
 });

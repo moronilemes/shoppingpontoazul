@@ -359,7 +359,7 @@
                     </form>
                     <div class="clearfix"></div>
                         <div class="row">
-                            <form action="/dashboard/create" id="myAwesomeDropzone" class="dropzone dz-clickable dz-started" enctype="multipart/form-data">
+                            <form action="/product/upload" id="myAwesomeDropzone" class="dropzone dz-clickable dz-started" enctype="multipart/form-data">
                                 <div class="dz-default dz-message col-md-12"><span>Arraste arquivos para fazer upload</span></div>
         <!--                    <div class="dz-preview dz-file-preview dz-processing dz-error dz-complete">  <div class="dz-image"><img data-dz-thumbnail=""></div>  
                                     <div class="dz-details">    <div class="dz-size"><span data-dz-size=""><strong>23.8</strong> MB</span></div>    <div class="dz-filename"><span data-dz-name="">googledrivesync.exe</span></div>  </div>  
@@ -382,8 +382,9 @@
                     
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              <button type="button" class="btn btn-primary btn-save-product">Salvar produto</button>
+                <button type="button" class="btn btn-link btn-delete-product" >Deletar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary btn-save-product">Salvar produto</button>
             </div>
         </div>
     </div>
