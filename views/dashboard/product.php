@@ -142,18 +142,23 @@
                                 <input type="text" name="sku" id="sku" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                             </div>
                         </div>
+                        <div class="form-group col-md-8">
+                          <label class="" for="category">Categoria <span class="required">*</span>
+                            </label>
+                            <div class="">
+                                <!--<input type="text" id="category" name="category" class="form-control col-md-7 col-xs-12" data-parsley-id="5">-->
+                                <select class="form-control" id="category" name="category">
+                                    
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group col-md-4">
                           <label for="stock" class="control-label">Estoque <span class="required">*</span></label>
                           <div class="">
                               <input placeholder="Quantidade" id="stock" class="form-control col-md-7 col-xs-12" type="number" name="stock" data-parsley-id="9" min="0">
                           </div>
                         </div>
-                        <div class="form-group col-md-4">
-                           <label for="operation-period" class="control-label">Prazo da Operação</label>
-                           <div class="">
-                               <input placeholder="Dias" id="operation-period" min="0" class="form-control col-md-7 col-xs-12" type="number" name="operation-period" data-parsley-id="9">
-                           </div>
-                        </div>
+                        
                         <div class="form-group col-md-4">
                           <label class="" for="cost">Custo<span class="required">*</span>
                           </label>
@@ -168,13 +173,7 @@
                             <input placeholder="R$" type="number" id="price-final" min="0" name="price-final" class="form-control col-md-7 col-xs-12" data-parsley-id="7">
                           </div>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label class="" for="origin">Origem
-                            </label>
-                            <div class="">
-                                <input type="text" id="origin" name="origin" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
-                            </div>
-                        </div>
+                        
                             
 <!--                        <div class="form-group col-md-9">
                             <label class="" for="bar-code">Codigo de Barra</label>
@@ -226,8 +225,8 @@
                     <div class="btn-group">
                       <a class="btn" data-edit="insertunorderedlist" title="" data-original-title="Bullet list"><i class="fa fa-list-ul"></i></a>
                       <a class="btn" data-edit="insertorderedlist" title="" data-original-title="Number list"><i class="fa fa-list-ol"></i></a>
-                      <a class="btn" data-edit="outdent" title="" data-original-title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
-                      <a class="btn" data-edit="indent" title="" data-original-title="Indent (Tab)"><i class="fa fa-indent"></i></a>
+<!--                      <a class="btn" data-edit="outdent" title="" data-original-title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
+                      <a class="btn" data-edit="indent" title="" data-original-title="Indent (Tab)"><i class="fa fa-indent"></i></a>-->
                     </div>
 
                     <div class="btn-group">
@@ -237,19 +236,19 @@
                       <a class="btn" data-edit="justifyfull" title="" data-original-title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
                     </div>
 
-                    <div class="btn-group">
+<!--                    <div class="btn-group">
                       <a class="btn dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Hyperlink"><i class="fa fa-link"></i></a>
                       <div class="dropdown-menu input-append">
                         <input class="span2" placeholder="URL" type="text" data-edit="createLink">
                         <button class="btn" type="button">Adicionar</button>
                       </div>
                       <a class="btn" data-edit="unlink" title="" data-original-title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
-                    </div>
+                    </div>-->
 
-                    <div class="btn-group">
+<!--                    <div class="btn-group">
                       <a class="btn" title="" id="pictureBtn" data-original-title="Insert picture (or just drag &amp; drop)"><i class="fa fa-picture-o"></i></a>
                       <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" style="opacity: 0; position: absolute; top: 0px; left: 0px; width: 37px; height: 34px;">
-                    </div>
+                    </div>-->
 
 <!--                    <div class="btn-group">
                       <a class="btn" data-edit="undo" title="" data-original-title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
@@ -265,15 +264,18 @@
                     </div>        
                     <div class="col-md-6">
                         
-                        <div class="form-group col-md-12">
-                          <label class="" for="category">Categoria <span class="required">*</span>
+                        <div class="form-group col-md-6">
+                            <label class="" for="origin">Origem
                             </label>
                             <div class="">
-                                <!--<input type="text" id="category" name="category" class="form-control col-md-7 col-xs-12" data-parsley-id="5">-->
-                                <select class="form-control" id="category" name="category">
-                                    
-                                </select>
+                                <input type="text" id="origin" name="origin" class="form-control col-md-7 col-xs-12" data-parsley-id="5">
                             </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                           <label for="operation-period" class="control-label">Prazo da Operação</label>
+                           <div class="">
+                               <input placeholder="Dias" id="operation-period" min="0" class="form-control col-md-7 col-xs-12" type="number" name="operation-period" data-parsley-id="9">
+                           </div>
                         </div>
                         
                         
@@ -365,8 +367,7 @@
                                 <div id="previews" class="dropzone-previews"></div>
                                 <div class="dz-default dz-message"><span>Clique ou arraste as imagens aqui</span></div>
                             </div>
-                            
-                            
+     
                             <?php
 
 //                                echo \kato\DropZone::widget([

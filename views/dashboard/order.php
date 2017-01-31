@@ -38,7 +38,7 @@
            
 <div class="row x_title">
     <div class="col-md-6">
-        <h3>Vendas <small>Graph title sub-title</small></h3>
+        <h3>Vendas <span class=""></span> <small>Graph title sub-title</small></h3>
     </div>
     <div class="col-md-6">
         <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
@@ -321,7 +321,7 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
               </button>   
-                <h3 class="modal-title" id="myModalLabel">Vendas</h3>
+                <h3 class="modal-title" id="myModalLabel">Detalhes da Venda</h3>
             </div>
             <div class="modal-body">
                 <div id="wizard" class="form_wizard wizard_horizontal">
@@ -370,7 +370,31 @@
                           </a>
                         </li>
                       </ul>
-                    <div class="actionBar"><div class="msgBox"><div class="content"></div><a href="#" class="close">X</a></div><div class="loader">Loading</div></div></div>
+                    <div class="actionBar"><div class="msgBox"><div class="content"></div><a href="#" class="close">X</a></div><div class="loader">Loading</div></div>
+                </div>
+                
+                <div class="x_panel fiscal-field-panel">
+                  <div class="x_title">
+                    <h2>Nota Fiscal Eletrônica</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                    
+                  <div class="x_content">
+                      <div class="form-group">
+                        <div class="col-sm-9">                          
+                          <div class="input-group">
+                              <input placeholder="Chave de acesso" type="number" min="1" max="99999999999999999999999999999999999999999999" class="form-control center fiscal-field-input">
+                            <span class="input-group-btn">
+                              <button type="button" class="btn btn-primary fiscal-field-submit">Marcar como Faturado</button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
                       
                 <section class="content invoice">    
                     

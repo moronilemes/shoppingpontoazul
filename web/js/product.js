@@ -16,13 +16,31 @@ $(document).ready(function(){
     var productListOffset = 0;
     var productListTotalElements;
     var thisProductID;
-    var thisUserID;
-    var myProductList = [];
+    var thisUserID;    
+    var thisProductImageList = [];
     
     var productDetailMode;
     var productPaginationQuantity;
     var productPaginationPosition;
+    var myProductList = [];
     var productThumbnailImage;
+    
+    Dropzone.autoDiscover = false; 
+    var myDropzone = new Dropzone("div#myDropzone", {
+        "maxFilesize":"2",
+        "acceptedFiles":"image/*",
+        "url":"/product/upload",
+        "addRemoveLinks":true,
+        "maxFiles":6,
+        "dictDefaultMessage":"Clique ou arraste as imagens aqui",
+        "dictMaxFilesExceeded":"Você atingiu o limite de imagens para upload",
+        "dictRemoveFile":"Remover imagem",
+        "dictCancelUpload":"Calcelar upload",
+        "dictFileTooBig":"Imagem muito grande para este upload",
+        "previewsContainer":"#previews",
+        "clickable":true,
+        "headers":{"X-CSRF-Token":"dUxBRmduLTY3HigoABZeexA2LywTW0BBNg0iJ1NbWFQbOQ12VApKTg=="}
+    });
     
     function showAlertError(message){
         new PNotify({
@@ -41,6 +59,22 @@ $(document).ready(function(){
             styling: 'bootstrap3'
         });
     } 
+    
+    function getImageJSONList(){
+        
+        imageTextList = '';
+        
+        $.each(thisProductImageList, function() {
+            imageTextList += "{\"main\": true,  \"url\": \"" + window.location.origin + "/uploads/" + this + "\"},";
+        });
+        
+        imageTextList = imageTextList.substring(0, imageTextList.length-1);
+         
+        console.log(imageTextList);
+        
+        return imageTextList;
+
+    }
         
     function updateProductList(){
         
@@ -153,10 +187,6 @@ $(document).ready(function(){
         //
         console.log(thisProductID);
         
-        $('#thisUploadProductID').val(thisProductID);
-        
-        console.log('puxando ' + $('#thisUploadProductID').val());
-        
         //$('.dropzone').hide();
         
 //        if (thisProductID !== ''){
@@ -197,6 +227,9 @@ $(document).ready(function(){
                 $('.modal').modal('show');
                 $('.img-thumbnail-list-product').empty();
                 $('.dropzone').empty();
+                thisProductImageList = []; // empties image list array
+                
+                var existingFileCount = 6; // The number of files already uploaded
                 
                 $.each(data['images'], function(index) {
                     //console.log($(this)[0]['thumbnailUrl']);
@@ -212,12 +245,52 @@ $(document).ready(function(){
 //                            "</div>"
 //                        );
                 
-                        $('.dropzone-previews').append(
-                            "<div class='dz-preview dz-processing dz-success dz-complete dz-image-preview'>" +
-                            "<div class='dz-image'><img data-dz-thumbnail='" + $(this)[0]['thumbnailUrl'] + "' alt='' src='" + $(this)[0]['thumbnailUrl'] + "'></div>" +
-                            "<a class='dz-remove' href='javascript:undefined;' data-dz-remove=''>Remover imagem</a></div>"
-                        );
-                                                
+//                        $('.dropzone').append(
+//                            "<div class='dz-preview dz-processing dz-success dz-complete dz-image-preview'>" +
+//                            "<div class='dz-image'><img data-dz-thumbnail='" + $(this)[0]['thumbnailUrl'] + "' alt='' src='" + $(this)[0]['thumbnailUrl'] + "'></div>" +
+//                            "<a class='dz-remove' href='#' data-dz-remove=''>Remover imagem</a></div>"
+//                        );
+                
+                        var el = document.createElement('a');
+                        el.href = $(this)[0]['url'];
+                        thisImageUrl = el.pathname.replace('/','');                        
+                        thisProductImageList.push(thisImageUrl);
+                        console.log(thisProductImageList);   
+                        
+                        // Create the mock file:
+                        var mockFile = { name: thisProductImageList, size: 12345 };
+
+                        // Call the default addedfile event handler
+                        myDropzone.emit("addedfile", mockFile);
+
+                        // And optionally show the thumbnail of the file:
+                        myDropzone.emit("thumbnail", mockFile, $(this)[0]['url']);
+                        // Or if the file on your server is not yet in the right
+                        // size, you can let Dropzone download and resize it
+                        // callback and crossOrigin are optional.
+                        //myDropzone.createThumbnailFromUrl(file, imageUrl, callback, crossOrigin);
+
+                        // Make sure that there is no progress bar, etc...
+                        myDropzone.emit("complete", mockFile);
+
+                        // If you use the maxFiles option, make sure you adjust it to the
+                        // correct amount:
+                        
+                        myDropzone.options.maxFiles = myDropzone.options.maxFiles - existingFileCount;
+                        
+                        
+                        
+//                        var mockFile = { name: "Existing file!", size: 12345 };
+//                        myDropzone.files.push(mockFile);
+//                        myDropzone.options.addedfile.call(myDropzone, mockFile);
+//                        myDropzone.options.thumbnail.call(myDropzone, mockFile, $(this)[0]['url']);
+                        
+//                        myDropzone.init(function(){
+//                            var mockFile = { name: thisImageUrl, size: 12345, type: 'image/jpeg' };
+//                            this.addFile.call(this, mockFile);
+//                            this.options.thumbnail.call(this, mockFile, $(this)[0]['url']);
+//                        });
+                      
                     }
                     catch(err){
                         console.log('Error in product')
@@ -273,15 +346,26 @@ $(document).ready(function(){
         if ($('#stock').val() === ''){ showAlertError('Estoque não preenchido'); return; }; 
         if ($('#operation-period').val() === ''){ $('#operation-period').val('0') }; 
         
+//        productPreparation = "{\"id\": " + productID + ",\"title\": \"" + $('#name').val() + "\","+
+//            "\"description\": \"" + $('#editor').html().replace(/"/g,"'") + "\",\"nbm\": {  \"id\": \"0\"}," +
+//            "\"origin\": {  \"id\": \"0\"}," +
+//            "\"category\": {  \"id\": \"" + $('#category').val() + "\"},\"model\": \"\"," +
+//            "\"warrantyText\": \"" + $('#warranty-text').val() + "\",\"warrantyTime\": \"" + $('#warranty-time').val() + "\"," +
+//            "\"weight\": " + packWeigth + ",\"height\": " + packHeight + ",\"width\": " + packWidth + ",\"length\": " + packLength + "," +
+//            "\"images\": [{  \"main\": true,  \"url\": \"http://66.media.tumblr.com/tumblr_lcpn2mv6yU1qf0qtao1_1280.jpg\"}, " +
+//            "{  \"main\": true,  \"url\": \"http://imguol.com/c/entretenimento/2014/09/03/2007---pedro-cardoso-em-cena-de-a-grande-familia-1409762964928_956x500.jpg\"}, " +
+//            "{  \"main\": true,  \"url\": \"http://imguol.com/blogs/160/files/2016/05/cauby-peixoto.jpg\"}]," +
+//            "\"priceFactor\": 1,\"calculatedPrice\": false," +
+//            "\"skus\": [{  \"price\": " + $('#price-final').val() + ",  \"amount\": " + $('#stock').val() + ",  \"ean\": null, \"additionalTime\" : " + $('#operation-period').val() + ",  " +
+//            "\"partnerId\": \"" + $('#sku').val() + "\",  \"title\": \"" + $('#name').val() + "\",  \"idProduct\": null,  \"internalIdProduct\": \"2573\"}]\r\n}";
+    
         productPreparation = "{\"id\": " + productID + ",\"title\": \"" + $('#name').val() + "\","+
             "\"description\": \"" + $('#editor').html().replace(/"/g,"'") + "\",\"nbm\": {  \"id\": \"0\"}," +
             "\"origin\": {  \"id\": \"0\"}," +
             "\"category\": {  \"id\": \"" + $('#category').val() + "\"},\"model\": \"\"," +
             "\"warrantyText\": \"" + $('#warranty-text').val() + "\",\"warrantyTime\": \"" + $('#warranty-time').val() + "\"," +
             "\"weight\": " + packWeigth + ",\"height\": " + packHeight + ",\"width\": " + packWidth + ",\"length\": " + packLength + "," +
-            "\"images\": [{  \"main\": true,  \"url\": \"http://66.media.tumblr.com/tumblr_lcpn2mv6yU1qf0qtao1_1280.jpg\"}, " +
-            "{  \"main\": true,  \"url\": \"http://imguol.com/c/entretenimento/2014/09/03/2007---pedro-cardoso-em-cena-de-a-grande-familia-1409762964928_956x500.jpg\"}, " +
-            "{  \"main\": true,  \"url\": \"http://imguol.com/blogs/160/files/2016/05/cauby-peixoto.jpg\"}]," +
+            "\"images\": [ " + getImageJSONList() + " ]," +
             "\"priceFactor\": 1,\"calculatedPrice\": false," +
             "\"skus\": [{  \"price\": " + $('#price-final').val() + ",  \"amount\": " + $('#stock').val() + ",  \"ean\": null, \"additionalTime\" : " + $('#operation-period').val() + ",  " +
             "\"partnerId\": \"" + $('#sku').val() + "\",  \"title\": \"" + $('#name').val() + "\",  \"idProduct\": null,  \"internalIdProduct\": \"2573\"}]\r\n}";
@@ -431,44 +515,36 @@ $(document).ready(function(){
         }
     });
     
-    $('.img-thumbnail-list-product').on('click', 'img', function(){
-        console.log('yo');
-        //$('.img-thumbnail-list-product').hide();
-        //$('.dropzone').show();
+    $('.dz-remove').on('click', 'a',function(){
+        console.log('removed');
     });
     
-    Dropzone.autoDiscover = false; 
-    var myDropzone = new Dropzone("div#myDropzone", {
-        "maxFilesize":"2",
-        "acceptedFiles":"image/*",
-        "url":"/product/upload",
-        "addRemoveLinks":true,
-        "maxFiles":6,
-        "dictDefaultMessage":"Clique ou arraste as imagens aqui",
-        "dictMaxFilesExceeded":"Você atingiu o limite de imagens para upload",
-        "dictRemoveFile":"Remover imagem",
-        "dictCancelUpload":"Calcelar upload",
-        "dictFileTooBig":"Imagem muito grande para este upload",
-        "previewsContainer":"#previews",
-        "clickable":true,
-        "headers":{"X-CSRF-Token":"dUxBRmduLTY3HigoABZeexA2LywTW0BBNg0iJ1NbWFQbOQ12VApKTg=="},
-        //"params":{"thisProductID": $('#thisUploadProductID').val() }
+
+    
+    myDropzone.on("sending", function (file) {
+        //this.params = {"thisProductID": $('#thisUploadProductID').val() };
+        this.params = {"thisProductID": 5 };
+    });
+
+    myDropzone.on("sending", function(file, xhr, formData){
+        formData.append("thisUploadProductID", thisProductID );
+    });
+
+    myDropzone.on('complete', function(file){
+        console.log('right: ' + (file));
     });
     
-//        myDropzone.on("sending", function (file) {
-//            this.params = {"thisProductID": $('#thisUploadProductID').val() };
-//        });
-        
-        myDropzone.on("sending", function(file, xhr, formData){
-            formData.append("thisUploadProductID", thisProductID );
-        });
-    
-        myDropzone.on('complete', function(file){
-            console.log(file);
-        });
-    
-        myDropzone.on('removedfile', function(file){
-            alert(file.name + ' is removed');
-        });
+    myDropzone.on('success', function(file, xhr, formData){
+        console.log('success: ' +  xhr );
+        thisProductImageList.push(xhr);
+        console.log(thisProductImageList);
+    });
+
+    myDropzone.on('removedfile', function(file){
+        alert(file.name + ' is removed');
+    });
+
+    myDropzone.on('complete', function(file){console.log(file);});
+    myDropzone.on('removedfile', function(file){alert(file.name + ' is removed');});
     
 });

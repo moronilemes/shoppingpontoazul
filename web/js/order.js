@@ -13,13 +13,65 @@ $(document).ready(function(){
     var orderListOffset = 0;
     var orderListTotalElements;
     var thisOrderID;
+    var thisOrderObject = [];
     var orderDetailMode;
     var orderPaginationQuantity;
     var orderPaginationPosition;
     var orderStartDate;
     var orderEndDate;
     
+    
+    
     var orderCounter = 0;
+    
+    function displayStatus(label){
+        
+//        status = thisOrderObject.status;
+//        marketPlaceStatus = thisOrderObject.marketPlaceStatus;
+        
+        if (label === 'PENDING'){
+            return 'Pendente de pagamento';
+        } else if (label === 'PAID_WAITING_SHIP'){
+            return 'Pago';
+        } else if (label === 'INVOICED'){
+            return 'Faturado';
+        } else if (label === 'PAID_WAITING_DELIVERY'){
+//            if (thisOrderObject.tracking.hasOwnProperty('deliveredDate')){
+                return 'Em trânsito / Entregue';
+//            } else {
+//                return 'Em trânsito';
+//            }
+        } else if (label === 'CONCLUDED'){
+            return 'Finalizado';
+        } else if (label === 'CANCELED'){
+            return 'Cancelado';
+        }
+    }
+    
+    function displayNextStatus(label){
+        
+//        status = thisOrderObject.status;
+//        marketPlaceStatus = thisOrderObject.marketPlaceStatus;
+        
+        if (label === 'PENDING'){
+            return "<button class='btn btn-default btn-order-update-paid' type='submit'>Pago</button>";
+        } else if (label === 'PAID_WAITING_SHIP'){
+            return "<button class='btn btn-default' type='submit'>Faturar</button>";
+        } else if (label === 'INVOICED'){
+            return "<button class='btn btn-default' type='submit'>Em trânsito</button>";
+        } else if (label === 'PAID_WAITING_DELIVERY'){
+//            if (thisOrderObject.tracking.hasOwnProperty('deliveredDate')){
+                return "<button class='btn btn-default' type='submit'>Entregue</button>";
+//            } else {
+//                return 'Em trânsito';
+//            }
+        } else {
+            return "";
+        }
+        
+    }
+    
+    
     
     function orderDashBoardStat(){
         $.ajax({
@@ -76,6 +128,8 @@ $(document).ready(function(){
                             }
                         }
                         
+                        orderCreatedAt = new Date(this.createdAt);
+                        
                         $('.order-list').append(
                             "<tr class='odd pointer'>" +
                                 "<td class='a-center'><input type='checkbox' class='flat' name='table_records'></td>" +
@@ -85,10 +139,10 @@ $(document).ready(function(){
                                 "<td class=''>" + this.buyer['name'] + "</td>" +
                                 "<td class=''>" + this.gross + "</td>" + 
                                 "<td class=''>" + this.gross + "</td>" +
-                                "<td class=''>" + this.createdAt + "</td>" +
-                                "<td class=''>" + this.status + "</td>" +
-                                "<td class='a-right a-right'><button class='btn btn-default' type='submit'>NF</button></td>" +
-                                "<td class='last'><button class='btn btn-default btn-order-detail' data-id='" + this.id + "' type='submit'><span class='glyphicon glyphicon-search' aria-hidden='true'></span></button></td>" +
+                                "<td class=''>" + orderCreatedAt.toLocaleString() + "</td>" +
+                                "<td class=''>" + displayStatus(this.status) + "</td>" +
+                                "<td class='a-right a-right'>" + displayNextStatus(this.status) + "</td>" +
+                                "<td class='last'><a href='#' class='btn btn-default btn-order-detail' data-id='" + this.id + "' type='submit'><span class='glyphicon glyphicon-search' aria-hidden='true'></span></button></td>" +
                             "</tr>" 
                         );
                     }
@@ -114,6 +168,9 @@ $(document).ready(function(){
                 "gumgatoken": tokenChosen,
                 "content-type": "application/json" },
             success: function (data) {
+                
+                thisOrderObject = data;
+                
                 console.log(data);   
                 console.log('status: ' + data['status']);
                 
@@ -446,18 +503,45 @@ $(document).ready(function(){
       
     // Opens order detail modal
     $( ".order-list " ).on( "click", "tr td .btn-order-detail", function() {
-        thisOrderID = $(this).text();
+        event.preventDefault();
+        //thisOrderID = $(this).text();
+        thisOrderID = $(this).data('id');
+        $('.fiscal-field-input').empty();
+        $('.fiscal-field-panel').hide();
         openOrderDetail();
-    });    
-        
+    }); 
+    
+    //----------
+    $( ".order-list " ).on( "click", "tr td .btn-order-update-paid", function() {
+        console.log('PAID_WAITING_SHIP');
+        updateStatusSetPaid(); 
+    }); 
     $('.btn-order-update-paid').click(function(){        
         console.log('PAID_WAITING_SHIP');
         updateStatusSetPaid();        
     });
     
     $('.btn-order-update-invoiced').click(function(){        
-        console.log('INVOICED');
-        updateStatusSetInvoiced("00000000000000000000000000000000000000000000");
+        console.log('Calling INVOICED');
+         
+        $('.fiscal-field-panel').fadeIn();
+        
+        
+        
+        //updateStatusSetInvoiced("00000000000000000000000000000000000000000000");
+    });
+    
+    $('.fiscal-field-submit').click(function(){   
+        if ($('.fiscal-field-input').val() === ''){
+            console.log('vazio');
+        } else {     
+            if (thisOrderObject.marketPlaceStatus === 'PENDING' && thisOrderObject.status === 'PAID_WAITING_SHIP'){
+                console.log(thisOrderObject);
+                console.log('validando...');
+            } else {
+                console.log('não está no status certo');
+            };
+        }
     });
     
     $('.btn-order-update-transit').click(function(){        

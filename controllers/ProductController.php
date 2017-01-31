@@ -174,17 +174,13 @@ class ProductController extends Controller
         $fileName = 'file';
         $uploadPath = 'uploads';
         
-//        if(isset($_POST["thisUploadProductID"]) && $_POST["thisUploadProductID"] != ''){
-//                 
-//            $thisProductID = $_POST["thisUploadProductID"];
-//            
-//        }
+        //return 'im here';
         
         if (isset($_FILES[$fileName])) {
             $file = \yii\web\UploadedFile::getInstanceByName($fileName);
             
             //Print file data
-            //print_r($file);
+            //  print_r($file);
             
             $newFileName = uniqid() . '.' . $file->getExtension();            
             $myImage = new Image();            
@@ -194,7 +190,7 @@ class ProductController extends Controller
                 //Now save file data to database
                 $myImage->url = $newFileName;
                 $myImage->save();
-                echo \yii\helpers\Json::encode($file);
+                return $newFileName;
                 
                 
             }
