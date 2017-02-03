@@ -1,5 +1,43 @@
 $(document).ready(function(){  
     
+    console.log('loaded zizap.js');
+    
+    window.showAlertError = function showAlertError(message){
+        new PNotify({
+            title: 'Erro no formulário:',
+            text: message,
+            type: 'error',
+            styling: 'bootstrap3'
+        });
+    };  
+    
+    window.showSuccessMessage = function showSuccessMessage(message){        
+        new PNotify({
+            title: 'Tudo certo!',
+            text: message,
+            type: 'success',
+            styling: 'bootstrap3'
+        });
+    }; 
+    
+    window.testInputMaxLength = function testInputMaxLength(inputField, length){
+        
+        typedValue = $(inputField).val();
+        
+        if (typedValue.length >= length){
+            $(inputField).val(typedValue.substring(0, length-1));
+        }
+    };
+    
+    window.getMyDateTime = function getMyDateTime(){
+        myDate = new Date();
+        
+        str = myDate.getFullYear();
+        
+        return str;
+        
+    };
+    
     try {
         var options = {
           legend: false,

@@ -374,27 +374,63 @@
                 </div>
                 
                 <div class="x_panel fiscal-field-panel">
-                  <div class="x_title">
-                    <h2>Nota Fiscal Eletrônica</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="close-link"><i class="fa fa-close"></i></a></li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
+                    <div class="x_title">
+                        <h2>Nota Fiscal Eletrônica</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
                     
-                  <div class="x_content">
-                      <div class="form-group">
-                        <div class="col-sm-9">                          
-                          <div class="input-group">
-                              <input placeholder="Chave de acesso" type="number" min="1" max="99999999999999999999999999999999999999999999" class="form-control center fiscal-field-input">
-                            <span class="input-group-btn">
-                              <button type="button" class="btn btn-primary fiscal-field-submit">Marcar como Faturado</button>
-                            </span>
-                          </div>
+                    <div class="x_content">
+                        <div class="form-group">
+                            <div class="col-sm-12">                          
+                                <div class="input-group">
+                                    <input placeholder="Chave de acesso" type="number" size="44" class="form-control center fiscal-field-input">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-primary fiscal-field-submit">Marcar como Faturado</button>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                  </div>
+                    </div>
                 </div>
+                <div class="x_panel in-transit-field-panel">
+                    <div class="x_title">
+                        <h2>Dados da Entrega</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="close-link"><i class="fa fa-close"></i></a></li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div class="form-group">
+                            <div class="col-sm-9">  
+                                <div class="form-group">
+                                    <label>Link de Acompanhamento</label>
+                                    <input type="email" class="form-control ship-link-field-input" placeholder="http://www.site.com.br/...">
+                                </div>
+                            </div>
+                            <div class="col-sm-3">  
+                                <div class="form-group">
+                                    <label>Código</label>
+                                    <input type="email" class="form-control ship-code-field-input" placeholder="Código">
+                                </div>
+                            </div>                            
+                            <div class="col-sm-12">  
+                                <div class="form-group">
+                                    <label>Transportadora *</label>
+                                    <input type="email" class="form-control ship-corp-field-input" placeholder="Transportadora">                                    
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn btn-primary pull-right ship-field-submit" ><i class="fa fa-truck"></i> Em Trânsito</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
                       
                 <section class="content invoice">    
                     

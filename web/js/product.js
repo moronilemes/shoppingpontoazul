@@ -42,23 +42,23 @@ $(document).ready(function(){
         "headers":{"X-CSRF-Token":"dUxBRmduLTY3HigoABZeexA2LywTW0BBNg0iJ1NbWFQbOQ12VApKTg=="}
     });
     
-    function showAlertError(message){
-        new PNotify({
-            title: 'Erro no formulário:',
-            text: message,
-            type: 'error',
-            styling: 'bootstrap3'
-        });
-    }  
-    
-    function showSuccessMessage(message){        
-        new PNotify({
-            title: 'Tudo certo!',
-            text: message,
-            type: 'success',
-            styling: 'bootstrap3'
-        });
-    } 
+//    function showAlertError(message){
+//        new PNotify({
+//            title: 'Erro no formulário:',
+//            text: message,
+//            type: 'error',
+//            styling: 'bootstrap3'
+//        });
+//    }  
+//    
+//    function showSuccessMessage(message){        
+//        new PNotify({
+//            title: 'Tudo certo!',
+//            text: message,
+//            type: 'success',
+//            styling: 'bootstrap3'
+//        });
+//    } 
     
     function getImageJSONList(){
         
