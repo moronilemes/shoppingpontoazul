@@ -33,7 +33,7 @@ AppAsset::register($this);
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
 <!--              <a href="/dashboard/index" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>-->
-                <a href="/dashboard/index" class="site_title"><img src="/images/logo.jpg" alt="zizap" /></a>
+                <a href="/dashboard/index" class="site_title"><img src="/images/logo-shopping-ponto-azul.jpg" alt="zizap" /></a>
             </div>
 
             <div class="clearfix"></div>
@@ -43,7 +43,13 @@ AppAsset::register($this);
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-smile-o"></i> Gerenciamento <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-home"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a href="/dashboard/dashboard">Dashboard</a></li>
+                            <li><a href="/dashboard/product">Products</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-smile-o"></i> Administration <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
 <!--                        <li><a href="/site/index">Home</a></li>
                         <li><a href="/site/about">About</a></li>
@@ -65,12 +71,7 @@ AppAsset::register($this);
                         } ?>-->
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-home"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li><a href="/dashboard/dashboard">Dashboard</a></li>
-                        <li><a href="/dashboard/product">Products</a></li>
-                    </ul>
-                  </li>
+                  
                
                 </ul>
               </div>
