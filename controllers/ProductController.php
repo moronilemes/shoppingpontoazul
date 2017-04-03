@@ -169,6 +169,22 @@ class ProductController extends Controller
         } 
     }
     
+    public function actionOwner(){
+        
+        if(Yii::$app->request->isAjax){
+            $myProductID = Yii::$app->request->get('anymarket_id');
+            
+            $rows = (new \yii\db\Query())
+                ->select(['user_id'])
+                ->from('product')
+                ->where(['anymarket_id' => $myProductID])
+                //->limit(10)
+                ->all();
+            
+            return json_encode($rows);
+        }
+    }
+    
     public function actionUpload()
     {
         $fileName = 'file';

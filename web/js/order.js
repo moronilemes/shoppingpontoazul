@@ -17,28 +17,52 @@ $(document).ready(function(){
     var orderDetailMode;
     var orderPaginationQuantity;
     var orderPaginationPosition;
-    var orderStartDate;
-    var orderEndDate;
+    // Loads last week's orders as new pageload
+    window.orderStartDate = '&createdAfter=' + getInternationalDateTime(Date(),-7) + 'T00:00:00Z';
+    window.orderEndDate = '&createdBefore=' + getInternationalDateTime(Date()) + 'T23:59:59Z';
     
     var orderCounter = 0;
     
+    window.verifyOwnership = function verifyOwnership(anyProductID){
+        $.ajax({
+            type: 'GET',
+            url: '/product/owner/',
+            data: { "anymarket_id": anyProductID },
+            dataType: 'text',
+            success: function(data){
+                $.each(JSON.parse(data), function(){
+                    
+                    console.log(this.user_id);
+                    return this.user_id;
+//                    console.log (this.user_id + ' === ' + window.thisUserID);
+//                    
+//                    if (this.user_id === window.thisUserID){
+//                        return true;
+//                    } else {
+//                        return false;
+//                    }
+                });
+            },
+            fail: function(data){
+                console.log(data);
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+    }
+        
     function displayStatus(label){
-        
-//        status = thisOrderObject.status;
-//        marketPlaceStatus = thisOrderObject.marketPlaceStatus;
-        
         if (label === 'PENDING'){
-            return 'Pendente de pagamento';
+            return 'Pendente';
         } else if (label === 'PAID_WAITING_SHIP'){
             return 'Pago';
         } else if (label === 'INVOICED'){
             return 'Faturado';
         } else if (label === 'PAID_WAITING_DELIVERY'){
-//            if (thisOrderObject.tracking.hasOwnProperty('deliveredDate')){
-                return 'Em trânsito / Entregue';
-//            } else {
-//                return 'Em trânsito';
-//            }
+            return 'Em trânsito';
+        } else if (label === 'DELIVERED'){
+            return 'Enviado';
         } else if (label === 'CONCLUDED'){
             return 'Finalizado';
         } else if (label === 'CANCELED'){
@@ -46,107 +70,95 @@ $(document).ready(function(){
         }
     }
     
-    function displayNextStatus(label){
-        
-//        status = thisOrderObject.status;
-//        marketPlaceStatus = thisOrderObject.marketPlaceStatus;
+    function displayNextStatus(rowItemID, label){
         
         if (label === 'PENDING'){
-            return "<button class='btn btn-default btn-order-update-paid' type='submit'>Pago</button>";
+            return "<button class='btn btn-default btn-action btn-order-update-paid' data-id='" + rowItemID + "' data-action='update-set-paid' type='submit'>Pagar</button>";
         } else if (label === 'PAID_WAITING_SHIP'){
-            return "<button class='btn btn-default' type='submit'>Faturar</button>";
+            return "<button class='btn btn-default btn-action' data-id='" + rowItemID + "' data-action='update-set-invoiced' type='submit'>Faturar</button>";
         } else if (label === 'INVOICED'){
-            return "<button class='btn btn-default' type='submit'>Em trânsito</button>";
+            return "<button class='btn btn-default btn-action' data-id='" + rowItemID + "' data-action='update-set-transit' type='submit'>Enviar</button>";
         } else if (label === 'PAID_WAITING_DELIVERY'){
-//            if (thisOrderObject.tracking.hasOwnProperty('deliveredDate')){
-                return "<button class='btn btn-default' type='submit'>Entregue</button>";
-//            } else {
-//                return 'Em trânsito';
-//            }
+            return "<button class='btn btn-default btn-action' data-id='" + rowItemID + "' data-action='update-set-delivered' type='submit'>Entregar</button>";
+        } else if (label === 'DELIVERED'){
+            return "<button class='btn btn-default btn-action' data-id='" + rowItemID + "' data-action='update-set-finished' type='submit'>Finalizar</button>";
         } else {
             return "N/A";
         }
-        
     }
        
-    function orderDashBoardStat(){
-        $.ajax({
-            url: baseURL  + '?limit=' + orderListLimit + '&offset=' + orderListOffset,
-            dataType: 'json',  
-            "headers": {
-                "gumgatoken": tokenChosen,
-                "content-type": "application/json" },
-            success: function (data) {
-                               
-                $.each(data['content'], function() {
-                    try {  
-                        console.log(this.createdAt);
-                        console.log(Date(this.createdAt));
-                        
-                        orderCounter++;                 
-                    }
-                    catch(err){
-                        console.log('Error in product');
-                    }
-               });
-               
-               console.log(orderCounter);
-               
-           }
-       });
-    }
-    
     function updateOrderList(){
         
         $('.order-list').hide();
-        
+       
         $.ajax({
-            url: baseURL  + '?limit=' + orderListLimit + '&offset=' + orderListOffset,
+            url: baseURL  + '?limit=' + orderListLimit + '&offset=' + orderListOffset + orderStartDate + orderEndDate,
             dataType: 'json',  
+            cache: false, 
             "headers": {
                 "gumgatoken": tokenChosen,
                 "content-type": "application/json" },
             success: function (data) {
                 console.log(data);
-                
-                //console.log(data['links'][0]['href']);  
                
-                $.each(data['content'], function() {           
+                $.each(data['content'], function() {
+                    
+                    thisOrderRow = this;
                     
                     try {
-                        
-                        if (orderStartDate !== undefined && orderEndDate !== undefined){
-                            console.log('Início: ' + Date(orderStartDate) + ' Fim: ' + Date(orderEndDate) + ' Pedido: ' + this.createdAt);
-                            if (Date(this.createdAt) >= Date(orderStartDate) && Date(this.createdAt) <= Date(orderEndDate)){
-                                console.log('está dentro');
-                            } else {
-                                console.log('não está dentro');
+                        orderCreatedAt = new Date(this.createdAt);
+                        thisStatus = this.status;
+                        try {
+                            if(typeof this.tracking.deliveredDate !== "undefined" && this.status !== 'CONCLUDED'){
+                                thisStatus = 'DELIVERED';
                             }
                         }
+                        catch(e){
+                            null;
+                        }
                         
-                        orderCreatedAt = new Date(this.createdAt);
+                        //console.log(this.items[0]['product']['id']);
+                        //console.log(verifyOwnership(this.items[0]['product']['id']) + ' === ' + thisUserID);
                         
-                        $('.order-list').append(
-                            "<tr class='odd pointer'>" +
-                                "<td class='a-center'><input type='checkbox' class='flat' name='table_records'></td>" +
-                                "<td class=''>" + this.marketPlace + "</td>" +
-                                "<td class=''><a href='#' class='btn-order-detail' data-id='" + this.id + "'>" + this.id + "</a></td>" +
-                                "<td class=''>" + this.items[0]['product']['title'] + "</td>" +
-                                "<td class=''>" + this.buyer['name'] + "</td>" +
-                                "<td class=''>" + this.gross + "</td>" + 
-                                "<td class=''>" + this.gross + "</td>" +
-                                "<td class=''>" + orderCreatedAt.toLocaleString() + "</td>" +
-                                "<td class=''>" + displayStatus(this.status) + "</td>" +
-                                "<td class='a-right a-right'>" + displayNextStatus(this.status) + "</td>" +
-                                "<td class='last'><a href='#' class='btn btn-default btn-order-detail' data-id='" + this.id + "' type='submit'><span class='glyphicon glyphicon-search' aria-hidden='true'></span></button></td>" +
-                            "</tr>" 
-                        );
+                        $.ajax({
+                            type: 'GET',
+                            url: '/product/owner/',
+                            data: { "anymarket_id": thisOrderRow.items[0]['product']['id'] },
+                            dataType: 'text',
+                            success: function(data){
+                                $.each(JSON.parse(data), function(){
+
+                                    console.log(this.user_id + ' === ' + thisUserID);
+                                    if (this.user_id === thisUserID){
+                                        $('.order-list').append(
+                                            "<tr class='odd pointer'>" +
+                                                "<td class='a-center'><input type='checkbox' class='flat' name='table_records'></td>" +
+                                                "<td class=''>" + thisOrderRow.marketPlace + "</td>" +
+                                                "<td class=''><a href='#' class='btn-order-detail' data-id='" + thisOrderRow.id + "'>" + thisOrderRow.id + "</a></td>" +
+                                                "<td class=''>" + thisOrderRow.items[0]['product']['title'] + "</td>" +
+                                                "<td class=''>" + thisOrderRow.buyer['name'] + "</td>" +
+                                                "<td class=''> R$ " + thisOrderRow.gross.toFixed(2).replace('.',',') + "</td>" + 
+                                                "<td class=''> R$ " + thisOrderRow.gross.toFixed(2).replace('.',',') + "</td>" +
+                                                "<td class=''>" + getNormalDateTime(orderCreatedAt) + "</td>" +
+                                                "<td class=''>" + displayStatus(thisStatus) + "</td>" +
+                                                "<td class='a-right a-right'>" + displayNextStatus(thisOrderRow.id, thisStatus) + "</td>" +
+                                                "<td class='last'><a href='#' class='btn btn-default btn-order-detail btn-zoom' data-id='" + thisOrderRow.id + "' type='submit'><span class='glyphicon glyphicon-search' aria-hidden='true'></span></button></td>" +
+                                            "</tr>" 
+                                        );
+                                    }
+                                });
+                            },
+                            fail: function(data){
+                                console.log(data);
+                            },
+                            error: function(data){
+                                console.log(data);
+                            }
+                        });
                     }
                     catch(err){
                         console.log('Error in product');
                     }
-
-                   //console.log(this);
                     $('.order-list').fadeIn();
                });
            }
@@ -265,8 +277,8 @@ $(document).ready(function(){
                 
                 $('.orderID').append(data['id']);
                 $('.order-channel').append(data['marketPlace']);
-                $('.order-date').append(data['createdAt']);
-                $('.order-payment-date').append(data['paymentDate']);
+                $('.order-date').append(getNormalDateTime(data['createdAt']));
+                $('.order-payment-date').append(getNormalDateTime(data['paymentDate']));
                 $('.order-payment-status').append(data['payments'][0]['status']);
                 $('.order-payment-value').append('xxxxxxx');
                 $('.order-stalments-number').append('xxxxxxx');
@@ -279,6 +291,12 @@ $(document).ready(function(){
                 $('.order-customer-address').append(data['shipping']['address']);
                 $('.order-customer-city').append(data['shipping']['city']);                
                 $('.order-customer-postal-code').append(data['shipping']['zipCode']);
+                
+                $('.order-gross').append(data['gross'].toFixed(2).replace('.',','));
+                $('.order-interest').append(data['interestValue'].toFixed(2).replace('.',','));
+                $('.order-freight').append(data['freight'].toFixed(2).replace('.',','));
+                $('.order-discount').append(data['discount'].toFixed(2).replace('.',','));
+                $('.order-total').append(data['total'].toFixed(2).replace('.',','));
                 
                 if (data['payments'][0]['method'].toLowerCase() === 'credicard'){
                     data['payments'][0]['method'] = 'mastercard';
@@ -294,7 +312,7 @@ $(document).ready(function(){
                                 "<td>" + this.amount + "</td>" + 
                                 "<td>" + this.product['title'] + "</td>" + 
                                 "<td>" + this.sku['partnerId'] + "</td>" + 
-                                "<td>" + this.total + "</td>" +
+                                "<td> R$ " + this.total.toFixed(2).replace('.',',') + "</td>" +
                             "</tr>"
                         );
                     }
@@ -349,9 +367,10 @@ $(document).ready(function(){
                 "content-type": "application/json"
             },
             "processData": false,
-            "data": "{\r\n  \"order_id\": \"" + orderID + "\",\r\n  \"status\": \"INVOICED\",\r\n  \"invoice\": {\r\n    \"series\": \"3\",\r\n    \"number\": \"431\",\r\n    \"accessKey\": \"" + numberNF + "\",\r\n    \"installments\": 1,\r\n    \"date\": \"2017-02-01T19:01:58Z\"\r\n  }\r\n}",
+            "data": "{\r\n  \"order_id\": \"" + orderID + "\",\r\n  \"status\": \"INVOICED\",\r\n  \"invoice\": {\r\n    \"series\": \"3\",\r\n    \"number\": \"431\",\r\n    \"accessKey\": \"" + numberNF + "\",\r\n    \"installments\": 1,\r\n    \"date\": \"" + getMyDateTime() + "\"\r\n  }\r\n}",
             success : function (response) {
                 console.log(response);
+                $('.fiscal-field-panel').hide();
                 showSuccessMessage('Status atual: FATURADO.')
                 console.log('Order #' + orderID + ' new status: INVOICED');
                 openOrderDetail(thisOrderID);
@@ -385,9 +404,9 @@ $(document).ready(function(){
                         "\"order_id\": \"" + thisOrderID + "\"," +
                         "\"status\": \"PAID_WAITING_DELIVERY\"," +
                         "\"tracking\": {" +
-                            "\"date\": \"2017-02-02T11:42:53Z\"," +
-                            "\"shippedDate\": \"2017-02-02T11:42:53Z\"," +
-                            "\"estimateDate\": \"2017-02-02T11:42:53Z\"," +
+                            "\"date\": \"" + getMyDateTime() + "\"," +
+                            "\"shippedDate\": \"" + getMyDateTime() + "\"," +
+                            "\"estimateDate\": \"" + getMyDateTime() + "\"," +
                             "\"carrier\": \"" + shipCorp + "\"," +
                             shipCodeRow +
                             shipLinkRow +
@@ -408,9 +427,9 @@ $(document).ready(function(){
                         "\"order_id\": \"" + thisOrderID + "\"," +
                         "\"status\": \"PAID_WAITING_DELIVERY\"," +
                         "\"tracking\": {" +
-                            "\"date\": \"2017-02-02T11:42:53Z\"," +
-                            "\"shippedDate\": \"2017-02-02T11:42:53Z\"," +
-                            "\"estimateDate\": \"2017-02-02T11:42:53Z\"," +
+                            "\"date\": \"" + getMyDateTime() + "\"," +
+                            "\"shippedDate\": \"" + getMyDateTime() + "\"," +
+                            "\"estimateDate\": \"" + getMyDateTime() + "\"," +
                             "\"carrier\": \"" + shipCorp + "\"," +
                             shipCodeRow +
                             shipLinkRow +
@@ -434,14 +453,34 @@ $(document).ready(function(){
     };
     
     function updateStatusSetDelivered(){ 
+            
+            console.log(thisOrderObject.id);
+        
+            extraFields = '';
+        
+            if(typeof thisOrderObject['tracking']['url'] !== "undefined"){
+                extraFields += ", \"url\": \"" + thisOrderObject['tracking']['url'] + "\" ";
+            }
+            if(typeof thisOrderObject['tracking']['number'] !== "undefined"){
+                extraFields += ", \"number\": \"" + thisOrderObject['tracking']['number'] + "\" ";
+            }
+            if(typeof thisOrderObject['tracking']['carrier'] !== "undefined"){
+                extraFields += ", \"carrier\": \"" + thisOrderObject['tracking']['carrier'] + "\" ";
+            }
+            if(typeof thisOrderObject['tracking']['date'] !== "undefined"){
+                extraFields += ", \"date\": \"" + thisOrderObject['tracking']['date'] + "\" ";
+            }
+            if(typeof thisOrderObject['tracking']['estimateDate'] !== "undefined"){
+                extraFields += ", \"estimateDate\": \"" + thisOrderObject['tracking']['estimateDate'] + "\" ";
+            }
+            if(typeof thisOrderObject['tracking']['shippedDate'] !== "undefined"){
+                extraFields += ", \"shippedDate\": \"" + thisOrderObject['tracking']['shippedDate'] + "\" ";
+            }
         
         console.log("{ \"order_id\": " + thisOrderID + "," +
                     "\"status\": \"PAID_WAITING_DELIVERY\", " +
                     "\"tracking\": {" +
-                        "\"deliveredDate\": \"2017-02-02T11:42:53Z\", " +
-                        "\"carrier\": \"Correios Correios-Sedex\", " +
-                        "\"number\": \"99998880000111\", " +
-                        "\"url\": \"http://www.example.com.vr\"}}"); 
+                        "\"deliveredDate\": \"" + getMyDateTime() + "\" " + extraFields + "}}"); 
         
         $.ajax({
             "async": true,
@@ -456,10 +495,7 @@ $(document).ready(function(){
             "data": "{ \"order_id\": " + thisOrderID + "," +
                     "\"status\": \"PAID_WAITING_DELIVERY\", " +
                     "\"tracking\": {" +
-                        "\"deliveredDate\": \"2017-02-03T11:42:53Z\", " +
-                        "\"carrier\": \"Correios Correios-Sedex\", " +
-                        "\"number\": \"99998880000111\", " +
-                        "\"url\": \"http://www.example.com.vr\"}}",
+                    "\"deliveredDate\": \"" + getMyDateTime() + "\" " + extraFields + "}}",
             success : function (response) {
                 showSuccessMessage('Novo status: ENTREGUE.');
                 openOrderDetail(thisOrderID);
@@ -486,7 +522,7 @@ $(document).ready(function(){
                 "content-type": "application/json"
             },
             "processData": false,
-            "data": "{\r\n  \"order_id\": \"" + thisOrderID + "\",\r\n  \"status\": \"PAID_WAITING_SHIP\"\r\n}",
+            "data": "{\r\n  \"order_id\": \"" + thisOrderID + "\",\r\n  \"status\": \"CONCLUDED\"\r\n}",
             success : function (response) {
                 showSuccessMessage('Novo status: CONCLUÍDO.');
                 openOrderDetail(thisOrderID);
@@ -506,7 +542,7 @@ $(document).ready(function(){
         $.ajax({
             "async": true,
             "crossDomain": true,
-            "url": "http://sandbox-api.anymarket.com.br/v2/orders/" + orderID,
+            "url": baseURL + orderID,
             "method": "PUT",
             "headers": {
                 "gumgatoken": sandboxToken,
@@ -526,9 +562,7 @@ $(document).ready(function(){
         });   
     };
     
-    //-----------------------------------------
     //------------// Datepicker //-------------
-    //-----------------------------------------
     try{
     
     var cb = function(start, end, label) {
@@ -578,21 +612,20 @@ $(document).ready(function(){
     
     $('#reportrange span').html(moment().subtract(29, 'days').format('DD/MM/YYYY') + ' - ' + moment().format('DD/MM/YYYY'));
     $('#reportrange').daterangepicker(optionSet1, cb);
-    $('#reportrange').on('show.daterangepicker', function() {
-        console.log("show event fired");
-    });
-    $('#reportrange').on('hide.daterangepicker', function() {
-        console.log("hide event fired");
-    });
+//    $('#reportrange').on('show.daterangepicker', function() {
+//        console.log("show event fired");
+//    });
+//    $('#reportrange').on('hide.daterangepicker', function() {
+//        console.log("hide event fired");
+//    });
     $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
-        orderStartDate = picker.startDate.format('YYYY/MM/DD');
-        orderEndDate = picker.endDate.format('YYYY/MM/DD');
+        orderStartDate = '&createdAfter=' + picker.startDate.format('YYYY-MM-DD') + 'T00:00:00Z';
+        orderEndDate = '&createdBefore=' + picker.endDate.format('YYYY-MM-DD') + 'T23:59:59Z';
         updateOrderList();
-        console.log("apply event fired, start/end dates are " + picker.startDate.format('DD/MM/YYYY') + " to " + picker.endDate.format('DD/MM/YYYY'));
     });
-    $('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
-        console.log("cancel event fired");
-    });
+//    $('#reportrange').on('cancel.daterangepicker', function(ev, picker) {
+//        console.log("cancel event fired");
+//    });
     $('#options1').click(function() {
         $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
     });
@@ -607,13 +640,6 @@ $(document).ready(function(){
         console.log(err);
     }
     
-    
-    //--------------------------------------------------------//
-    
-    
-    //orderDashBoardStat();
-    
-
     if ($('tbody').hasClass('order-list')){
         updateOrderList();
     }
@@ -627,7 +653,6 @@ $(document).ready(function(){
     // Opens order detail modal
     $( ".order-list " ).on( "click", "tr td .btn-order-detail", function() {
         event.preventDefault();
-        //thisOrderID = $(this).text();
         thisOrderID = $(this).data('id');
         $('.fiscal-field-input').empty();
         $('.fiscal-field-panel').hide();
@@ -635,21 +660,26 @@ $(document).ready(function(){
         openOrderDetail();
     }); 
     
-    //----------
-    $( ".order-list " ).on( "click", "tr td .btn-order-update-paid", function() {
-        console.log('PAID_WAITING_SHIP');
-        updateStatusSetPaid(); 
-    }); 
-    $('.btn-order-update-paid').click(function(){        
-        console.log('PAID_WAITING_SHIP');
-        updateStatusSetPaid();        
+    // Action on Status 1 click :: PENDING
+    $('.btn-order-update-pending').click(function(){        
+        console.log('Calling PENDING');
+        showAlertError('Não é possível selecionar esse status.');
     });
+        
+    // Action on Status 2 click :: PAID
+     $('.btn-order-update-paid').click(function(){        
+        console.log('Calling PAID');        
+        if (thisOrderObject.status === "PENDING"){ 
+            updateStatusSetPaid();  
+        } else {
+            showAlertError('Não é possível selecionar esse status.');
+        }
+    });    
     
-    
-    // Set to INVOICED
+    // Action on Status 3 click :: INVOICED
     $('.btn-order-update-invoiced').click(function(){        
         console.log('Calling INVOICED');
-        if (thisOrderObject.marketPlaceStatus === 'PENDING' && thisOrderObject.status === 'PAID_WAITING_SHIP'){ 
+        if (thisOrderObject.status === 'PAID_WAITING_SHIP'){ 
             $('.fiscal-field-panel').fadeIn();
         } else {
             showAlertError('Não é possível selecionar esse status.');
@@ -665,7 +695,7 @@ $(document).ready(function(){
         if ($('.fiscal-field-input').val() === ''){
             showAlertError('Preencha o campo com a chave de acesso da NFe.');
         } else {     
-            if (thisOrderObject.marketPlaceStatus === 'PENDING' && thisOrderObject.status === 'PAID_WAITING_SHIP'){
+            if (thisOrderObject.status === 'PAID_WAITING_SHIP'){
                 console.log(thisOrderObject);
                 if ($('.fiscal-field-input').val().length !== 44){
                     showAlertError('O número deve ter 44 caracteres de tamanho.');
@@ -673,12 +703,12 @@ $(document).ready(function(){
                     updateStatusSetInvoiced(thisOrderObject.id, $('.fiscal-field-input').val());
                 }
             } else {
-                showAlertError('não está no status certo');
+                showAlertError('Não é possível selecionar esse status.');
             };
         }
     });
     
-    // Set to IN TRANSIT
+    // Action on Status 4 click :: IN TRANSIT
     $('.btn-order-update-transit').click(function(){   
         console.log('Calling to in transit');
         if (thisOrderObject.status === 'INVOICED'){ 
@@ -691,7 +721,7 @@ $(document).ready(function(){
     $('.ship-field-submit').click(function(){        
         console.log('Chamou Em Transito');
         if ($('.ship-link-field-input').val() !== ''){
-            if ($('.ship-link-field-input').val().search("http://") === -1){
+            if ($('.ship-link-field-input').val().search("http://") === -1 && $('.ship-link-field-input').val().search("https://") === -1){
                 showAlertError('Formato de link incorreto.');
                 return;
             } 
@@ -703,17 +733,17 @@ $(document).ready(function(){
         }
     });
     
-    // Set to DELIVERED
+    // Action on Status 5 click :: DELIVERED
     $('.btn-order-update-delivered').click(function(){        
-        console.log('PAID_WAITING_DELIVERY 2');
-        //if (thisOrderObject.status === 'PAID_WAITING_DELIVERY' && typeof thisOrderObject['tracking']['deliveredDate'] === "undefined"){ 
+        console.log('Calling DELIVERED');
+        if (thisOrderObject.status === 'PAID_WAITING_DELIVERY' && typeof thisOrderObject['tracking']['deliveredDate'] === "undefined"){ 
             updateStatusSetDelivered();
-//        } else {
-//            showAlertError('Não é possível selecionar esse status.');
-//        }
+        } else {
+            showAlertError('Não é possível selecionar esse status.');
+        }
     });
     
-    // Set to FINISHED
+    // Action on Status 6 click :: CONCLUDED
     $('.btn-order-update-finished').click(function(){        
         console.log('CONCLUDED');
         if (thisOrderObject.status === 'PAID_WAITING_DELIVERY' && typeof thisOrderObject['tracking']['deliveredDate'] !== "undefined"){ 
@@ -729,7 +759,87 @@ $(document).ready(function(){
         updateStatusSetCancelled();
     });
     
-    $('.status-step').hover(function(){
-        //$(this).effect('highlight');
-    });    
+    $( ".order-list " ).on( "click", "tr td .btn-action", function() {    
+        
+        thisOrderID = $(this).data('id');
+        thisAction = $(this).data('action');
+        
+        $.ajax({
+            url: baseURL + thisOrderID,
+            dataType: 'json',   
+            "headers": {
+                "gumgatoken": tokenChosen,
+                "content-type": "application/json" },
+            success: function (data) {
+                
+                thisOrderObject = data;
+                console.log(data);
+                console.log(thisAction);
+                
+                if (thisAction === 'update-set-paid'){
+                    console.log('Calling PAID');        
+                    if (thisOrderObject.status === "PENDING"){ 
+                        $('.fiscal-field-panel').hide();
+                        $('.in-transit-field-panel').hide();
+                        console.log('updateStatusSetPaid()');  
+                        updateStatusSetPaid();
+                    } else {
+                        showAlertError('Não é possível selecionar esse status.');
+                    }
+                } else if (thisAction === 'update-set-invoiced'){
+                    console.log('Calling INVOICED');
+                    if (thisOrderObject.status === 'PAID_WAITING_SHIP'){ 
+                        $('.fiscal-field-panel').fadeIn();
+                        $('.in-transit-field-panel').hide();
+                        openOrderDetail();
+                    } else {
+                        showAlertError('Não é possível selecionar esse status.');
+                    }
+                } else if (thisAction === 'update-set-transit'){
+                    console.log('Calling to in transit');
+                    if (thisOrderObject.status === 'INVOICED'){ 
+                        $('.fiscal-field-panel').hide();
+                        $('.in-transit-field-panel').fadeIn();
+                        openOrderDetail();
+                    } else {
+                        showAlertError('Não é possível selecionar esse status.');
+                    }
+                } else if (thisAction === 'update-set-delivered'){
+                    console.log('Calling DELIVERED');
+                    if (thisOrderObject.status === 'PAID_WAITING_DELIVERY' && typeof thisOrderObject['tracking']['deliveredDate'] === "undefined"){ 
+                        console.log('updateStatusSetDelivered()');
+                        $('.fiscal-field-panel').hide();
+                        $('.in-transit-field-panel').hide();
+                        updateStatusSetDelivered();
+                    } else {
+                        showAlertError('Não é possível selecionar esse status.');
+                    }
+                } else if (thisAction === 'update-set-finished'){
+                    console.log('CONCLUDED');
+                    if (thisOrderObject.status === 'PAID_WAITING_DELIVERY' && typeof thisOrderObject['tracking']['deliveredDate'] !== "undefined"){ 
+                        console.log('updateStatusSetFinished()');
+                        $('.fiscal-field-panel').hide();
+                        $('.in-transit-field-panel').hide();
+                        updateStatusSetFinished();
+                    } else {
+                        showAlertError('Não é possível selecionar esse status.');
+                        return;
+                    }
+                } else {
+                    null;
+                }
+            },
+            error: function(data){
+                console.log(data);  
+            }
+        });
+        
+        //openOrderDetail();
+    });   
+    
+    $( ".order-list " ).on( "click", "tr td .btn-zoom", function() {    
+        thisOrderID = $(this).data('id');
+        openOrderDetail();
+    });
+    
 });

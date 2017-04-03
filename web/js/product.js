@@ -16,7 +16,6 @@ $(document).ready(function(){
     var productListOffset = 0;
     var productListTotalElements;
     var thisProductID;
-    var thisUserID;    
     var thisProductImageList = [];
     
     var productDetailMode;
@@ -428,7 +427,6 @@ $(document).ready(function(){
     }
     
     if ($('tbody').hasClass('product-list')){
-        thisUserID = $('.this-user-id').html();
         updateProductList();
     }
     

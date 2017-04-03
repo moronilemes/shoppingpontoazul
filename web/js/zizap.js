@@ -1,6 +1,6 @@
 $(document).ready(function(){  
-    
-    console.log('loaded zizap.js');
+   
+    window.thisUserID = $('.this-user-id').html().trim();
     
     window.showAlertError = function showAlertError(message){
         new PNotify({
@@ -29,13 +29,25 @@ $(document).ready(function(){
         }
     };
     
-    window.getMyDateTime = function getMyDateTime(){
-        myDate = new Date();
+    // Returns formatted date with the offset option to push on or back a date
+    window.getMyDateTime = function getMyDateTime(offset = 0){
         
-        str = myDate.getFullYear();
-        
+        myDate = new Date((new Date()).valueOf() + (offset)*1000*3600*24);
+        str = myDate.toISOString().split('.')[0]+"Z" ;
         return str;
         
+    };
+    
+    window.getNormalDateTime = function getNormalDateTime(dateSent, offset = 0){
+        //myDate = new Date(dateSent);
+        myDate = new Date((new Date(dateSent)).valueOf() + (offset)*1000*3600*24);
+        return myDate.toLocaleDateString();
+    };
+    
+    window.getInternationalDateTime = function getNormalDateTime(dateSent, offset = 0){
+        //myDate = new Date(dateSent);
+        myDate = new Date((new Date(dateSent)).valueOf() + (offset)*1000*3600*24);
+        return myDate.toISOString().split('T')[0];
     };
     
     try {
