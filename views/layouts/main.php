@@ -37,25 +37,11 @@ AppAsset::register($this);
             </div>
 
             <div class="clearfix"></div>
-
-<!--             menu profile quick info -->
-<!--            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="/images/img.jpg" alt="..." class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
-              </div>
-            </div>-->
-<!--             /menu profile quick info -->
-
             <br />
 	
 <!--             sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-<!--                <h3>General</h3>-->
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-smile-o"></i> Gerenciamento <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -83,113 +69,12 @@ AppAsset::register($this);
                     <ul class="nav child_menu">
                         <li><a href="/dashboard/dashboard">Dashboard</a></li>
                         <li><a href="/dashboard/product">Products</a></li>
-                        <li><a href="/dashboard/order">Orders</a></li>
-                        <li><a href="/dashboard/financial">Financial</a></li>
-                        <li><a href="/dashboard/metrics">Metrics</a></li>
-                        <li><a href="/dashboard/relationship">Relationship</a></li>
-                        <li><a href="/dashboard/setting">Settings</a></li>
-                        <li><a href="/dashboard/account">Account</a></li>
                     </ul>
                   </li>
-                  <!--
-                  <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/dashboard/index">Dashboard</a></li>
-                      <li><a href="/dashboard/index2">Dashboard2</a></li>
-                      <li><a href="/dashboard/index3">Dashboard3</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/dashboard/form">General Form</a></li>
-                      <li><a href="/dashboard/form_advanced">Advanced Components</a></li>
-                      <li><a href="/dashboard/form_validation">Form Validation</a></li>
-                      <li><a href="/dashboard/form_wizards">Form Wizard</a></li>
-                      <li><a href="/dashboard/form_upload">Form Upload</a></li>
-                      <li><a href="/dashboard/form_buttons">Form Buttons</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/dashboard/general_elements">General Elements</a></li>
-                      <li><a href="/dashboard/media_gallery">Media Gallery</a></li>
-                      <li><a href="/dashboard/typography">Typography</a></li>
-                      <li><a href="/dashboard/icons">Icons</a></li>
-                      <li><a href="/dashboard/glyphicons">Glyphicons</a></li>
-                      <li><a href="/dashboard/widgets">Widgets</a></li>
-                      <li><a href="/dashboard/invoice">Invoice</a></li>
-                      <li><a href="/dashboard/inbox">Inbox</a></li>
-                      <li><a href="/dashboard/calendar">Calendar</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/dashboard/tables">Tables</a></li>
-                      <li><a href="/dashboard/tables_dynamic">Table Dynamic</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/dashboard/chartjs">Chart JS</a></li>
-                      <li><a href="/dashboard/chartjs2">Chart JS2</a></li>
-                      <li><a href="/dashboard/morisjs">Moris JS</a></li>
-                      <li><a href="/dashboard/echarts">ECharts</a></li>
-                      <li><a href="/dashboard/other_charts">Other Charts</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/dashboard/fixed_sidebar">Fixed Sidebar</a></li>
-                      <li><a href="/dashboard/fixed_footer">Fixed Footer</a></li>
-                    </ul>
-                  </li>
-                  -->
+               
                 </ul>
               </div>
-                <!--
-              <div class="menu_section">
-                <h3>Live On</h3>
-                <ul class="nav side-menu">
-                  <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/dashboard/e_commerce">E-commerce</a></li>
-                      <li><a href="/dashboard/projects">Projects</a></li>
-                      <li><a href="/dashboard/project_detail">Project Detail</a></li>
-                      <li><a href="/dashboard/contacts">Contacts</a></li>
-                      <li><a href="/dashboard/profile">Profile</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="/dashboard/page_403">403 Error</a></li>
-                      <li><a href="/dashboard/page_404">404 Error</a></li>
-                      <li><a href="/dashboard/page_500">500 Error</a></li>
-                      <li><a href="/dashboard/plain_page">Plain Page</a></li>
-                      <li><a href="/dashboard/login">Login Page</a></li>
-                      <li><a href="/dashboard/pricing_tables">Pricing Tables</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li><a href="/dashboard/#level1_1">Level One</a>
-                        <li><a>Level One<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="/dashboard/level2">Level Two</a>
-                            </li>
-                            <li><a href="/dashboard/#level2_1">Level Two</a>
-                            </li>
-                            <li><a href="/dashboard/#level2_2">Level Two</a>
-                            </li>
-                          </ul>
-                        </li>
-                        <li><a href="/dashboard/#level1_2">Level One</a>
-                        </li>
-                    </ul>
-                  </li>                  
-                  <li><a href="/dashboard/javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
-                </ul>
-              </div>
-                -->
+              
             </div>
             <div class="sidebar-footer hidden-small">
               <a data-toggle="tooltip" data-placement="top" title="Settings">
