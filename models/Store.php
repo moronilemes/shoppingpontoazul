@@ -12,19 +12,17 @@ use Yii;
  * @property string $phone
  * @property string $mobile
  * @property string $observation
- * @property string $address
- * @property string $address2
- * @property string $postal_code
- * @property string $city
- * @property string $state
- * @property string $country
- * @property string $pay_day
+ * @property string $slot
  * @property string $CPF
  * @property string $CNPJ
  * @property string $IE
  * @property string $RG
- * @property string $store_type
+ * @property string $plan
  *
+ * @property Chat[] $chats
+ * @property Customer[] $customers
+ * @property Product[] $products
+ * @property StoreCategory[] $storeCategories
  * @property UserStoreRole[] $userStoreRoles
  */
 class Store extends \yii\db\ActiveRecord
@@ -43,15 +41,14 @@ class Store extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'address', 'postal_code', 'city', 'state', 'store_type'], 'required'],
-            [['pay_day'], 'string'],
+            [['name', 'slot', 'plan'], 'required'],
             [['name'], 'string', 'max' => 100],
-            [['phone', 'mobile', 'address', 'address2', 'postal_code', 'city', 'state', 'country'], 'string', 'max' => 45],
+            [['phone', 'mobile', 'slot'], 'string', 'max' => 45],
             [['observation'], 'string', 'max' => 200],
             [['CPF'], 'string', 'max' => 11],
             [['CNPJ', 'RG'], 'string', 'max' => 15],
             [['IE'], 'string', 'max' => 12],
-            [['store_type'], 'string', 'max' => 1],
+            [['plan'], 'string', 'max' => 1],
         ];
     }
 
@@ -66,19 +63,45 @@ class Store extends \yii\db\ActiveRecord
             'phone' => Yii::t('app', 'Phone'),
             'mobile' => Yii::t('app', 'Mobile'),
             'observation' => Yii::t('app', 'Observation'),
-            'address' => Yii::t('app', 'Address'),
-            'address2' => Yii::t('app', 'Address2'),
-            'postal_code' => Yii::t('app', 'Postal Code'),
-            'city' => Yii::t('app', 'City'),
-            'state' => Yii::t('app', 'State'),
-            'country' => Yii::t('app', 'Country'),
-            'pay_day' => Yii::t('app', 'Pay Day'),
-            'CPF' => Yii::t('app', 'CPF'),
-            'CNPJ' => Yii::t('app', 'CNPJ'),
-            'IE' => Yii::t('app', 'IE'),
-            'RG' => Yii::t('app', 'RG'),
-            'store_type' => Yii::t('app', 'Store Type'),
+            'slot' => Yii::t('app', 'Slot'),
+            'CPF' => Yii::t('app', 'Cpf'),
+            'CNPJ' => Yii::t('app', 'Cnpj'),
+            'IE' => Yii::t('app', 'Ie'),
+            'RG' => Yii::t('app', 'Rg'),
+            'plan' => Yii::t('app', 'Plan'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getChats()
+    {
+        return $this->hasMany(Chat::className(), ['store' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCustomers()
+    {
+        return $this->hasMany(Customer::className(), ['store' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasMany(Product::className(), ['store_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStoreCategories()
+    {
+        return $this->hasMany(StoreCategory::className(), ['store' => 'id']);
     }
 
     /**

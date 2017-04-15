@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Product;
+use app\models\Chat;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProductController implements the CRUD actions for Product model.
+ * ChatController implements the CRUD actions for Chat model.
  */
-class ProductController extends Controller
+class ChatController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,13 +30,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Lists all Product models.
+     * Lists all Chat models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
+            'query' => Chat::find(),
         ]);
 
         return $this->render('index', [
@@ -45,28 +45,29 @@ class ProductController extends Controller
     }
 
     /**
-     * Displays a single Product model.
-     * @param integer $id
+     * Displays a single Chat model.
+     * @param integer $store
+     * @param integer $customer
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($store, $customer)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($store, $customer),
         ]);
     }
 
     /**
-     * Creates a new Product model.
+     * Creates a new Chat model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Product();
+        $model = new Chat();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'store' => $model->store, 'customer' => $model->customer]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -75,17 +76,18 @@ class ProductController extends Controller
     }
 
     /**
-     * Updates an existing Product model.
+     * Updates an existing Chat model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param integer $store
+     * @param integer $customer
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($store, $customer)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($store, $customer);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'store' => $model->store, 'customer' => $model->customer]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -94,28 +96,30 @@ class ProductController extends Controller
     }
 
     /**
-     * Deletes an existing Product model.
+     * Deletes an existing Chat model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
+     * @param integer $store
+     * @param integer $customer
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($store, $customer)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($store, $customer)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Product model based on its primary key value.
+     * Finds the Chat model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Product the loaded model
+     * @param integer $store
+     * @param integer $customer
+     * @return Chat the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($store, $customer)
     {
-        if (($model = Product::findOne($id)) !== null) {
+        if (($model = Chat::findOne(['store' => $store, 'customer' => $customer])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

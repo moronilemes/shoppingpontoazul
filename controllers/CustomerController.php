@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Product;
+use app\models\Customer;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProductController implements the CRUD actions for Product model.
+ * CustomerController implements the CRUD actions for Customer model.
  */
-class ProductController extends Controller
+class CustomerController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,13 +30,13 @@ class ProductController extends Controller
     }
 
     /**
-     * Lists all Product models.
+     * Lists all Customer models.
      * @return mixed
      */
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
+            'query' => Customer::find(),
         ]);
 
         return $this->render('index', [
@@ -45,28 +45,29 @@ class ProductController extends Controller
     }
 
     /**
-     * Displays a single Product model.
+     * Displays a single Customer model.
      * @param integer $id
+     * @param integer $store
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id, $store)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($id, $store),
         ]);
     }
 
     /**
-     * Creates a new Product model.
+     * Creates a new Customer model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Product();
+        $model = new Customer();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id, 'store' => $model->store]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -75,17 +76,18 @@ class ProductController extends Controller
     }
 
     /**
-     * Updates an existing Product model.
+     * Updates an existing Customer model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
+     * @param integer $store
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id, $store)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($id, $store);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id, 'store' => $model->store]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -94,28 +96,30 @@ class ProductController extends Controller
     }
 
     /**
-     * Deletes an existing Product model.
+     * Deletes an existing Customer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
+     * @param integer $store
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $store)
     {
-        $this->findModel($id)->delete();
+        $this->findModel($id, $store)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Product model based on its primary key value.
+     * Finds the Customer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Product the loaded model
+     * @param integer $store
+     * @return Customer the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($id, $store)
     {
-        if (($model = Product::findOne($id)) !== null) {
+        if (($model = Customer::findOne(['id' => $id, 'store' => $store])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

@@ -47,6 +47,7 @@ AppAsset::register($this);
                         <ul class="nav child_menu">
                             <li><a href="/dashboard/dashboard">Dashboard</a></li>
                             <li><a href="/dashboard/product">Products</a></li>
+                            <li><a href="/product">Store Products</a></li>
                         </ul>
                     </li>
                     <li><a><i class="fa fa-smile-o"></i> Administration <span class="fa fa-chevron-down"></span></a>
@@ -56,7 +57,10 @@ AppAsset::register($this);
                         <li><a href="/site/contact">Contact</a></li>-->
                         <li><a href="/user/">User</a></li>
                         <li><a href="/store">Store</a></li>
-                        <li><a href="/user-store-role">Assignment</a></li>
+                        <li><a href="/category">Category</a></li>
+                        <li><a href="/user-store-role">Assign users to stores</a></li>
+                        <li><a href="/store-category">Assign categories to stores</a></li>
+                        <li><a href="/log">Log</a></li>
                         <!--      <?php if(Yii::$app->user->isGuest){ ?>
                                       <li><a href="/site/login">Login</a></li>
                               <?php } else { 

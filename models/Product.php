@@ -8,10 +8,12 @@ use Yii;
  * This is the model class for table "{{%product}}".
  *
  * @property integer $id
- * @property integer $anymarket_id
- * @property integer $user_id
+ * @property string $name
+ * @property double $price
+ * @property integer $store_id
  *
- * @property User $user
+ * @property Image[] $images
+ * @property Store $store
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -29,9 +31,11 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'user_id'], 'integer'],
-            [['anymarket_id', 'user_id'], 'integer'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['name', 'store_id'], 'required'],
+            [['price'], 'number'],
+            [['store_id'], 'integer'],
+            [['name'], 'string', 'max' => 100],
+            [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ];
     }
 
@@ -42,16 +46,25 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'anymarket_id' => Yii::t('app', 'Anymarket ID'),
-            'user_id' => Yii::t('app', 'User ID'),
+            'name' => Yii::t('app', 'Name'),
+            'price' => Yii::t('app', 'Price'),
+            'store_id' => Yii::t('app', 'Store ID'),
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getImages()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasMany(Image::className(), ['product' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStore()
+    {
+        return $this->hasOne(Store::className(), ['id' => 'store_id']);
     }
 }
