@@ -38,9 +38,13 @@ class CategoryController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Category::find(),
         ]);
+        
+        $query = Category::find();        
+        $categories = $query->all();
 
-        return $this->render('index', [
+        return $this->render('test', [
             'dataProvider' => $dataProvider,
+            'categories' => $categories,
         ]);
     }
 
@@ -120,5 +124,11 @@ class CategoryController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+    public function getCategory(){
+        $query = Category::find();        
+        $categories = $query->all();
+        return $categories;
     }
 }

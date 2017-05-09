@@ -9,7 +9,10 @@ use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\models\Category;
+use app\models\Store;
 
+// Selects the stores "Destaque"
+$stores = Store::find()->all();
 $categories = Category::find()->all();
 
 AppAsset::register($this);
@@ -63,15 +66,17 @@ AppAsset::register($this);
                 <ul class="nav navbar-nav navbar-right">
                     <li class=""><a href="/store-category/show/">Lojas</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produtos<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produtos <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <?php
-                                foreach($categories as $thisCategory){
-                                    echo "<li><a href='/store-category/show/".$thisCategory->id."'>".$thisCategory->name."</a></li>";
-                                }    
+                
+                            foreach($categories as $thisCategory){
+                                echo "<li><a href='/store-category/show/".$thisCategory->id."'>".$thisCategory->name."</a></li>";
+                            }                   
+
                             ?>
                         </ul>
-                    </li>                
+                    </li>
                 </ul>
             </div>
           </div>
@@ -81,60 +86,24 @@ AppAsset::register($this);
     </div>
 
 
-    <!-- Carousel
-    ================================================== -->
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-<!--        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>-->
-      </ol>
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <img class="first-slide" src="http://lorempixel.com/1400/450/fashion/" alt="First slide">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>Seja bem-vindo!</h1>
-              <p>                
-                Nossas lojas populares estão de portas abertas para te receber
-              </p>
-              <p><a class="btn btn-lg btn-primary" href="/store-category/view/" role="button">Ver lojas</a></p>
+    <div class="page-content">      
+        
+            <div class="col-sm-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Produtos</div>
+                    <ul class="list-group">
+                        <?php
+                            foreach($categories as $thisCategory){
+                                echo "<a href='/store-category/show?id=".$thisCategory->id."'><li class='list-group-item'>".$thisCategory->name."</li></a>";
+                            }                   
+                        ?>
+                    </ul>
+                </div>
             </div>
-          </div>
-        </div>      
-      </div>
-<!--      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>-->
-    </div><!-- /.carousel -->
-    <div class="container top-ad">
-<!--        <div class="row">
-            <div class="col-sm-12">
-                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                  general 
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-8990393761638596"
-                     data-ad-slot="3920931637"
-                     data-ad-format="auto"></ins>
-                <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
+            <div class="col-sm-9">
+                <?= $content ?>
             </div>
-        </div>-->
-    </div>
-
-    <div class="container marketing">        
-        <?= $content ?>
-    </div>
-    
-    
+        </div>
     </div>
         
         <footer>

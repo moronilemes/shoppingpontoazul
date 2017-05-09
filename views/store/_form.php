@@ -20,19 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'observation')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'address2')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'postal_code')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'city')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'state')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'country')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'pay_day')->dropDownList([ 5 => '5', 10 => '10', 15 => '15', 20 => '20', 25 => '25', 30 => '30', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'slot')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'CPF')->textInput(['maxlength' => true]) ?>
 
@@ -42,7 +30,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'RG')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'store_type')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'plan')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

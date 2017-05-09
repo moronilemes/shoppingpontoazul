@@ -21,6 +21,7 @@ use Yii;
  *
  * @property Chat[] $chats
  * @property Customer[] $customers
+ * @property Customer[] $customers0
  * @property Product[] $products
  * @property StoreCategory[] $storeCategories
  * @property UserStoreRole[] $userStoreRoles
@@ -84,6 +85,14 @@ class Store extends \yii\db\ActiveRecord
      * @return \yii\db\ActiveQuery
      */
     public function getCustomers()
+    {
+        return $this->hasMany(Customer::className(), ['id' => 'customer'])->viaTable('{{%chat}}', ['store' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCustomers0()
     {
         return $this->hasMany(Customer::className(), ['store' => 'id']);
     }

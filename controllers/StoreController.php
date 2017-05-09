@@ -43,6 +43,27 @@ class StoreController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionShow($id)
+    {
+        $this->layout = 'page';
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => Store::find(),
+        ]);
+        
+        if ($id == null){
+                    return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
+        } else {
+            return $this->render('show', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        
+        
+    }
 
     /**
      * Displays a single Store model.

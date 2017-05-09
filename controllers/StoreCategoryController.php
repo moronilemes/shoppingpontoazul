@@ -43,6 +43,18 @@ class StoreCategoryController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionShow()
+    {
+        $this->layout = 'page';
+        $dataProvider = new ActiveDataProvider([
+            'query' => StoreCategory::find(),
+        ]);
+
+        return $this->render('show', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     /**
      * Displays a single StoreCategory model.
