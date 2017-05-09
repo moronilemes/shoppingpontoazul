@@ -28,10 +28,10 @@ $this->title = 'Shopping Ponto Azul';
                 <div class="col-lg-3">
                     <div class="media">
                         <div class="media-left">
-                            <a href="/store/show/<?=$store->id?>">
+                            <a href="/store/show?id=<?=$store->id?>">
                                 <img class="media-object" src="/images/logo-placeholder.jpg" width="64" height="64" alt="..."></a></div>
                         <div class="media-body">
-                            <a href="/store/show/<?=$store->id?>">
+                            <a href="/store/show?id=<?=$store->id?>">
                             <h4 class="media-heading"><?=$store->name?></h4>
                             <h6>
                                 <?=$store->observation?>
