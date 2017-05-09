@@ -17,6 +17,7 @@ Alunos: Alexandre Galvão, Guilherme Farias, Moroni Lemes
 
 Professor: Sérgio Furgeri
 
+FATEC Indaiatuba
 
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-basic/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-basic)
 [![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-basic/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-basic)
