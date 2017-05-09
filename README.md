@@ -13,7 +13,8 @@ O sistema contará com funcionalidades de exposição dos produtos de todos os l
 
 Sofisticar os canais de venda, buscando na tecnologia a solução para isso. Essa é nossa proposta.
 
-Alunos: Alexandre, Guilherme, Moroni
+Alunos: Alexandre Galvão, Guilherme Farias, Moroni Lemes
+
 Professor: Sérgio Furgeri
 
 
