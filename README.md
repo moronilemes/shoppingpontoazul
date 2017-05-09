@@ -1,12 +1,21 @@
-Yii 2 Basic Project Template
+Shopping Ponto Azul
 ============================
 
-Yii 2 Basic Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-rapidly creating small projects.
+No cenário de comércio competitivo da região de Indaiatuba encontra-se o Shopping Ponto Azul – antigamente camelôs informais, em um esforço do poder público, abrigaram-se sob um mesmo teto, embora com sérias limitações de espaço e estrutura.
 
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
+A partir deste cenário, foi identificado uma possibilidade de criar oportunidades de vendas a partir da criação de um novo canal pela rede mundial de computadores. A proposta é um sistema com base online, também conhecido como marketplace, onde os lojistas poderão cadastrar produtos e promoções alcançando, de maneira mais sofisticada, o nicho de público já alcançado.
+
+A competitividade destas empresas é vital para sua sobrevivência em uma cidade que conta com três significativos centros de compras: Polo Shopping, Shopping Jaraguá, Center Jeans. Juntos, estes contam com centenas de espaços para locação, vagas para automóveis e uma verba publicitária incomparável ao patamar do conjunto de lojas aqui destacado.	 
+
+Além das facilidades do cadastro de produtos, o cliente encontrará um novo meio de comunicação com opção da disponibilidade online. 
+
+O sistema contará com funcionalidades de exposição dos produtos de todos os lojistas de forma inteligível e aleatória, mas priorizando os assinantes do plano de publicidade. Por meio de categorias e uma caixa de busca presentes na maioria das páginas, todos os conteúdos disponíveis na plataforma serão encontrados dentro de um número mínimo de cliques necessários.
+
+Sofisticar os canais de venda, buscando na tecnologia a solução para isso. Essa é nossa proposta.
+
+Alunos: Alexandre, Guilherme, Moroni
+Professor: Sérgio Furgeri
+
 
 [![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-basic/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-basic)
 [![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-basic/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-basic)
@@ -35,7 +44,7 @@ REQUIREMENTS
 The minimum requirement by this project template that your Web server supports PHP 5.4.0.
 
 
-INSTALLATION
+Exemplo de configuração de um ambiente Yii
 ------------
 
 ### Install via Composer
