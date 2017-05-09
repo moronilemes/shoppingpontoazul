@@ -71,7 +71,7 @@ AppAsset::register($this);
                             <?php
                 
                             foreach($categories as $thisCategory){
-                                echo "<li><a href='/store-category/show/".$thisCategory->id."'>".$thisCategory->name."</a></li>";
+                                echo "<li><a href='/store-category/show?id=".$thisCategory->id."'>".$thisCategory->name."</a></li>";
                             }                   
 
                             ?>

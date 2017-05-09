@@ -17,16 +17,12 @@ $this->title = 'Shopping Ponto Azul';
         <div class="col-lg-12">
             <div class="row col-sm-12">
                 <h1>Lojas Destaque</h1>
-                <br>
+                <hr>
             </div>
             <div class="col-lg-12">
                 <div class="row">
-                <?php foreach($stores as $store){ 
-                    //if($store->plan == "P"){?>
-                        
-                        
-                <div class="col-lg-3">
-                    <div class="media">
+                <?php foreach($stores as $store){ ?>
+                    <div class="media col-lg-3">
                         <div class="media-left">
                             <a href="/store/show?id=<?=$store->id?>">
                                 <img class="media-object" src="/images/logo-placeholder.jpg" width="64" height="64" alt="..."></a></div>
@@ -39,12 +35,7 @@ $this->title = 'Shopping Ponto Azul';
                             </a>
                         </div>
                     </div>
-                </div>
-
-                <?php }    ?>
-                    
-                
-                
+                <?php } ?>
             </div>
                 </div>
         </div>

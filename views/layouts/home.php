@@ -99,7 +99,7 @@ AppAsset::register($this);
               <p>                
                 Nossas lojas populares estão de portas abertas para te receber
               </p>
-              <p><a class="btn btn-lg btn-primary" href="/store-category/view/" role="button">Ver lojas</a></p>
+              <p><a class="btn btn-lg btn-primary" href="/store-category/show/" role="button">Ver lojas</a></p>
             </div>
           </div>
         </div>      
