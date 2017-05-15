@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use app\models\Product;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
@@ -21,4 +22,11 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
     <form action="/product/delete?id=<?= $_GET['id'] ?>" method="POST">
           <button type="submit" class="btn btn-link btn-delete-product" >Delete</button>
     </form>
+    <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'product' => $model->id, 'product' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
+                'method' => 'post',
+            ],
+        ]) ?>
 </div>

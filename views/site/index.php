@@ -7,7 +7,7 @@ use app\models\Store;
 $stores = Store::find()->where("plan='D'")->all();
 
 
-$this->title = 'Shopping Ponto Azul';
+$this->title = Yii::t('app', 'Shopping Ponto Azul');
 ?>
 <div class="">
 
@@ -16,7 +16,7 @@ $this->title = 'Shopping Ponto Azul';
          <div class="row">
         <div class="col-lg-12">
             <div class="row col-sm-12">
-                <h1>Lojas Destaque</h1>
+                <h1><?=Yii::t('app', 'Featured stores')?></h1>
                 <hr>
             </div>
             <div class="col-lg-12">

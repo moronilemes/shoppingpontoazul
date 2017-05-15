@@ -8,7 +8,7 @@ $storeProducts = Product::find()->where('store_id='.$blueSession['store_id'])->a
 
 <div class="row x_title">
     <div class="col-md-6">
-        <h3>Produtos<br>            
+        <h3><?=Yii::t('app', 'Products')?><br>            
             <span class="hidden this-user-id">
                 <?php 
                     echo Yii::$app->user->identity->id;                        
@@ -27,7 +27,7 @@ $storeProducts = Product::find()->where('store_id='.$blueSession['store_id'])->a
                 <button type="button" class="btn btn-default btn-product-list-previous">Próximo</button>-->
             </div>
             <div class="btn-group">
-                <button type="button" class="btn btn-primary btn-product-new" data-toggle="modal" data-target=".product-modal-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  Novo</button>
+                <button type="button" class="btn btn-primary btn-product-new" data-toggle="modal" data-target=".product-modal-lg"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>  <?=Yii::t('app', 'Novo')?></button>
             </div>
         </div>
     </div>
@@ -40,9 +40,9 @@ $storeProducts = Product::find()->where('store_id='.$blueSession['store_id'])->a
 <!--              <th>
                 <input type="checkbox" id="check-all" class="flat">
               </th>-->
-              <th class="column-title">Foto </th>
-              <th class="column-title no-link"> <span class="nobr">Nome do Produto </span></th>
-              <th class="column-title">Preço </th>
+              <th class="column-title"><?=Yii::t('app', 'Picture')?> </th>
+              <th class="column-title no-link"> <span class="nobr"><?=Yii::t('app', 'Product name')?> </span></th>
+              <th class="column-title"><?=Yii::t('app', 'Price')?> </th>
 <!--              <th class="bulk-actions" colspan="7">
                 <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
               </th>-->
@@ -70,7 +70,7 @@ $storeProducts = Product::find()->where('store_id='.$blueSession['store_id'])->a
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
               </button>
-              <h4 class="modal-title" id="myModalLabel">Detalhes do Produto</h4>
+              <h4 class="modal-title" id="myModalLabel"><?=Yii::t('app', 'Product detail')?></h4>
             </div>
             <div class="modal-body">
                                 
@@ -81,14 +81,14 @@ $storeProducts = Product::find()->where('store_id='.$blueSession['store_id'])->a
                         <div class="col-md-12">
                         
                         <div class="form-group col-md-8">
-                          <label class="" for="first-name">Nome do Produto <span class="required">*</span>                         </label>
+                          <label class="" for="first-name"><?=Yii::t('app', 'Product name')?> <span class="required">*</span>                         </label>
                           <div class="">
                               <input type="text" id="product-name" class="form-control" name="Product[name]" maxlength="100">
                         </div>
                         </div>
                        
                         <div class="form-group col-md-4">
-                          <label class="" for="price">Preço<span class="required">*</span>
+                          <label class="" for="price"><?=Yii::t('app', 'Price')?><span class="required">*</span>
                           </label>
                           <div class="">
                             <input placeholder="R$" type="number" id="product-price" class="form-control" name="Product[price]">
@@ -118,7 +118,7 @@ $storeProducts = Product::find()->where('store_id='.$blueSession['store_id'])->a
                             
                             <div id="myDropzone" class="dropzone dz-clickable">
                                 <div id="previews" class="dropzone-previews"></div>
-                                <div class="dz-default dz-message"><span>Clique ou arraste as imagens aqui</span></div>
+                                <div class="dz-default dz-message"><span><?=Yii::t('app', 'Click or drag images here')?></span></div>
                             </div>
      
                             <?php
@@ -150,8 +150,8 @@ $storeProducts = Product::find()->where('store_id='.$blueSession['store_id'])->a
             </div>
             <div class="modal-footer">
 <!--                <button type="button" class="btn btn-link btn-delete-product" >Deletar</button>-->
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-primary btn-save-product">Salvar produto</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?=Yii::t('app', 'Close')?></button>
+                <button type="submit" class="btn btn-primary btn-save-product"><?=Yii::t('app', 'Save product')?></button>
                 </form>
             </div>
         </div>

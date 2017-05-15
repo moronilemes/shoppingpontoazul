@@ -18,9 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <h1><?= Html::encode($this->title) ?></h1>
     </div>
     <div class="col-sm-3">
-        <p>Fone: <?= Html::encode($model->phone) ?></p>
-        <p>Celular: <?= Html::encode($model->mobile) ?></p>
-        <p>Loja número <?= Html::encode($model->slot) ?></p>
+        <p><?=Yii::t('app', 'Phone')?>: <?= Html::encode($model->phone) ?></p>
+        <p><?=Yii::t('app', 'Mobile')?>: <?= Html::encode($model->mobile) ?></p>
+        <p><?=Yii::t('app', 'Store number')?> <?= Html::encode($model->slot) ?></p>
     </div>
     <div class="col-sm-3">
         <?= Html::encode($model->observation) ?>

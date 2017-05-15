@@ -47,12 +47,12 @@ AppAsset::register($this);
           <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Navegação</span>
+                <span class="sr-only"><?=Yii::t('app', 'Navigation')?></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/">Shopping Ponto Azul</a>
+              <a class="navbar-brand" href="/"><?=Yii::t('app', 'Shopping Ponto Azul')?></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <form class="navbar-form navbar-left" role="search"> 
@@ -64,14 +64,14 @@ AppAsset::register($this);
                     </div> 
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class=""><a href="/store-category/show/">Lojas</a></li>
+                    <li class=""><a href="/store-category/show/"><?=Yii::t('app', 'Stores')?></a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produtos <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=Yii::t('app', 'Products')?> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <?php
                 
                             foreach($categories as $thisCategory){
-                                echo "<li><a href='/store-category/show?id=".$thisCategory->id."'>".$thisCategory->name."</a></li>";
+                                echo "<li><a href='/store-category/show?id=".$thisCategory->id."'>".Yii::t('app', $thisCategory->name)."</a></li>";
                             }                   
 
                             ?>
@@ -90,11 +90,11 @@ AppAsset::register($this);
         
             <div class="col-sm-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Produtos</div>
+                    <div class="panel-heading"><?=Yii::t('app', 'Products')?></div>
                     <ul class="list-group">
                         <?php
                             foreach($categories as $thisCategory){
-                                echo "<a href='/store-category/show?id=".$thisCategory->id."'><li class='list-group-item'>".$thisCategory->name."</li></a>";
+                                echo "<a href='/store-category/show?id=".$thisCategory->id."'><li class='list-group-item'>".Yii::t('app', $thisCategory->name)."</li></a>";
                             }                   
                         ?>
                     </ul>
@@ -112,8 +112,8 @@ AppAsset::register($this);
                 
             </div>
             <div class="">
-                &copy; Shopping Ponto Azul <?= date('Y') ?> || 
-                <a href="/site/login/">Login</a>
+                &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?> || 
+                <a href="/site/login/"><?=Yii::t('app', 'Login')?></a>
             </div>
         </footer>
         

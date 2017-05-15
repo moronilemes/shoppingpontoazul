@@ -13,7 +13,7 @@ $stores = Store::find()->all();
 
 
 
-$this->title = Yii::t('app', 'Lojas');
+$this->title = Yii::t('app', 'Stores');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

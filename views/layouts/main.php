@@ -34,7 +34,6 @@ $session = Yii::$app->session;
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-<!--              <a href="/dashboard/index" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>-->
                 <a href="/dashboard/index" class="site_title"><img src="/images/logo-shopping-ponto-azul.jpg" alt="zizap" /></a>
             </div>
 
@@ -49,19 +48,15 @@ $session = Yii::$app->session;
                     
                     <?php if ($session['role'] == 'admin') { ?>
                     
-                    <li><a><i class="fa fa-smile-o"></i> Administration <span class="fa fa-chevron-down"></span></a>
+                    <li><a><i class="fa fa-smile-o"></i> <?=Yii::t('app', 'Administration')?> <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-<!--                        <li><a href="/site/index">Home</a></li>
-                        <li><a href="/site/about">About</a></li>
-                        <li><a href="/site/contact">Contact</a></li>-->
-                        <li><a href="/user/">User</a></li>
-                        <li><a href="/store">Store</a></li>
-                        <li><a href="/category">Category</a></li>
-                        <li><a href="/user-store-role">Assign users to stores</a></li>
-                        <li><a href="/store-category">Assign categories to stores</a></li>
+                        <li><a href="/user/"><?=Yii::t('app', 'User')?></a></li>
+                        <li><a href="/store"><?=Yii::t('app', 'Store')?></a></li>
+                        <li><a href="/category"><?=Yii::t('app', 'Category')?></a></li>
+                        <li><a href="/user-store-role"><?=Yii::t('app', 'Assign users to stores')?></a></li>
+                        <li><a href="/store-category"><?=Yii::t('app', 'Assign categories to stores')?></a></li>
                         <li><a href="/log">Log</a></li>
                         <!--      <?php if(Yii::$app->user->isGuest){ ?>
-                                      <li><a href="/site/login">Login</a></li>
                               <?php } else { 
                                               echo '<li>'
                                               . Html::beginForm(['/site/logout'], 'post')
@@ -75,12 +70,11 @@ $session = Yii::$app->session;
                     </ul>
                   </li>
                     <?php } else {?>
-                    <li class="active"><a><i class="fa fa-home"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
+                    <li class="active"><a><i class="fa fa-home"></i> <?=Yii::t('app', 'Dashboard')?> <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li class="current-page"><a href="/chat/panel">Chat</a></li>
-<!--                            <li><a href="/dashboard/dashboard">Dashboard</a></li>-->
-                            <li><a href="/product/panel/">Products</a></li>
-                            <li><a href="/product">Store Products</a></li>
+                            <li class="current-page"><a href="/chat/panel"><?=Yii::t('app', 'Chat')?></a></li>
+                            <li><a href="/product/panel/"><?=Yii::t('app', 'Products')?></a></li>
+                            <li><a href="/product"><?=Yii::t('app', 'Store Products')?></a></li>
                         </ul>
                     </li>
                     <?php } ?>
@@ -127,7 +121,7 @@ $session = Yii::$app->session;
                     
                     <?php if(Yii::$app->user->isGuest){ ?>
                             <a href="/site/login/" class="user-profile" aria-expanded="false">
-                                Login
+                                <?=Yii::t('app', 'Login')?>
                             </a>
                     <?php } else { ?>
                         <a href="/dashboard/javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -153,85 +147,19 @@ $session = Yii::$app->session;
                     <li><a href="/dashboard/profile"> Profile</a></li>
                     <li><a href="/dashboard/settings"><span>Settings</span></a></li>v-->    
                     <?php if(Yii::$app->user->isGuest){ ?>
-                            <li><a href="/site/login">Login</a></li>
+                            <li><a href="/site/login"><?=Yii::t('app', 'Login')?></a></li>
                     <?php } else { 
-                                    echo '<li>'
-                                    . Html::beginForm(['/site/logout'], 'post')
-                                    . Html::submitButton(
-                                            'Logout',
-                                            ['class' => 'btn btn-link logout']
-                                    )
-                                    . Html::endForm()
-                                    . '</li>';
+                            echo '<li>'
+                            . Html::beginForm(['/site/logout'], 'post')
+                            . Html::submitButton(
+                                    Yii::t('app', 'Logout'),
+                                    ['class' => 'btn btn-link logout']
+                            )
+                            . Html::endForm()
+                            . '</li>';
                     } ?>
                   </ul>
                 </li>
-                                
-
-<!--                <li role="presentation" class="dropdown">
-                  <a href="/dashboard/javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>-->
               </ul>
             </nav>
           </div>
@@ -255,7 +183,7 @@ $session = Yii::$app->session;
         
         <footer>
           <div class="pull-right">
-            &copy; Zizap <?= date('Y') ?>
+            &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?>
           </div>
           <div class="clearfix"></div>
         </footer>

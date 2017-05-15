@@ -44,12 +44,12 @@ AppAsset::register($this);
           <div class="container">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Navegação</span>
+                <span class="sr-only"><?=Yii::t('app', 'Navigation')?></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/">Shopping Ponto Azul</a>
+              <a class="navbar-brand" href="/"><?=Yii::t('app', 'Shopping Ponto Azul')?></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <form class="navbar-form navbar-left" role="search"> 
@@ -61,9 +61,9 @@ AppAsset::register($this);
                     </div> 
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class=""><a href="/store-category/show/">Lojas</a></li>
+                    <li class=""><a href="/store-category/show/"><?=Yii::t('app', 'Stores')?></a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produtos<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=Yii::t('app', 'Products')?><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <?php
                                 foreach($categories as $thisCategory){
@@ -95,11 +95,11 @@ AppAsset::register($this);
           <img class="first-slide" src="http://lorempixel.com/1400/450/fashion/" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Seja bem-vindo!</h1>
-              <p>                
-                Nossas lojas populares estão de portas abertas para te receber
+              <h1><?=Yii::t('app', 'Welcome')?></h1>
+              <p>            
+                  <?=Yii::t('app', 'Our popular stores got the doors wide open for you')?>
               </p>
-              <p><a class="btn btn-lg btn-primary" href="/store-category/show/" role="button">Ver lojas</a></p>
+              <p><a class="btn btn-lg btn-primary" href="/store-category/show/" role="button"><?=Yii::t('app', 'See stores')?></a></p>
             </div>
           </div>
         </div>      
@@ -143,8 +143,8 @@ AppAsset::register($this);
                 
             </div>
             <div class="">
-                &copy; Shopping Ponto Azul <?= date('Y') ?> || 
-                <a href="/site/login/">Login</a>
+                &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?> || 
+                <a href="/site/login/"><?=Yii::t('app', 'Login')?></a>
             </div>
         </footer>
         
