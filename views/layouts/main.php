@@ -10,6 +10,8 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+$session = Yii::$app->session;
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -43,13 +45,10 @@ AppAsset::register($this);
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-home"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a href="/dashboard/dashboard">Dashboard</a></li>
-                            <li><a href="/dashboard/product">Products</a></li>
-                            <li><a href="/product">Store Products</a></li>
-                        </ul>
-                    </li>
+                    
+                    
+                    <?php if ($session['role'] == 'admin') { ?>
+                    
                     <li><a><i class="fa fa-smile-o"></i> Administration <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
 <!--                        <li><a href="/site/index">Home</a></li>
@@ -75,8 +74,16 @@ AppAsset::register($this);
                         } ?>-->
                     </ul>
                   </li>
-                  
-               
+                    <?php } else {?>
+                    <li class="active"><a><i class="fa fa-home"></i> Dashboard <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li class="current-page"><a href="/chat/panel">Chat</a></li>
+<!--                            <li><a href="/dashboard/dashboard">Dashboard</a></li>-->
+                            <li><a href="/product/panel/">Products</a></li>
+                            <li><a href="/product">Store Products</a></li>
+                        </ul>
+                    </li>
+                    <?php } ?>
                 </ul>
               </div>
               
@@ -141,10 +148,10 @@ AppAsset::register($this);
                     <li><a href="/site/contact">Contact</a></li>
                     <li><a href="/site/signup">New User</a></li>
                     <li><a href="/store">Store</a></li>
-                    <li><a href="/user-store-role">Assignment</a></li>-->
+                    <li><a href="/user-store-role">Assignment</a></li>
                     
                     <li><a href="/dashboard/profile"> Profile</a></li>
-                    <li><a href="/dashboard/settings"><span>Settings</span></a></li>
+                    <li><a href="/dashboard/settings"><span>Settings</span></a></li>v-->    
                     <?php if(Yii::$app->user->isGuest){ ?>
                             <li><a href="/site/login">Login</a></li>
                     <?php } else { 
@@ -161,7 +168,7 @@ AppAsset::register($this);
                 </li>
                                 
 
-                <li role="presentation" class="dropdown">
+<!--                <li role="presentation" class="dropdown">
                   <a href="/dashboard/javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
                     <span class="badge bg-green">6</span>
@@ -224,7 +231,7 @@ AppAsset::register($this);
                       </div>
                     </li>
                   </ul>
-                </li>
+                </li>-->
               </ul>
             </nav>
           </div>

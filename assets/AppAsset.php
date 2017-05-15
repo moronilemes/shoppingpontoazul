@@ -57,7 +57,7 @@ class AppAsset extends AssetBundle
         'js/custom.min.js',
         // Project stuff
         'js/zizap.js',
-        'js/order.js',
+        //'js/order.js',
         'js/product.js'
     ];
     public $depends = [

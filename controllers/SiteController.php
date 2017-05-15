@@ -10,12 +10,17 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\SignupForm;
 use app\models\Category;
+use app\models\UserStoreRole;
+
+$session = Yii::$app->session;
+$session->open();
 
 class SiteController extends Controller
 {
     /**
      * @inheritdoc
      */
+    
     public function behaviors()
     {
         return [
@@ -78,20 +83,33 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+//        if (!Yii::$app->user->isGuest) {
+//            return $this->goHome();
+//        }
 
-        //$this->layout = 'home';
+        $this->layout = 'home';
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            
+            $storeQuery = UserStoreRole::find()->where('user_id='.$model->user["id"])->all();
+            Yii::$app->session->open();
+            
+            Yii::$app->session['store'] = $storeQuery[0]['store_id'];
+            Yii::$app->session['user'] = $storeQuery[0]['user_id'];
+            Yii::$app->session['role'] = $storeQuery[0]['role'];
+            
+            if (Yii::$app->session['role']=='admin'){
+                return $this->redirect("/store/");
+            } else {
+                return $this->redirect("/chat/panel/");
+            }
+            //return $this->goBack();
         }
         return $this->render('login', [
             'model' => $model,
         ]);
     }
-
+    
     /**
      * Logout action.
      *

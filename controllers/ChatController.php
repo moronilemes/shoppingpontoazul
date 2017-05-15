@@ -43,6 +43,17 @@ class ChatController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    public function actionPanel()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Chat::find(),
+        ]);
+
+        return $this->render('panel', [
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 
     /**
      * Displays a single Chat model.
