@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         'model' => $model,
     ]) ?>
     <form action="/product/delete?id=<?= $_GET['id'] ?>" method="POST">
-          <button type="submit" class="btn btn-link btn-delete-product" >Delete</button>
+          <button type="submit" class="btn btn-link btn-delete-product" ><?=Yii::t('app', 'Delete')?></button>
     </form>
     <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'product' => $model->id, 'product' => $model->id], [
             'class' => 'btn btn-danger',
