@@ -6,7 +6,7 @@
 use yii\helpers\Html;
 //use yii\bootstrap\Nav;
 //use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
+//use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\models\Category;
 use app\models\Store;
@@ -26,19 +26,19 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>   
-    
+    <?php $this->head() ?>
+
     <!-- Custom styles for this template -->
     <link href="/css/custom-public.css" rel="stylesheet">
-    
+
 </head>
 <body class="nav-md">
 <?php $this->beginBody() ?>
 
 
-    
+
     <div class="container">
-        
+
 
 <div class="navbar-wrapper">
       <div class="container-fluid">
@@ -55,24 +55,26 @@ AppAsset::register($this);
               <a class="navbar-brand" href="/"><?=Yii::t('app', 'Shopping Ponto Azul')?></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <form class="navbar-form navbar-left" role="search"> 
+                <!--
+                <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" class="form-control main-search-input" id="exampleInputAmount" placeholder="">
                             <div class="input-group-addon"><span class='glyphicon glyphicon-search'></span></div>
                         </div>
-                    </div> 
+                    </div>
                 </form>
+                -->
                 <ul class="nav navbar-nav navbar-right">
                     <li class=""><a href="/store-category/show/"><?=Yii::t('app', 'Stores')?></a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=Yii::t('app', 'Products')?> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <?php
-                
+
                             foreach($categories as $thisCategory){
                                 echo "<li><a href='/store-category/show?id=".$thisCategory->id."'>".Yii::t('app', $thisCategory->name)."</a></li>";
-                            }                   
+                            }
 
                             ?>
                         </ul>
@@ -86,44 +88,42 @@ AppAsset::register($this);
     </div>
 
 
-    <div class="page-content">      
-        
-            <div class="col-sm-3">
+    <div class="page-content">
+            <div class="col-sm-3 col-xs-3">
                 <div class="panel panel-default">
                     <div class="panel-heading"><?=Yii::t('app', 'Products')?></div>
                     <ul class="list-group">
                         <?php
                             foreach($categories as $thisCategory){
                                 echo "<a href='/store-category/show?id=".$thisCategory->id."'><li class='list-group-item'>".Yii::t('app', $thisCategory->name)."</li></a>";
-                            }                   
+                            }
                         ?>
                     </ul>
                 </div>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-9 col-xs-9">
                 <?= $content ?>
             </div>
         </div>
     </div>
-        
+
         <footer>
             <div class="clearfix"></div>
             <div>
-                
+
             </div>
             <div class="">
-                &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?> || 
+                &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?> ||
                 <a href="/site/login/"><?=Yii::t('app', 'Login')?></a>
             </div>
         </footer>
-        
-      
+
+
     </div>
 
 
-    
+
 <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
-

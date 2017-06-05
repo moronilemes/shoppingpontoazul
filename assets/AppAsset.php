@@ -20,14 +20,14 @@ class AppAsset extends AssetBundle
     public $css = [
         //'css/site.css',
         'gentella-vendors/font-awesome/css/font-awesome.min.css',
-        'gentella-vendors/nprogress/nprogress.css',     
+        'gentella-vendors/nprogress/nprogress.css',
         'gentella-vendors/iCheck/skins/flat/green.css',
-        'gentella-vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css',   
+        'gentella-vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css',
         'gentella-vendors/bootstrap-daterangepicker/daterangepicker.css',
-        'gentella-vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',   
+        'gentella-vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css',
         'gentella-vendors/google-code-prettify/bin/prettify.min.css',
         'gentella-vendors/dropzone/dist/min/dropzone.min.css',
-        // PNotify 
+        // PNotify
         'gentella-vendors/pnotify/dist/pnotify.css',
         'gentella-vendors/pnotify/dist/pnotify.buttons.css',
         'gentella-vendors/pnotify/dist/pnotify.nonblock.css',
@@ -39,17 +39,17 @@ class AppAsset extends AssetBundle
         'gentella-vendors/iCheck/icheck.min.js',
         'gentella-vendors/Chart.js/dist/Chart.min.js',
         'gentella-vendors/fastclick/lib/fastclick.js',
-        'gentella-vendors/nprogress/nprogress.js',   
+        'gentella-vendors/nprogress/nprogress.js',
         'gentella-vendors/moment/min/moment.min.js',
         'gentella-vendors/bootstrap-daterangepicker/daterangepicker.js',
-        'gentella-vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',  
+        'gentella-vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js',
         // Bootstrap WYSIWYG
         'gentella-vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js',
         'gentella-vendors/jquery.hotkeys/jquery.hotkeys.js',
         'gentella-vendors/google-code-prettify/src/prettify.js',
         //
         'gentella-vendors/dropzone/dist/min/dropzone.min.js',
-        // PNotify 
+        // PNotify
         'gentella-vendors/pnotify/dist/pnotify.js',
         'gentella-vendors/pnotify/dist/pnotify.buttons.js',
         'gentella-vendors/pnotify/dist/pnotify.nonblock.js',

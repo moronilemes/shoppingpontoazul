@@ -3,6 +3,8 @@
 
 return [
     'Are you sure you want to delete this item?' => 'Você está certo que quer deletar este item?',
+    'Assign users to stores' => 'Gerenciar usuários das lojas',
+    'Assign categories to stores'=>'Gerenciar categorias das lojas',
     'Category'=>'Categoria',
     'Chats' => 'Bate-papo',
     'Chat' => 'Bate-papo',
@@ -36,6 +38,7 @@ return [
     'Logs'=>'Logs',
     'Login'=>'Entrar',
     'Logout'=>'Sair',
+    'Logs'=>'Logs',
     'Music'=>'Músicas',
     'Name'=>'Nome',
     'New User'=>'Novo usuário',
@@ -44,6 +47,7 @@ return [
     'Please fill out the following fields to signup:' => 'Por favor, preencha os campos a seguir para se cadastrar:',
     'See stores'=>'Ver lojas',
     'Telephony'=>'Telefonia',
+    'User' => 'Usuário',
     'Users'=>'Usuários',
     'User Store Roles' => 'Relação usuário-loja',
     'Password'=>'Senha',

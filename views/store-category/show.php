@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="store-category-index">
     <h1><?= Html::encode($this->title) ?></h1>
     <?php foreach($stores as $store){ ?>
-        <div class="media col-lg-3">
+        <div class="media col-sm-3">
             <div class="media-left">
                 <a href="/store/show?id=<?=$store->id?>">
                     <img class="media-object" src="/images/logo-placeholder.jpg" width="64" height="64" alt="..."></a></div>
@@ -33,5 +33,5 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
             </div>
         </div>
-    <?php }  ?>    
+    <?php }  ?>
 </div>

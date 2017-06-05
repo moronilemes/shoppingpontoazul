@@ -22,14 +22,14 @@ $session = Yii::$app->session;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>   
-    
+    <?php $this->head() ?>
+
 </head>
 <body class="nav-md">
 <?php $this->beginBody() ?>
 
 <div class="container body">
-    
+
     <div class="main_container">
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
@@ -39,25 +39,24 @@ $session = Yii::$app->session;
 
             <div class="clearfix"></div>
             <br />
-	
+
 <!--             sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <ul class="nav side-menu">
-                    
-                    
+
                     <?php if ($session['role'] == 'admin') { ?>
-                    
-                    <li><a><i class="fa fa-smile-o"></i> <?=Yii::t('app', 'Administration')?> <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
+
+                    <!--<li><a><i class="fa fa-smile-o"></i> <?=Yii::t('app', 'Administration')?> <span class="fa fa-chevron-down"></span></a>-->
+                    <ul class="nav">
                         <li><a href="/user/"><?=Yii::t('app', 'User')?></a></li>
                         <li><a href="/store"><?=Yii::t('app', 'Store')?></a></li>
                         <li><a href="/category"><?=Yii::t('app', 'Category')?></a></li>
                         <li><a href="/user-store-role"><?=Yii::t('app', 'Assign users to stores')?></a></li>
                         <li><a href="/store-category"><?=Yii::t('app', 'Assign categories to stores')?></a></li>
-                        <li><a href="/log">Log</a></li>
+                        <li><a href="/log"><?=Yii::t('app', 'Logs')?><a></li>
                         <!--      <?php if(Yii::$app->user->isGuest){ ?>
-                              <?php } else { 
+                              <?php } else {
                                               echo '<li>'
                                               . Html::beginForm(['/site/logout'], 'post')
                                               . Html::submitButton(
@@ -80,8 +79,9 @@ $session = Yii::$app->session;
                     <?php } ?>
                 </ul>
               </div>
-              
+
             </div>
+            <!--
             <div class="sidebar-footer hidden-small">
               <a data-toggle="tooltip" data-placement="top" title="Settings">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
@@ -92,10 +92,11 @@ $session = Yii::$app->session;
               <a data-toggle="tooltip" data-placement="top" title="Lock">
                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
               </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout">
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="/site/logout">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>
             </div>
+          -->
           </div>
         </div>
 
@@ -113,29 +114,29 @@ $session = Yii::$app->session;
                       <img src="/images/img.jpg" alt="">
                       <?php if(Yii::$app->user->isGuest){ ?>
                               Login
-                      <?php } else { 
+                      <?php } else {
                               echo Yii::$app->user->identity->username;
                       } ?>
                       <span class=" fa fa-angle-down"></span>
                     </a>-->
-                    
+
                     <?php if(Yii::$app->user->isGuest){ ?>
                             <a href="/site/login/" class="user-profile" aria-expanded="false">
                                 <?=Yii::t('app', 'Login')?>
                             </a>
                     <?php } else { ?>
                         <a href="/dashboard/javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                            <img src="/images/img.jpg" alt="">
-                            <?php 
+                            <!--<img src="/images/img.jpg" alt="">-->
+                            <?php
                                 echo Yii::$app->user->identity->username
                             ?>
                             <span class=" fa fa-angle-down"></span>
                         </a>
                     <?php } ?>
-                    
-                    
-                    
-                    
+
+
+
+
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
                     <!--<li><a href="/site/index">Home</a></li>
                     <li><a href="/site/about">About</a></li>
@@ -143,12 +144,12 @@ $session = Yii::$app->session;
                     <li><a href="/site/signup">New User</a></li>
                     <li><a href="/store">Store</a></li>
                     <li><a href="/user-store-role">Assignment</a></li>
-                    
+
                     <li><a href="/dashboard/profile"> Profile</a></li>
-                    <li><a href="/dashboard/settings"><span>Settings</span></a></li>v-->    
+                    <li><a href="/dashboard/settings"><span>Settings</span></a></li>v-->
                     <?php if(Yii::$app->user->isGuest){ ?>
                             <li><a href="/site/login"><?=Yii::t('app', 'Login')?></a></li>
-                    <?php } else { 
+                    <?php } else {
                             echo '<li>'
                             . Html::beginForm(['/site/logout'], 'post')
                             . Html::submitButton(
@@ -165,34 +166,34 @@ $session = Yii::$app->session;
           </div>
         </div>
         <!-- /top navigation -->
-    
- 
+
+
     <div class="right_col" role="main">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
-        
+
         <?= $content ?>
     </div>
-    
-    
+
+
 </div>
 
 
 
-        
+
         <footer>
           <div class="pull-right">
             &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?>
           </div>
           <div class="clearfix"></div>
         </footer>
-        
+
       </div>
     </div>
 
 
-    
+
 <?php $this->endBody() ?>
 </body>
 </html>

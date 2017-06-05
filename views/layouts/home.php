@@ -6,7 +6,7 @@
 use yii\helpers\Html;
 //use yii\bootstrap\Nav;
 //use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
+//use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\models\Category;
 
@@ -23,19 +23,19 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>   
-    
+    <?php $this->head() ?>
+
     <!-- Custom styles for this template -->
     <link href="/css/custom-public.css" rel="stylesheet">
-    
+
 </head>
 <body class="nav-md">
 <?php $this->beginBody() ?>
 
 
-    
+
     <div class="container">
-        
+
 
 <div class="navbar-wrapper">
       <div class="container-fluid">
@@ -52,14 +52,16 @@ AppAsset::register($this);
               <a class="navbar-brand" href="/"><?=Yii::t('app', 'Shopping Ponto Azul')?></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <form class="navbar-form navbar-left" role="search"> 
+                <!--
+                <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" class="form-control main-search-input" id="exampleInputAmount" placeholder="">
                             <div class="input-group-addon"><span class='glyphicon glyphicon-search'></span></div>
                         </div>
-                    </div> 
+                    </div>
                 </form>
+                -->
                 <ul class="nav navbar-nav navbar-right">
                     <li class=""><a href="/store-category/show/"><?=Yii::t('app', 'Stores')?></a></li>
                     <li class="dropdown">
@@ -68,10 +70,10 @@ AppAsset::register($this);
                             <?php
                                 foreach($categories as $thisCategory){
                                     echo "<li><a href='/store-category/show/".$thisCategory->id."'>".$thisCategory->name."</a></li>";
-                                }    
+                                }
                             ?>
                         </ul>
-                    </li>                
+                    </li>
                 </ul>
             </div>
           </div>
@@ -96,13 +98,13 @@ AppAsset::register($this);
           <div class="container">
             <div class="carousel-caption">
               <h1><?=Yii::t('app', 'Welcome')?></h1>
-              <p>            
+              <p>
                   <?=Yii::t('app', 'Our popular stores got the doors wide open for you')?>
               </p>
               <p><a class="btn btn-lg btn-primary" href="/store-category/show/" role="button"><?=Yii::t('app', 'See stores')?></a></p>
             </div>
           </div>
-        </div>      
+        </div>
       </div>
 <!--      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -113,48 +115,31 @@ AppAsset::register($this);
         <span class="sr-only">Next</span>
       </a>-->
     </div><!-- /.carousel -->
-    <div class="container top-ad">
-<!--        <div class="row">
-            <div class="col-sm-12">
-                <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-                  general 
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-8990393761638596"
-                     data-ad-slot="3920931637"
-                     data-ad-format="auto"></ins>
-                <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
-                </script>
-            </div>
-        </div>-->
-    </div>
 
-    <div class="container marketing">        
+    <div class="container marketing">
         <?= $content ?>
     </div>
-    
-    
+
+
     </div>
-        
+
         <footer>
             <div class="clearfix"></div>
             <div>
-                
+
             </div>
             <div class="">
-                &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?> || 
+                &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?> ||
                 <a href="/site/login/"><?=Yii::t('app', 'Login')?></a>
             </div>
         </footer>
-        
-      
+
+
     </div>
 
 
-    
+
 <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
-

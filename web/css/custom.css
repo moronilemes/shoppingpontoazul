@@ -635,14 +635,22 @@ a:hover, a:focus {
   display: block;
   padding: 13px 15px 12px; }
 
+.current-page{
+  color: #fff !important;
+}
+
 .nav.side-menu > li.current-page, .nav.side-menu > li.active {
-  border-right: 5px solid #1ABB9C; }
+  border-right: 5px solid #1ABB9C;
+  color: #fff;
+ }
 
 .nav li.current-page {
-  background: rgba(255, 255, 255, 0.05); }
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;  }
 
 .nav li li li.current-page {
-  background: none; }
+  background: none;
+  color: #fff; }
 
 .nav li li.current-page a {
   color: #fff; }
