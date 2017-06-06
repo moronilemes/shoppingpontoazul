@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\controllers\LogController;
 /**
  * StoreController implements the CRUD actions for Store model.
  */
@@ -43,7 +43,7 @@ class StoreController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     public function actionShow($id)
     {
         $this->layout = 'page';
@@ -51,7 +51,7 @@ class StoreController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Store::find(),
         ]);
-        
+
         if ($id == null){
                     return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -61,8 +61,8 @@ class StoreController extends Controller
                 'model' => $this->findModel($id),
             ]);
         }
-        
-        
+
+
     }
 
     /**
@@ -87,6 +87,7 @@ class StoreController extends Controller
         $model = new Store();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            LogController::createSystemLog(Yii::$app->user->getId(), "Store created.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -106,6 +107,7 @@ class StoreController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            LogController::createSystemLog(Yii::$app->user->getId(), "Store data altered.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -123,7 +125,7 @@ class StoreController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        LogController::createSystemLog(Yii::$app->user->getId(), "Store deleted.");
         return $this->redirect(['index']);
     }
 

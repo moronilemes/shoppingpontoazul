@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-store-role-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Yii::t('app', Html::encode($this->title)) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create new Assignment'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'user.displayname:text:User',
-            //'user_id', 
+            //'user_id',
             //'store.name:text:Store',
             [
                 'attribute' => 'store.name',

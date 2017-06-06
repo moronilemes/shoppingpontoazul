@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\controllers\LogController;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -66,6 +66,7 @@ class UserController extends Controller
         $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            LogController::createSystemLog(Yii::$app->user->getId(), "New user created.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -85,6 +86,7 @@ class UserController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            LogController::createSystemLog(Yii::$app->user->getId(), "User data updated.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -102,7 +104,7 @@ class UserController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        LogController::createSystemLog(Yii::$app->user->getId(), "User deleted.");
         return $this->redirect(['index']);
     }
 

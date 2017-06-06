@@ -11,8 +11,9 @@ use yii\widgets\ActiveForm;
 <div class="user-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <?= $form->field($model, 'username')->textInput(['disabled'=>true]) ?>
     <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'email')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -7,26 +7,26 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Logs');
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="log-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
+    <!--<p>
         <?= Html::a(Yii::t('app', 'Create Log'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    </p>-->
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'user',
             'description',
-            'timestamp',
+            'timestamp'
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
+            //['class' => 'yii\grid\ActionColumn'         ],
+          ],
     ]); ?>
 </div>

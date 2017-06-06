@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\controllers\LogController;
 /**
  * CategoryController implements the CRUD actions for Category model.
  */
@@ -38,11 +38,11 @@ class CategoryController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Category::find(),
         ]);
-        
-        $query = Category::find();        
+
+        $query = Category::find();
         $categories = $query->all();
 
-        return $this->render('test', [
+        return $this->render('index', [
             'dataProvider' => $dataProvider,
             'categories' => $categories,
         ]);
@@ -70,6 +70,7 @@ class CategoryController extends Controller
         $model = new Category();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            LogController::createSystemLog(Yii::$app->user->getId(), "New category added.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -89,6 +90,7 @@ class CategoryController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            LogController::createSystemLog(Yii::$app->user->getId(), "Categories data changed.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -106,7 +108,7 @@ class CategoryController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        LogController::createSystemLog(Yii::$app->user->getId(), "Category deleted.");
         return $this->redirect(['index']);
     }
 
@@ -125,9 +127,9 @@ class CategoryController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
+
     public function getCategory(){
-        $query = Category::find();        
+        $query = Category::find();
         $categories = $query->all();
         return $categories;
     }

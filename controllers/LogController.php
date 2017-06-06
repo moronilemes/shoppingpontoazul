@@ -74,6 +74,19 @@ class LogController extends Controller
         }
     }
 
+    // Function that creates different logs according to user's action on the system
+    public function createSystemLog($user, $action){
+
+        $systemLog = new Log();
+
+        $systemLog->user = $user;
+        $systemLog->description = $action;
+
+        if (!$systemLog->save()){
+          echo 'logging did not work';
+        };
+    }
+
     /**
      * Updates an existing Log model.
      * If update is successful, the browser will be redirected to the 'view' page.

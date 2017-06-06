@@ -11,6 +11,7 @@ use app\models\ContactForm;
 use app\models\SignupForm;
 use app\models\Category;
 use app\models\UserStoreRole;
+use app\controllers\LogController;
 
 $session = Yii::$app->session;
 $session->open();
@@ -20,7 +21,7 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
-    
+
     public function behaviors()
     {
         return [
@@ -67,9 +68,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $query = Category::find();        
+        $query = Category::find();
         $categories = $query->all();
-                
+
         $this->layout = 'home';
         return $this->render('index',[
             'categories' => $categories,
@@ -90,14 +91,16 @@ class SiteController extends Controller
         $this->layout = 'home';
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            
+
             $storeQuery = UserStoreRole::find()->where('user_id='.$model->user["id"])->all();
             Yii::$app->session->open();
-            
+
             Yii::$app->session['store'] = $storeQuery[0]['store_id'];
             Yii::$app->session['user'] = $storeQuery[0]['user_id'];
             Yii::$app->session['role'] = $storeQuery[0]['role'];
-            
+
+            LogController::createSystemLog($storeQuery[0]['user_id'], "User logged in.");
+
             if (Yii::$app->session['role']=='admin'){
                 return $this->redirect("/store/");
             } else {
@@ -109,7 +112,7 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-    
+
     /**
      * Logout action.
      *
@@ -117,6 +120,7 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        LogController::createSystemLog(Yii::$app->user->getId(), "User logged out.");
         Yii::$app->user->logout();
 
         return $this->goHome();
@@ -149,7 +153,7 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
-    
+
     public function actionSignup()
     {
         $model = new SignupForm();
@@ -165,9 +169,9 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-    
+
     public function getCategory(){
-        $query = Category::find();        
+        $query = Category::find();
         $categories = $query->all();
         return $categories;
     }

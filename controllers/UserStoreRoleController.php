@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\controllers\LogController;
 /**
  * UserStoreRoleController implements the CRUD actions for UserStoreRole model.
  */
@@ -68,6 +68,7 @@ class UserStoreRoleController extends Controller
         $model = new UserStoreRole();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            LogController::createSystemLog(Yii::$app->user->getId(), "New user related to store.");
             return $this->redirect(['view', 'user_id' => $model->user_id, 'store_id' => $model->store_id, 'role' => $model->role]);
         } else {
             return $this->render('create', [
@@ -89,6 +90,7 @@ class UserStoreRoleController extends Controller
         $model = $this->findModel($user_id, $store_id, $role);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            LogController::createSystemLog(Yii::$app->user->getId(), "User related to store updated.");
             return $this->redirect(['view', 'user_id' => $model->user_id, 'store_id' => $model->store_id, 'role' => $model->role]);
         } else {
             return $this->render('update', [
@@ -108,7 +110,7 @@ class UserStoreRoleController extends Controller
     public function actionDelete($user_id, $store_id, $role)
     {
         $this->findModel($user_id, $store_id, $role)->delete();
-
+        LogController::createSystemLog(Yii::$app->user->getId(), "User related to store deleted.");
         return $this->redirect(['index']);
     }
 

@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use app\controllers\LogController;
 /**
  * StoreCategoryController implements the CRUD actions for StoreCategory model.
  */
@@ -43,7 +43,7 @@ class StoreCategoryController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     public function actionShow()
     {
         $this->layout = 'page';
@@ -78,6 +78,7 @@ class StoreCategoryController extends Controller
         $model = new StoreCategory();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            LogController::createSystemLog(Yii::$app->user->getId(), "Category added to store.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -97,6 +98,7 @@ class StoreCategoryController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            LogController::createSystemLog(Yii::$app->user->getId(), "Category altered to store.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -114,7 +116,7 @@ class StoreCategoryController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        LogController::createSystemLog(Yii::$app->user->getId(), "Category deleted to store.");
         return $this->redirect(['index']);
     }
 
