@@ -23,6 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'store',
+            [
+                'attribute' => 'store.name',
+                'format' => 'text',
+                'label' => 'Store'
+            ],
             'category',
 
             ['class' => 'yii\grid\ActionColumn'],

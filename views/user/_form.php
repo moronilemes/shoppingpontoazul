@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="user-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'username')->textInput(['disabled'=>true]) ?>
+    <?= $form->field($model, 'username')->textInput() ?>
     <?= $form->field($model, 'status')->textInput() ?>
     <?= $form->field($model, 'email')->textInput() ?>
 

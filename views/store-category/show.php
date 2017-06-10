@@ -7,10 +7,28 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 use app\models\Store;
+use app\models\StoreCategory;
+$request = Yii::$app->request;
+
 
 // Selects the stores "Destaque"
 $stores = Store::find()->all();
 
+if ($request->get('id')){
+    $categories = StoreCategory::find()->where('category='.$request->get('id'))->all();
+    $categoryList = "";
+    foreach($categories as $category){
+      $categoryList = $categoryList.$category->store.", ";
+    }
+
+    $categoryList = "(".substr($categoryList, 0,strlen($categoryList)-2).")";
+
+    if (strlen($categoryList)>2){
+      $stores = Store::find()->where('id in '.$categoryList)->all();
+    } else {
+      $stores = Store::find()->where('id=null')->all();
+    }
+}
 
 
 $this->title = Yii::t('app', 'Stores');
@@ -34,4 +52,5 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     <?php }  ?>
+
 </div>

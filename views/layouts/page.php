@@ -68,7 +68,7 @@ AppAsset::register($this);
                 <ul class="nav navbar-nav navbar-right">
                     <li class=""><a href="/store-category/show/"><?=Yii::t('app', 'Stores')?></a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=Yii::t('app', 'Products')?> <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=Yii::t('app', 'Stores')?> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <?php
 
@@ -114,7 +114,7 @@ AppAsset::register($this);
             </div>
             <div class="">
                 &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?> ||
-                <a href="/site/login/"><?=Yii::t('app', 'Login')?></a>
+                <a class='btn btn-default' href="/site/login/"><?=Yii::t('app', 'Login')?></a>
             </div>
         </footer>
 
