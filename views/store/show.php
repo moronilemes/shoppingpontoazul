@@ -26,7 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::encode($model->observation) ?>
     </div>
     <div class="col-sm-3">
-        CHAT
+        <!-- Large modal -->
+        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-lg">Bate-papo</button>
     </div>
     </div>
     <div class="row">
@@ -42,9 +43,33 @@ $this->params['breadcrumbs'][] = $this->title;
                     </div>
                 </div>
             </div>
-                    
-        
+
+
         <?php endforeach; ?>
     </div>
 
+</div>
+
+
+<div id='myModal' class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="col-sm-12">
+        <h3>Bate-papo:</h3>
+        <div class="chat-well well">
+
+        </div>
+        <div class="col-lg-12">
+          <div class="input-group">
+            <input type="text" class="form-control chat-input" placeholder="Digite sua mensagem">
+            <span class="input-group-btn">
+              <button class="btn btn-default chat-button" type="button">Enviar</button>
+            </span>
+          </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+          <!--<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with"
+             data-auto-logout-link="false" data-use-continue-as="true"></div>-->
+      </div>
+    </div>
+  </div>
 </div>

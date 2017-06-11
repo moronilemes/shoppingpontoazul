@@ -8,8 +8,6 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\UserStoreRole;
-
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -57,22 +55,6 @@ class ProductController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-    
-    public function actionPanel()
-    {
-        $storeQuery = UserStoreRole::find()->where('user_id='.Yii::$app->user->identity->id)->all();
-        $blueSession = Yii::$app->session;
-        $blueSession->open();
-        
-        $blueSession['store_id'] = $storeQuery[0]['store_id'];
-        $blueSession['user_id'] = $storeQuery[0]['user_id'];
-        $blueSession['role'] = $storeQuery[0]['role'];
-                
-
-        return $this->render('panel', [            
-            'blueSession' => $blueSession,
-        ]);
-    }
 
     /**
      * Creates a new Product model.
@@ -82,21 +64,9 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
-        
-        $storeQuery = UserStoreRole::find()->where('user_id='.Yii::$app->user->identity->id)->all();
-        $blueSession = Yii::$app->session;
-        $blueSession->open();
-        
-        $blueSession['store_id'] = $storeQuery[0]['store_id'];
-        $blueSession['user_id'] = $storeQuery[0]['user_id'];
-        $blueSession['role'] = $storeQuery[0]['role'];
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['view', 'id' => $model->id]);
-            return $this->render('panel', [
-                'model' => $model,
-                'blueSession' => $blueSession,
-            ]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,

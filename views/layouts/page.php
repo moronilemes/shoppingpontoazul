@@ -33,6 +33,14 @@ AppAsset::register($this);
 
 </head>
 <body class="nav-md">
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.9&appId=145564478901286";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
 <?php $this->beginBody() ?>
 
 
@@ -55,16 +63,6 @@ AppAsset::register($this);
               <a class="navbar-brand" href="/"><?=Yii::t('app', 'Shopping Ponto Azul')?></a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <!--
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control main-search-input" id="exampleInputAmount" placeholder="">
-                            <div class="input-group-addon"><span class='glyphicon glyphicon-search'></span></div>
-                        </div>
-                    </div>
-                </form>
-                -->
                 <ul class="nav navbar-nav navbar-right">
                     <li class=""><a href="/store-category/show/"><?=Yii::t('app', 'Stores')?></a></li>
                     <li class="dropdown">

@@ -67,36 +67,20 @@ $session = Yii::$app->session;
                                               . '</li>';
                         } ?>-->
                     </ul>
-                  </li>
+                    <!--</li>-->
                     <?php } else {?>
-                    <li class="active"><a><i class="fa fa-home"></i> <?=Yii::t('app', 'Dashboard')?> <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
+                    <!--<li class="active"><a><i class="fa fa-home"></i> <?=Yii::t('app', 'Dashboard')?> <span class="fa fa-chevron-down"></span></a>-->
+                        <ul class="nav">
                             <li class="current-page"><a href="/chat/panel"><?=Yii::t('app', 'Chat')?></a></li>
-                            <li><a href="/product/panel/"><?=Yii::t('app', 'Products')?></a></li>
-                            <li><a href="/product"><?=Yii::t('app', 'Store Products')?></a></li>
+                            <!--<li><a href="/product/panel/"><?=Yii::t('app', 'Products')?></a></li>-->
+                            <li><a href="/product"><?=Yii::t('app', 'Products')?></a></li>
                         </ul>
-                    </li>
+                    <!--</li>-->
                     <?php } ?>
                 </ul>
               </div>
 
             </div>
-            <!--
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="/site/logout">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-            </div>
-          -->
           </div>
         </div>
 
@@ -138,15 +122,7 @@ $session = Yii::$app->session;
 
 
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <!--<li><a href="/site/index">Home</a></li>
-                    <li><a href="/site/about">About</a></li>
-                    <li><a href="/site/contact">Contact</a></li>
-                    <li><a href="/site/signup">New User</a></li>
-                    <li><a href="/store">Store</a></li>
-                    <li><a href="/user-store-role">Assignment</a></li>
 
-                    <li><a href="/dashboard/profile"> Profile</a></li>
-                    <li><a href="/dashboard/settings"><span>Settings</span></a></li>v-->
                     <?php if(Yii::$app->user->isGuest){ ?>
                             <li><a href="/site/login"><?=Yii::t('app', 'Login')?></a></li>
                     <?php } else {

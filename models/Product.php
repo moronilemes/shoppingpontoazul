@@ -5,12 +5,13 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "{{%product}}".
+ * This is the model class for table "product".
  *
  * @property integer $id
  * @property string $name
  * @property double $price
  * @property integer $store_id
+ * @property string $image
  *
  * @property Image[] $images
  * @property Store $store
@@ -22,7 +23,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return '{{%product}}';
+        return 'product';
     }
 
     /**
@@ -34,7 +35,7 @@ class Product extends \yii\db\ActiveRecord
             [['name', 'store_id'], 'required'],
             [['price'], 'number'],
             [['store_id'], 'integer'],
-            [['name'], 'string', 'max' => 100],
+            [['name', 'image'], 'string', 'max' => 100],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
         ];
     }
@@ -49,6 +50,7 @@ class Product extends \yii\db\ActiveRecord
             'name' => Yii::t('app', 'Name'),
             'price' => Yii::t('app', 'Price'),
             'store_id' => Yii::t('app', 'Store ID'),
+            'image' => Yii::t('app', 'Image'),
         ];
     }
 
