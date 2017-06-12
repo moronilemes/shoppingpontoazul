@@ -35,8 +35,10 @@ class Product extends \yii\db\ActiveRecord
             [['name', 'store_id'], 'required'],
             [['price'], 'number'],
             [['store_id'], 'integer'],
-            [['name', 'image'], 'string', 'max' => 100],
+            [['name'], 'string', 'max' => 100],
+            [['image'], 'string', 'max' => 255],
             [['store_id'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store_id' => 'id']],
+            [['image'],'file','extensions'=>'jpg,png','skipOnEmpty'=>true]
         ];
     }
 

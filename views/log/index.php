@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -22,7 +23,8 @@ $this->title = Yii::t('app', 'Logs');
             //['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user',
+            //'user',
+            ['label'=>Yii::t('app', 'User'), 'value'=>function ($model, $index, $widget) { return (User::findIdentity($model->user)->username); }],
             'description',
             'timestamp'
 

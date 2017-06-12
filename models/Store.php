@@ -50,6 +50,8 @@ class Store extends \yii\db\ActiveRecord
             [['CNPJ', 'RG'], 'string', 'max' => 15],
             [['IE'], 'string', 'max' => 12],
             [['plan'], 'string', 'max' => 1],
+            [['image'], 'string', 'max' => 255],
+            [['image'],'file','extensions'=>'jpg,png','skipOnEmpty'=>true]
         ];
     }
 
@@ -70,8 +72,15 @@ class Store extends \yii\db\ActiveRecord
             'IE' => Yii::t('app', 'Ie'),
             'RG' => Yii::t('app', 'Rg'),
             'plan' => Yii::t('app', 'Plan'),
+            'image' => Yii::t('app', 'Image'),
         ];
     }
+
+    public static function findIdentity($id)
+    {
+        return static::findOne(['id' => $id]);
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery

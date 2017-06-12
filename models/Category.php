@@ -32,6 +32,10 @@ class Category extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 40],
         ];
     }
+    public static function findIdentity($id)
+    {
+        return static::findOne(['id' => $id]);
+    }
 
     /**
      * @inheritdoc

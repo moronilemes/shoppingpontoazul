@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php foreach ($products as $product): ?>
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
-                    <img src="/images/logo-placeholder.jpg" alt="<?= $product->name ?>">
+                    <img src="/uploads/<?= $product->image ?>" alt="<?= $product->name ?>">
                     <div class="caption">
                     <h3><?= $product->name ?></h3>
                     <?php if ($product->price != '') {?>

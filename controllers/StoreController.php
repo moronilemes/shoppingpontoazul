@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 use app\controllers\LogController;
 /**
  * StoreController implements the CRUD actions for Store model.
@@ -86,7 +87,20 @@ class StoreController extends Controller
     {
         $model = new Store();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $imageFile = UploadedFile::getInstance($model,'image');
+            if (isset($imageFile->size)){
+              $randNumber = rand(1,20000);
+              $imageFile->saveAs('uploads/'.$imageFile->baseName.$randNumber.'.'.$imageFile->extension);
+              $model->image = $imageFile->baseName.$randNumber.'.'.$imageFile->extension;
+            } else {
+              $model->image = 'logo-placeholder.jpg';
+            }
+
+            $model->save();
+
+
             LogController::createSystemLog(Yii::$app->user->getId(), "Store created.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
@@ -106,7 +120,19 @@ class StoreController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $imageFile = UploadedFile::getInstance($model,'image');
+            if (isset($imageFile->size)){
+              $randNumber = rand(1,20000);
+              $imageFile->saveAs('uploads/'.$imageFile->baseName.$randNumber.'.'.$imageFile->extension);
+              $model->image = $imageFile->baseName.$randNumber.'.'.$imageFile->extension;
+            } else {
+              $model->image = 'logo-placeholder.jpg';
+            }
+
+            $model->save();
+
             LogController::createSystemLog(Yii::$app->user->getId(), "Store data altered.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

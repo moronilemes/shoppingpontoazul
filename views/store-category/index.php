@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Store;
+use app\models\Category;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -21,14 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'store',
-            [
-                'attribute' => 'store.name',
-                'format' => 'text',
-                'label' => 'Store'
-            ],
-            'category',
+            //'id',
+            //'store',
+            ['label'=>Yii::t('app','Store'), 'value'=>function ($model, $index, $widget) { return (Store::findIdentity($model->store)->name); }],
+            //'category',
+            ['label'=>Yii::t('app','Category'), 'value'=>function ($model, $index, $widget) { return (Category::findIdentity($model->category)->name); }],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'phone',
             'mobile',
             'observation',
+            'image',
             // 'slot',
             // 'CPF',
             // 'CNPJ',

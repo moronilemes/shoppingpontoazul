@@ -7,6 +7,7 @@ use app\models\Product;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 use yii\filters\VerbFilter;
 
 /**
@@ -65,7 +66,19 @@ class ProductController extends Controller
     {
         $model = new Product();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $imageFile = UploadedFile::getInstance($model,'image');
+            if (isset($imageFile->size)){
+              $randNumber = rand(1,20000);
+              $imageFile->saveAs('uploads/'.$imageFile->baseName.$randNumber.'.'.$imageFile->extension);
+              $model->image = $imageFile->baseName.$randNumber.'.'.$imageFile->extension;
+            } else {
+              $model->image = 'logo-placeholder.jpg';
+            }
+
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -84,7 +97,19 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $imageFile = UploadedFile::getInstance($model,'image');
+            if (isset($imageFile->size)){
+              $randNumber = rand(1,20000);
+              $imageFile->saveAs('uploads/'.$imageFile->baseName.$randNumber.'.'.$imageFile->extension);
+              $model->image = $imageFile->baseName.$randNumber.'.'.$imageFile->extension;
+            } else {
+              $model->image = 'logo-placeholder.jpg';
+            }
+
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
