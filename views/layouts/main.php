@@ -2,7 +2,7 @@
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-
+use Yii;
 use yii\helpers\Html;
 //use yii\bootstrap\Nav;
 //use yii\bootstrap\NavBar;
@@ -11,6 +11,12 @@ use app\assets\AppAsset;
 
 AppAsset::register($this);
 $session = Yii::$app->session;
+
+if (!$session['role']) {
+    header("Location: /");
+    die();
+}
+
 
 ?>
 <?php $this->beginPage() ?>
@@ -34,7 +40,7 @@ $session = Yii::$app->session;
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-                <a href="/dashboard/index" class="site_title"><img src="/images/logo-shopping-ponto-azul.jpg" alt="zizap" /></a>
+                <a href="/dashboard/index" class="site_title"><img src="/images/logo-shopping-ponto-azul.jpg" alt="Shopping Ponto Azul" /></a>
             </div>
 
             <div class="clearfix"></div>
@@ -161,6 +167,9 @@ $session = Yii::$app->session;
         <footer>
           <div class="pull-right">
             &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?>
+            ||
+            <a class='btn btn-default' href="/site/language?lg=en"><?=Yii::t('app', 'English')?></a>
+            <a class='btn btn-default' href="/site/language?lg=pt_BR"><?=Yii::t('app', 'Portuguese')?></a>
           </div>
           <div class="clearfix"></div>
         </footer>

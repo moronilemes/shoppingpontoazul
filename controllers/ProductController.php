@@ -36,9 +36,17 @@ class ProductController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Product::find(),
-        ]);
+        $session = Yii::$app->session;
+
+        if ($session['role'] == 'manager'){
+          $dataProvider = new ActiveDataProvider([
+              'query' => Product::find()->where('store_id='.$session['store']),
+          ]);
+        } else {
+          $dataProvider = new ActiveDataProvider([
+              'query' => Product::find(),
+          ]);
+        }
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,

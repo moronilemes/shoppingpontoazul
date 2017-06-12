@@ -19,7 +19,7 @@ $this->title = Yii::t('app', 'Shopping Ponto Azul');
               <div class="media col-sm-3 col-xs-3">
                   <div class="media-left">
                       <a href="/store/show?id=<?=$store->id?>">
-                          <img class="media-object" src="/images/logo-placeholder.jpg" width="50" height="50" alt="..."></a></div>
+                          <img class="media-object" src="/uploads/<?=$store->image?>" width="50" height="50" alt="..."></a></div>
                   <div class="media-body">
                       <a href="/store/show?id=<?=$store->id?>">
                       <h4 class="media-heading"><?=$store->name?></h4>

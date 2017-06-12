@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use app\controllers\LogController;
+
 /**
  * StoreController implements the CRUD actions for Store model.
  */
@@ -54,7 +55,7 @@ class StoreController extends Controller
         ]);
 
         if ($id == null){
-                    return $this->render('index', [
+          return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
         } else {

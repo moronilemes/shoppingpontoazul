@@ -113,6 +113,8 @@ AppAsset::register($this);
             <div class="">
                 &copy; <?=Yii::t('app', 'Shopping Ponto Azul')?> <?= date('Y') ?> ||
                 <a class='btn btn-default' href="/site/login/"><?=Yii::t('app', 'Login')?></a>
+                <a class='btn btn-default' href="/site/language?lg=en"><?=Yii::t('app', 'English')?></a>
+                <a class='btn btn-default' href="/site/language?lg=pt_BR"><?=Yii::t('app', 'Portuguese')?></a>
             </div>
         </footer>
 

@@ -14,21 +14,24 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="store-view">
     <div class="row">
-    <div class="col-sm-3">
-        <h1><?= Html::encode($this->title) ?></h1>
-    </div>
-    <div class="col-sm-3">
-        <p><?=Yii::t('app', 'Phone')?>: <?= Html::encode($model->phone) ?></p>
-        <p><?=Yii::t('app', 'Mobile')?>: <?= Html::encode($model->mobile) ?></p>
-        <p><?=Yii::t('app', 'Store number')?> <?= Html::encode($model->slot) ?></p>
-    </div>
-    <div class="col-sm-3">
-        <?= Html::encode($model->observation) ?>
-    </div>
-    <div class="col-sm-3">
-        <!-- Large modal -->
-        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-lg">Bate-papo</button>
-    </div>
+      <div class="media col-sm-9">
+        <div class="media-left">
+          <a href="#">
+            <img class="media-object" src="/uploads/<?=$model->image?>" alt="<?= Html::encode($this->title) ?>">
+          </a>
+        </div>
+        <div class="media-body">
+          <h1><?= Html::encode($this->title) ?></h1>
+          <p><?=Yii::t('app', 'Phone')?>: <?= Html::encode($model->phone) ?></p>
+          <p><?=Yii::t('app', 'Mobile')?>: <?= Html::encode($model->mobile) ?></p>
+          <p><?=Yii::t('app', 'Store number')?>: <?= Html::encode($model->slot) ?></p>
+        </div>
+      </div>
+      <div class="col-sm-3">
+          <!-- Large modal -->
+          <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target=".bs-example-modal-lg">Bate-papo</button>
+          <?= Html::encode($model->observation) ?>
+      </div>
     </div>
     <div class="row">
         <?php foreach ($products as $product): ?>

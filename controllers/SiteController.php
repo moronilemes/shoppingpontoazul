@@ -176,4 +176,19 @@ class SiteController extends Controller
         return $categories;
     }
 
+    public function actionLanguage() {
+    if (Yii::$app->session->has('lg')) {
+        Yii::$app->language = Yii::$app->session->get('lg');
+        Yii::$app->session->set('lang', Yii::$app->session->get('lg'));
+    } else {
+        //or you may want to set lang session, this is just a sample
+        Yii::$app->language = 'pt_BR';
+        Yii::$app->session->set('lang', 'pt_BR'); //or $_GET['lang']
+    }
+    //return parent::beforeAction($action);
+
+    $this->redirect('/site/index');
+}
+
+
 }

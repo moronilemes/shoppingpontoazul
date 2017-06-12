@@ -6,6 +6,9 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Product */
 /* @var $form yii\widgets\ActiveForm */
+
+$session = Yii::$app->session;
+
 ?>
 
 <div class="product-form">
@@ -16,8 +19,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'price')->textInput() ?>
 
-    <?= $form->field($model, 'store_id')->textInput() ?>
-
+    <?= $form->field($model, 'store_id')->hiddenInput(['value'=> $session['store']])->label(false) ?>
+      
     <?= $form->field($model, 'image')->fileInput() ?>
 
     <div class="form-group">
