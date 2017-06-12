@@ -32,7 +32,7 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'store', 'name', 'email', 'phone'], 'required'],
+            [['id', 'store', 'name'], 'required'],
             [['id', 'store'], 'integer'],
             [['name'], 'string', 'max' => 120],
             [['email'], 'string', 'max' => 100],

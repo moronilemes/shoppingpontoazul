@@ -75,6 +75,18 @@ class CustomerController extends Controller
         }
     }
 
+    public function actionInsert($newbie)
+    {
+        $model = new Customer();
+        echo 'here';
+        die();
+        if ($model->load(Yii::$app->request->post())) {
+            return 'yo!';
+        } else {
+            return 'no:/';
+        }
+    }
+
     /**
      * Updates an existing Customer model.
      * If update is successful, the browser will be redirected to the 'view' page.
