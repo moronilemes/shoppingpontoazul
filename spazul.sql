@@ -51,9 +51,9 @@ CREATE TABLE `chat` (
   `customer` int(11) NOT NULL,
   `message` varchar(350) COLLATE utf8_unicode_ci NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`store`,`customer`),
+  PRIMARY KEY (`store`,`timestamp`),
   KEY `fk_chat_store` (`store`),
-  KEY `fk_chat_customer` (`customer`),
+  KEY `fk_chat_customer_idx` (`customer`),
   CONSTRAINT `fk_chat_customer` FOREIGN KEY (`customer`) REFERENCES `customer` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT `fk_chat_store` FOREIGN KEY (`store`) REFERENCES `store` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -65,6 +65,7 @@ CREATE TABLE `chat` (
 
 LOCK TABLES `chat` WRITE;
 /*!40000 ALTER TABLE `chat` DISABLE KEYS */;
+INSERT INTO `chat` VALUES (1,2,'cucarachas!','2017-06-21 02:50:16'),(1,2,'oi','2017-06-21 03:17:34'),(1,2,'o que tem feito?','2017-06-21 03:18:03'),(1,2,'ok','2017-06-21 03:18:42'),(1,2,'ok','2017-06-21 03:18:43'),(1,2,'ok','2017-06-21 03:18:44'),(1,2,'ok','2017-06-21 03:18:45'),(1,2,'pkpk','2017-06-21 03:18:46'),(1,2,'pkpk','2017-06-21 03:18:47'),(1,2,'ppk','2017-06-21 03:18:49'),(1,2,'pkpk','2017-06-21 03:18:50'),(1,2,'asdas','2017-06-21 03:18:52'),(1,2,'ok','2017-06-21 03:22:28'),(1,2,'asdasd','2017-06-21 03:22:29'),(1,2,'spdofksd','2017-06-21 03:22:30'),(1,2,'pokaspodka','2017-06-21 03:22:31'),(1,2,'pakspodkasp','2017-06-21 03:22:32'),(1,2,'paoskpdaso','2017-06-21 03:22:33'),(1,2,'oksdmsolkds','2017-06-21 03:22:34'),(1,2,'lknvlskv','2017-06-21 03:22:35'),(1,2,'poakspdokas','2017-06-21 03:22:37'),(1,2,'ksdvlksdvl','2017-06-21 03:22:38'),(1,2,'oaisjdoasijd','2017-06-21 03:22:40'),(1,2,'osidfosdijf','2017-06-21 03:22:42'),(1,2,'oiaoasd','2017-06-21 03:22:44');
 /*!40000 ALTER TABLE `chat` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,7 +77,7 @@ DROP TABLE IF EXISTS `customer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `customer` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `store` int(11) NOT NULL,
   `name` varchar(120) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(100) CHARACTER SET utf8 DEFAULT NULL,
@@ -84,7 +85,7 @@ CREATE TABLE `customer` (
   PRIMARY KEY (`id`,`store`),
   KEY `fk_customer_store` (`store`),
   CONSTRAINT `fk_customer_store` FOREIGN KEY (`store`) REFERENCES `store` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,6 +94,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` VALUES (2,1,'Moroni Lemes','moronilemes@live.com','5555555');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -136,7 +138,7 @@ CREATE TABLE `log` (
   PRIMARY KEY (`id`),
   KEY `fk_log_user` (`user`),
   CONSTRAINT `fk_log_user` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -145,7 +147,7 @@ CREATE TABLE `log` (
 
 LOCK TABLES `log` WRITE;
 /*!40000 ALTER TABLE `log` DISABLE KEYS */;
-INSERT INTO `log` VALUES (1,1,'User logged in.','2017-06-06 00:30:54'),(2,1,'User logged in.','2017-06-06 01:30:42'),(3,1,'User logged in.','2017-06-06 01:32:35'),(4,1,'User logged out.','2017-06-06 02:09:10'),(5,1,'User logged in.','2017-06-06 02:11:50'),(6,1,'New user related to store.','2017-06-06 02:12:26'),(7,1,'User related to store updated.','2017-06-06 02:13:10'),(8,1,'User related to store deleted.','2017-06-06 02:13:22'),(9,1,'Category added to store.','2017-06-06 02:15:49'),(10,1,'Category altered to store.','2017-06-06 02:16:06'),(11,1,'Category deleted to store.','2017-06-06 02:16:18'),(12,1,'New category added.','2017-06-06 02:18:53'),(13,1,'Categories data changed.','2017-06-06 02:19:07'),(14,1,'Category deleted.','2017-06-06 02:19:15'),(15,1,'Store created.','2017-06-06 02:29:56'),(16,1,'Store data altered.','2017-06-06 02:32:56'),(17,1,'Store deleted.','2017-06-06 02:33:09'),(18,1,'User logged out.','2017-06-06 02:37:35'),(19,1,'User logged in.','2017-06-06 02:37:47'),(20,1,'User data updated.','2017-06-06 02:40:30'),(21,1,'User logged in.','2017-06-06 15:44:32'),(22,1,'User logged out.','2017-06-06 15:59:40'),(23,1,'User logged in.','2017-06-06 16:23:51'),(24,1,'User logged in.','2017-06-10 18:55:53'),(25,1,'Category added to store.','2017-06-10 19:10:33'),(26,1,'Category added to store.','2017-06-10 19:10:47'),(27,1,'User logged out.','2017-06-10 20:10:15'),(28,8,'User logged in.','2017-06-10 20:10:28'),(29,8,'User logged in.','2017-06-12 14:44:46'),(30,8,'User logged out.','2017-06-12 16:13:55'),(31,1,'User logged in.','2017-06-12 16:14:46'),(32,1,'Store created.','2017-06-12 16:38:50'),(33,1,'Store deleted.','2017-06-12 16:42:39'),(34,1,'Store created.','2017-06-12 17:19:01'),(35,1,'Store data altered.','2017-06-12 18:01:15'),(36,1,'User logged out.','2017-06-12 19:16:42'),(37,1,'User logged in.','2017-06-12 19:31:55'),(38,1,'User logged out.','2017-06-12 19:34:54'),(39,8,'User logged in.','2017-06-12 19:37:21'),(40,8,'User logged out.','2017-06-12 21:10:07');
+INSERT INTO `log` VALUES (1,1,'User logged in.','2017-06-06 00:30:54'),(2,1,'User logged in.','2017-06-06 01:30:42'),(3,1,'User logged in.','2017-06-06 01:32:35'),(4,1,'User logged out.','2017-06-06 02:09:10'),(5,1,'User logged in.','2017-06-06 02:11:50'),(6,1,'New user related to store.','2017-06-06 02:12:26'),(7,1,'User related to store updated.','2017-06-06 02:13:10'),(8,1,'User related to store deleted.','2017-06-06 02:13:22'),(9,1,'Category added to store.','2017-06-06 02:15:49'),(10,1,'Category altered to store.','2017-06-06 02:16:06'),(11,1,'Category deleted to store.','2017-06-06 02:16:18'),(12,1,'New category added.','2017-06-06 02:18:53'),(13,1,'Categories data changed.','2017-06-06 02:19:07'),(14,1,'Category deleted.','2017-06-06 02:19:15'),(15,1,'Store created.','2017-06-06 02:29:56'),(16,1,'Store data altered.','2017-06-06 02:32:56'),(17,1,'Store deleted.','2017-06-06 02:33:09'),(18,1,'User logged out.','2017-06-06 02:37:35'),(19,1,'User logged in.','2017-06-06 02:37:47'),(20,1,'User data updated.','2017-06-06 02:40:30'),(21,1,'User logged in.','2017-06-06 15:44:32'),(22,1,'User logged out.','2017-06-06 15:59:40'),(23,1,'User logged in.','2017-06-06 16:23:51'),(24,1,'User logged in.','2017-06-10 18:55:53'),(25,1,'Category added to store.','2017-06-10 19:10:33'),(26,1,'Category added to store.','2017-06-10 19:10:47'),(27,1,'User logged out.','2017-06-10 20:10:15'),(28,8,'User logged in.','2017-06-10 20:10:28'),(29,8,'User logged in.','2017-06-12 14:44:46'),(30,8,'User logged out.','2017-06-12 16:13:55'),(31,1,'User logged in.','2017-06-12 16:14:46'),(32,1,'Store created.','2017-06-12 16:38:50'),(33,1,'Store deleted.','2017-06-12 16:42:39'),(34,1,'Store created.','2017-06-12 17:19:01'),(35,1,'Store data altered.','2017-06-12 18:01:15'),(36,1,'User logged out.','2017-06-12 19:16:42'),(37,1,'User logged in.','2017-06-12 19:31:55'),(38,1,'User logged out.','2017-06-12 19:34:54'),(39,8,'User logged in.','2017-06-12 19:37:21'),(40,8,'User logged out.','2017-06-12 21:10:07'),(41,1,'User logged in.','2017-06-12 22:37:09'),(42,1,'New user related to store.','2017-06-12 22:38:22'),(43,1,'User logged out.','2017-06-12 22:39:46'),(44,8,'User logged in.','2017-06-12 22:40:01'),(45,8,'User logged out.','2017-06-12 22:42:22'),(46,1,'User logged in.','2017-06-12 22:42:35'),(47,1,'Store data altered.','2017-06-12 22:42:52'),(48,1,'Store data altered.','2017-06-12 22:43:07');
 /*!40000 ALTER TABLE `log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,7 +191,7 @@ CREATE TABLE `product` (
   PRIMARY KEY (`id`),
   KEY `fk_product_user` (`store_id`),
   CONSTRAINT `fk_product_store` FOREIGN KEY (`store_id`) REFERENCES `store` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='Records relation between internal product id with Anymarket''s';
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8 COMMENT='Records relation between internal product id with Anymarket''s';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +200,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (10,'Placa de vídeo',120,1,'logo-placeholder.jpg'),(12,'Camiseta da paz',15,1,'logo-placeholder.jpg'),(15,'Coleção Sertanejo',20,2,'logo-placeholder.jpg'),(16,'Pirulito',1,2,'logo-placeholder.jpg'),(20,'Acácia',2,1,'logo-placeholder.jpg'),(23,'Arco-íris',45,1,'logo-placeholder.jpg'),(24,'Estátua do José',18,1,'logo-placeholder.jpg'),(26,'produto novo',500,1,'logo-placeholder.jpg'),(28,'coisa boa',12,1,'logo-placeholder.jpg'),(29,'roupa nova',12,1,'logo-placeholder.jpg'),(30,'roupa velha',515151,1,'logo-placeholder.jpg'),(32,'Camiseta',14,5,'logo-placeholder.jpg'),(33,'Camiseta',55,8,'logo-placeholder.jpg'),(34,'Alegria',66,8,'logo-placeholder.jpg'),(35,'asdasd',99,8,'logo-placeholder.jpg'),(36,'Peças',3,8,'logo-placeholder.jpg'),(37,'Jovem 2',99,8,'logo-placeholder.jpg'),(38,'JJJJJJJJJJJJJ',44,1,'pinocchio2418.png');
+INSERT INTO `product` VALUES (10,'Placa de vídeo',120,1,'logo-placeholder.jpg'),(12,'Camiseta da paz',15,1,'logo-placeholder.jpg'),(15,'Coleção Sertanejo',20,2,'logo-placeholder.jpg'),(16,'Pirulito',1,2,'logo-placeholder.jpg'),(20,'Acácia',2,1,'logo-placeholder.jpg'),(23,'Arco-íris',45,1,'logo-placeholder.jpg'),(24,'Estátua do José',18,1,'logo-placeholder.jpg'),(26,'produto novo',500,1,'logo-placeholder.jpg'),(28,'coisa boa',12,1,'logo-placeholder.jpg'),(29,'roupa nova',12,1,'logo-placeholder.jpg'),(30,'roupa velha',515151,1,'logo-placeholder.jpg'),(32,'Camiseta',14,5,'logo-placeholder.jpg'),(33,'Camiseta',55,8,'logo-placeholder.jpg'),(34,'Alegria',66,8,'logo-placeholder.jpg'),(35,'asdasd',99,8,'logo-placeholder.jpg'),(36,'Peças',3,8,'logo-placeholder.jpg'),(37,'Jovem 2',99,8,'logo-placeholder.jpg'),(38,'JJJJJJJJJJJJJ',44,1,'pinocchio2418.png'),(39,'Cartazes',2,1,'vySrd11339.png');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,7 +234,7 @@ CREATE TABLE `store` (
 
 LOCK TABLES `store` WRITE;
 /*!40000 ALTER TABLE `store` DISABLE KEYS */;
-INSERT INTO `store` VALUES (1,'Boot Informática','(19) 3329-4133','','Informática, Eletrônicos','10','','','','','D','boot-informatica-logo12875.jpg'),(2,'SR Celulares','','','adsda','31','','','','','N','logo-placeholder.jpg'),(3,'TC Games','19332255446','','','11','','','','','D','logo-placeholder.jpg'),(4,'Angel\'s Modas','1999998888','1999998888','','46','','','','','D','logo-placeholder.jpg'),(5,'Box 37','190','190','Loja de roupas, etc','37',NULL,NULL,NULL,NULL,'N','logo-placeholder.jpg'),(6,'Alemão','5556664442','111552246','Eletrônicos e presentes','7',NULL,NULL,NULL,NULL,'D','logo-placeholder.jpg'),(7,'Sol Jóias','12312312312321','1231232131','Jóias e bijus','15',NULL,NULL,NULL,NULL,'N','logo-placeholder.jpg'),(8,'Casa da Chica',NULL,NULL,NULL,'9',NULL,NULL,NULL,NULL,'D','logo-placeholder.jpg'),(9,'Games e Cia','12123131232','345345345','Games e games','1',NULL,NULL,NULL,NULL,'N','logo-placeholder.jpg'),(10,'Ferramentas Gerais','3453453454','56756756756','Super','23',NULL,NULL,NULL,NULL,'D','logo-placeholder.jpg'),(12,'Loja do Valdir','','','','3','','','','','D','logo-fenac16858.png');
+INSERT INTO `store` VALUES (1,'Boot Informática','(19) 3329-4133','','Informática, Eletrônicos','10','','','','','D','boot-informatica-logo12875.jpg'),(2,'SR Celulares','','','adsda','31','','','','','N','logo-placeholder.jpg'),(3,'TC Games','19332255446','','','11','','','','','D','logo-placeholder.jpg'),(4,'Angel\'s Modas','1999998888','1999998888','','46','','','','','D','logo-placeholder.jpg'),(5,'Box 37','190','190','Loja de roupas, etc','37',NULL,NULL,NULL,NULL,'N','logo-placeholder.jpg'),(6,'Alemão','5556664442','111552246','Eletrônicos e presentes','7',NULL,NULL,NULL,NULL,'D','logo-placeholder.jpg'),(7,'Sol Jóias','12312312312321','1231232131','Jóias e bijus','15',NULL,NULL,NULL,NULL,'N','logo-placeholder.jpg'),(8,'Casa da Chica','','','','9','','','','','D','logo-placeholder.jpg'),(9,'Games e Cia','12123131232','345345345','Games e games','1',NULL,NULL,NULL,NULL,'N','logo-placeholder.jpg'),(10,'Ferramentas Gerais','3453453454','56756756756','Super','23',NULL,NULL,NULL,NULL,'D','logo-placeholder.jpg'),(12,'Loja do Valdir','','','','3','','','','','D','logo-fenac16858.png');
 /*!40000 ALTER TABLE `store` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,7 +325,7 @@ CREATE TABLE `user_store_role` (
 
 LOCK TABLES `user_store_role` WRITE;
 /*!40000 ALTER TABLE `user_store_role` DISABLE KEYS */;
-INSERT INTO `user_store_role` VALUES (1,1,'admin'),(8,1,'manager'),(2,3,'manager'),(5,3,'operator'),(4,4,'manager'),(7,4,'manager');
+INSERT INTO `user_store_role` VALUES (1,1,'admin'),(8,1,'manager'),(2,3,'manager'),(5,3,'operator'),(4,4,'manager'),(7,4,'manager'),(6,12,'manager');
 /*!40000 ALTER TABLE `user_store_role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -336,4 +338,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-06-12 18:38:44
+-- Dump completed on 2017-06-21  1:10:42
