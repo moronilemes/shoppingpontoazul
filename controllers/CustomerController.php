@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Customer;
+use app\models\Chat;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -75,16 +76,34 @@ class CustomerController extends Controller
         }
     }
 
-    public function actionInsert($newbie)
+    public function actionInsert()
     {
+      $chatSent = Yii::$app->request->post();
+
+      if (($model = Customer::findOne(['email' => $chatSent['email'], 'store' => $chatSent['store']])) === null) {
         $model = new Customer();
-        echo 'here';
-        die();
-        if ($model->load(Yii::$app->request->post())) {
-            return 'yo!';
-        } else {
-            return 'no:/';
-        }
+        //$model->load(Yii::$app->request->post());
+
+        //$model->id = '';
+        $model->store = intval($chatSent['store']);
+        $model->name = $chatSent['name'];
+        $model->email = $chatSent['email'];
+        $model->phone = $chatSent['phone'];
+
+        $model->save();
+      }
+
+      $thisUser = Customer::findOne(['email' => $chatSent['email'], 'store' => $chatSent['store']]);
+      //return ($thisUser->id);
+
+      $chatMessage = new Chat();
+      $chatMessage->customer = $thisUser->id;
+      $chatMessage->message = $chatSent['message'];
+      $chatMessage->store = $chatSent['store'];
+
+      if(!$chatMessage->save()){
+        return print_r($chatMessage);
+      }
     }
 
     /**

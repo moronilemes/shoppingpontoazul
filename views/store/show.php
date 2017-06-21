@@ -59,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="modal-content">
       <div class="col-sm-12">
         <h3>Bate-papo:</h3>
-        <div class="chat-well well">
+        <div class="chat-well well" style="overflow: scroll;">
 
         </div>
         <div class="col-lg-12">

@@ -32,12 +32,12 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'store', 'name'], 'required'],
+            [['store', 'email'], 'required'],
             [['id', 'store'], 'integer'],
             [['name'], 'string', 'max' => 120],
             [['email'], 'string', 'max' => 100],
             [['phone'], 'string', 'max' => 45],
-            [['store'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store' => 'id']],
+            //[['store'], 'exist', 'skipOnError' => true, 'targetClass' => Store::className(), 'targetAttribute' => ['store' => 'id']],
         ];
     }
 
