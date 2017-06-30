@@ -3,12 +3,16 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Store;
+use app\models\Chat;
+use app\models\Customer;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Chats');
 $this->params['breadcrumbs'][] = $this->title;
 $session = Yii::$app->session;
+
+$storeChats = Chat::find()->where('store=1')->all();
 
 $thisStore = Store::findIdentity($session['store']);
 
@@ -20,15 +24,17 @@ $thisStore = Store::findIdentity($session['store']);
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="col-sm-3">
       <ul class="nav nav-pills nav-stacked">
-        <li role="presentation" class="active"><a href="#">Cliente 1</a></li>
-        <li role="presentation"><a href="#">Cliente 2</a></li>
-        <li role="presentation"><a href="#">Cliente 3</a></li>
+        <li role="presentation" class="active"><a href="#">Moroni Lemes</a></li>
+        <!--<li role="presentation"><a href="#">Cliente 2</a></li>
+        <li role="presentation"><a href="#">Cliente 3</a></li>-->
       </ul>
     </div>
     <div class="col-sm-9">
       <div class="col-sm-12">
         <div class="chat-well well">
-
+          <?php foreach($storeChats as $chat){ ?>
+            <p class="text-right text-warning"><strong><?= Customer::findIdentity($chat->customer)->name; ?> : </strong><?= $chat->message ?></p>
+          <?php } ?>
         </div>
         <div class="col-lg-12">
           <div class="input-group">

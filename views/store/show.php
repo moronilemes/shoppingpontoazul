@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <div class="media col-sm-9">
         <div class="media-left">
           <a href="#">
-            <img class="media-object" src="/uploads/<?=$model->image?>" alt="<?= Html::encode($this->title) ?>">
+            <img width="140px" class="media-object" src="/uploads/<?=$model->image?>" alt="<?= Html::encode($this->title) ?>">
           </a>
         </div>
         <div class="media-body">

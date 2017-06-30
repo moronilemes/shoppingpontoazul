@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\Cookie;
+use yii\web\CHttpCookie;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
@@ -177,13 +179,20 @@ class SiteController extends Controller
     }
 
     public function actionLanguage() {
-    if (Yii::$app->session->has('lg')) {
-        Yii::$app->language = Yii::$app->session->get('lg');
-        Yii::$app->session->set('lang', Yii::$app->session->get('lg'));
+
+    if (Yii::$app->request->get('lg')) {
+      echo Yii::$app->language;
+
+        \Yii::$app->language = Yii::$app->request->get('lg');
+        \Yii::$app->session->set('lang', Yii::$app->request->get('lg'));
+        //$cookie = new yii\web\Cookie();
+        Yii::$app->request->cookies['_lang'] = new CHttpCookie('_lang', 'en');
+
+
     } else {
         //or you may want to set lang session, this is just a sample
-        Yii::$app->language = 'pt_BR';
-        Yii::$app->session->set('lang', 'pt_BR'); //or $_GET['lang']
+        \Yii::$app->language = 'pt_BR';
+        \Yii::$app->session->set('lang', 'pt_BR'); //or $_GET['lang']
     }
     //return parent::beforeAction($action);
 

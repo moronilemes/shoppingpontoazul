@@ -6,11 +6,11 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    
+
     //'language' => 'en',
     'language' => 'pt_BR',
     'sourceLanguage' => 'en',
-    
+
     'components' => [
         'i18n' => [
             'translations' => [
@@ -56,18 +56,18 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        
+
         // this is the pretty URL functionality. It only works when the Yii Serve is active
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
-        ],        
+        ],
     ],
     'params' => $params,
 ];
-
+/* Uncomment for debugging mode
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
@@ -80,5 +80,5 @@ if (YII_ENV_DEV) {
         'class' => 'yii\gii\Module',
     ];
 }
-
+*/
 return $config;

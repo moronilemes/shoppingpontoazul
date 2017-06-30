@@ -31,8 +31,8 @@ $(document).ready(function(){
         if($('.store-name').val()===''){
           sendChatMessage($('.store-name').val(), $('.chat-input').val());
         } else {
-          sendStoreChatMessage(thisChatUser.name, $(this).val());
-          createChatUser(thisChatUser.name, thisChatUser.email, $('.chat-input').val(), getParam("id"));
+          sendStoreChatMessage($('.store-name').val(), $('.chat-input').val());
+          //createChatUser($('.store-name').val(), thisChatUser.email, $('.chat-input').val(), getParam("id"));
         }
         $(this).val('');
       }
@@ -43,7 +43,7 @@ $(document).ready(function(){
         if($('.store-name').val()===''){
           sendChatMessage($('.store-name').val(), $('.chat-input').val());
         } else {
-          sendStoreChatMessage(thisChatUser.name, $('.chat-input').val());
+          sendStoreChatMessage($('.store-name').val(), $('.chat-input').val());
           createChatUser(thisChatUser.name, thisChatUser.email, $('.chat-input').val(), getParam("id"));
         }
         $('.chat-input').val('');

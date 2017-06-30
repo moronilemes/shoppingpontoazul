@@ -94,7 +94,7 @@ AppAsset::register($this);
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
-          <img class="first-slide" src="http://lorempixel.com/1400/450/fashion/" alt="First slide">
+          <img class="first-slide" src="/images/tools.jpg" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
               <h1><?=Yii::t('app', 'Welcome')?></h1>

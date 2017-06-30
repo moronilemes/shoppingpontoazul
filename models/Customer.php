@@ -70,4 +70,10 @@ class Customer extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Store::className(), ['id' => 'store']);
     }
+
+    public static function findIdentity($id)
+    {
+        return static::findOne(['id' => $id]);
+    }
+
 }
